@@ -1,671 +1,565 @@
 <!doctype html>
 <html lang="de">
+
 <head>
-  <meta charset="utf-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  >
-
-  <meta
-    name="description"
-    content="Rasenschach – Thesen, Draft und Fußball für zwei Spieler."
-  >
-
-  <title>Rasenschach Duo</title>
-
-  <!-- Supabase JavaScript Client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-
-    :root {
-      --bg: #10281f;
-      --panel: #17372b;
-      --panel-light: #1e4435;
-      --cream: #f3eedf;
-      --muted: #b7c6bd;
-      --line: #315747;
-      --accent: #d8ff69;
-      --danger: #ff816f;
-      --dark: #0a1712;
-      --white: #ffffff;
-    }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      min-height: 100%;
-    }
-
-    body {
-      margin: 0;
-
-      min-height: 100vh;
-
-      font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+<meta charset="utf-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
+<title>Rasenschach Duo</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root {
+  --bg: #10281f;
+  --panel: #17372b;
+  --dark: #0a1712;
+  --cream: #f3eedf;
+  --muted: #b7c6bd;
+  --line: #315747;
+  --accent: #d8ff69;
+  --danger: #ff816f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #24503f 0,
+      #10281f 45%,
+      #09140f 100%
+    );
+
+  color: var(--cream);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.shell {
+  width: min(1100px, calc(100% - 24px));
+  margin: auto;
+  padding: 20px 0 60px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.brand {
+  font-size: clamp(25px, 5vw, 42px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.brand span {
+  color: var(--accent);
+}
+
+.room {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.card {
+  background: rgba(23,55,43,.94);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 18px;
+  margin: 12px 0;
 
-      background:
-        radial-gradient(
-          circle at top,
-          #24503f 0,
-          #10281f 45%,
-          #09140f 100%
-        );
-
-      color: var(--cream);
-    }
-
-    button,
-    input,
-    select {
-      font: inherit;
-    }
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.18);
+}
 
-    button {
-      cursor: pointer;
-    }
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
 
-    .shell {
-      width: min(
-        1100px,
-        calc(100% - 24px)
-      );
+@media(max-width:720px) {
 
-      margin: auto;
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
 
-      padding:
-        20px
-        0
-        60px;
-    }
+  header {
+    align-items: flex-start;
+  }
 
-    header {
-      display: flex;
+}
 
-      justify-content: space-between;
-      align-items: center;
-
-      gap: 12px;
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
 
-      margin-bottom: 18px;
-    }
+h1 {
+  letter-spacing: -.03em;
+}
 
-    .brand {
-      font-weight: 900;
+h2 {
+  font-size: 20px;
+}
 
-      letter-spacing: -0.04em;
+.muted {
+  color: var(--muted);
+}
 
-      font-size:
-        clamp(
-          24px,
-          5vw,
-          42px
-        );
-    }
+.success {
+  color: var(--accent);
+}
 
-    .brand span {
-      color: var(--accent);
-    }
+.error {
+  color: var(--danger);
+}
 
-    .room {
-      color: var(--muted);
+input,
+select {
 
-      font-size: 13px;
+  width: 100%;
 
-      display: flex;
+  background: var(--dark);
+  color: var(--cream);
 
-      align-items: center;
-      justify-content: flex-end;
+  border: 1px solid var(--line);
+  border-radius: 12px;
 
-      gap: 6px;
+  padding: 12px;
 
-      flex-wrap: wrap;
-    }
+  outline: none;
+}
 
-    .card {
-      background:
-        rgba(
-          23,
-          55,
-          43,
-          0.94
-        );
+input:focus,
+select:focus {
+  border-color: var(--accent);
+}
 
-      border:
-        1px
-        solid
-        var(--line);
+button {
 
-      border-radius: 20px;
+  border: 0;
+  border-radius: 12px;
 
-      padding: 18px;
+  padding: 11px 14px;
 
-      margin: 12px 0;
+  background: var(--cream);
+  color: #102018;
 
-      box-shadow:
-        0
-        18px
-        60px
-        rgba(0, 0, 0, 0.18);
-    }
+  font-weight: 800;
+}
 
-    .grid2 {
-      display: grid;
+button.primary {
+  background: var(--accent);
+}
 
-      grid-template-columns:
-        1fr 1fr;
+button.ghost {
 
-      gap: 12px;
-    }
+  background: transparent;
+  color: var(--cream);
 
-    @media (max-width: 720px) {
+  border: 1px solid var(--line);
+}
 
-      .grid2 {
-        grid-template-columns: 1fr;
-      }
+button.danger {
 
-      header {
-        align-items: flex-start;
-      }
+  background: transparent;
+  color: var(--danger);
 
-      .room {
-        justify-content: flex-end;
-      }
+  border: 1px solid rgba(255,129,111,.35);
+}
 
-    }
+button:disabled {
 
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
+  opacity: .45;
+  cursor: not-allowed;
+}
 
-    h1 {
-      letter-spacing: -0.03em;
-    }
+.row {
 
-    h2 {
-      font-size: 20px;
-    }
+  display: flex;
+  gap: 8px;
 
-    .muted {
-      color: var(--muted);
-    }
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-    input,
-    select {
+.stack {
 
-      width: 100%;
+  display: grid;
+  gap: 10px;
+}
 
-      background: var(--dark);
+.thesis {
 
-      color: var(--cream);
+  background: #0d2119;
 
-      border:
-        1px
-        solid
-        var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
 
-      border-radius: 12px;
+  padding: 13px;
+}
 
-      padding: 12px;
+.thesis.available:hover {
+  border-color: var(--accent);
+}
 
-      outline: none;
-    }
+.badge {
 
-    input:focus,
-    select:focus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 
-      border-color: var(--accent);
-    }
+  padding: 5px 9px;
 
-    button {
+  border-radius: 100px;
 
-      border: 0;
+  background: #0c2119;
 
-      border-radius: 12px;
+  border: 1px solid var(--line);
 
-      padding:
-        11px
-        14px;
+  color: var(--muted);
 
-      background: var(--cream);
+  font-size: 12px;
 
-      color: #102018;
+  margin: 2px;
+}
 
-      font-weight: 800;
-    }
+.turn {
 
-    button.primary {
+  background: var(--accent);
+  color: #102018;
 
-      background: var(--accent);
-    }
+  border-radius: 14px;
 
-    button.ghost {
+  padding: 13px;
 
-      background: transparent;
+  font-weight: 900;
+  text-align: center;
 
-      color: var(--cream);
+  margin-bottom: 12px;
+}
 
-      border:
-        1px
-        solid
-        var(--line);
-    }
+.phasebar {
 
-    button.danger {
+  display: flex;
+  gap: 6px;
 
-      background: transparent;
+  overflow-x: auto;
 
-      color: var(--danger);
+  margin-bottom: 14px;
 
-      border:
-        1px
-        solid
-        rgba(
-          255,
-          129,
-          111,
-          0.35
-        );
-    }
+  scrollbar-width: none;
+}
 
-    button:disabled {
+.phasebar::-webkit-scrollbar {
+  display: none;
+}
 
-      opacity: 0.45;
+.phasebar span {
 
-      cursor: not-allowed;
-    }
+  white-space: nowrap;
 
-    .row {
+  padding: 7px 10px;
 
-      display: flex;
+  border-radius: 99px;
 
-      align-items: center;
+  background: #0b1d16;
+  color: #7d9488;
 
-      gap: 8px;
+  font-size: 12px;
+}
 
-      flex-wrap: wrap;
-    }
+.phasebar span.active {
 
-    .stack {
+  background: var(--accent);
+  color: #102018;
 
-      display: grid;
+  font-weight: 800;
+}
 
-      gap: 10px;
-    }
+.fields {
 
-    .thesis {
+  display: grid;
+  gap: 8px;
+}
 
-      background: #0d2119;
+.field {
 
-      border:
-        1px
-        solid
-        var(--line);
+  display: grid;
+  grid-template-columns: 70px 1fr;
 
-      border-radius: 14px;
+  gap: 10px;
 
-      padding: 13px;
-    }
+  align-items: center;
 
-    .thesis.available:hover {
+  background: #0c2119;
 
-      border-color: var(--accent);
-    }
+  border: 1px solid var(--line);
+  border-radius: 14px;
 
-    .badge {
+  padding: 10px;
+}
 
-      display: inline-flex;
+.fieldLabel {
 
-      align-items: center;
+  font-size: 22px;
+  font-weight: 900;
 
-      gap: 6px;
+  text-align: center;
+}
 
-      padding:
-        5px
-        9px;
+.score {
 
-      border-radius: 100px;
+  display: grid;
 
-      background: #0c2119;
+  grid-template-columns:
+    1fr auto 1fr;
 
-      border:
-        1px
-        solid
-        var(--line);
+  align-items: center;
 
-      color: var(--muted);
+  gap: 14px;
 
-      font-size: 12px;
+  text-align: center;
+}
 
-      margin:
-        2px
-        2px
-        2px
-        0;
-    }
+.score .points {
 
-    .badge.live {
+  font-size:
+    clamp(
+      34px,
+      8vw,
+      64px
+    );
 
-      color: var(--accent);
-    }
+  font-weight: 900;
+}
 
-    .score {
+.vs {
 
-      display: grid;
+  color: var(--muted);
 
-      grid-template-columns:
-        1fr auto 1fr;
+  font-size: 24px;
 
-      gap: 14px;
+  font-weight: 900;
+}
 
-      align-items: center;
+.bigResult {
 
-      text-align: center;
-    }
+  text-align: center;
 
-    .score .points {
+  font-size:
+    clamp(
+      32px,
+      8vw,
+      70px
+    );
 
-      font-size:
-        clamp(
-          34px,
-          8vw,
-          64px
-        );
+  font-weight: 900;
+}
 
-      font-weight: 900;
-    }
+.drawCard {
 
-    .vs {
+  text-align: center;
 
-      color: var(--muted);
+  padding: 22px;
+}
 
-      font-weight: 900;
+.drawIcon {
 
-      font-size: 24px;
-    }
+  font-size: 42px;
 
-    .fields {
+  margin-bottom: 8px;
+}
 
-      display: grid;
+.drawWinner {
 
-      gap: 8px;
-    }
+  font-size:
+    clamp(
+      25px,
+      6vw,
+      42px
+    );
 
-    .field {
+  font-weight: 900;
 
-      display: grid;
+  color: var(--accent);
 
-      grid-template-columns:
-        70px 1fr;
+  margin: 6px 0;
+}
 
-      align-items: center;
+small {
+  color: var(--muted);
+}
 
-      gap: 10px;
+hr {
 
-      background: #0c2119;
+  border: 0;
 
-      padding: 10px;
+  border-top:
+    1px solid var(--line);
 
-      border-radius: 14px;
+  margin: 18px 0;
+}
 
-      border:
-        1px
-        solid
-        var(--line);
-    }
+.footer {
 
-    .fieldLabel {
+  margin-top: 40px;
 
-      font-size: 22px;
+  text-align: center;
 
-      font-weight: 900;
+  color: var(--muted);
 
-      text-align: center;
-    }
+  font-size: 12px;
+}
 
-    .phasebar {
+.loading {
 
-      display: flex;
+  padding: 60px 20px;
 
-      overflow-x: auto;
+  text-align: center;
 
-      gap: 6px;
+  color: var(--muted);
+}
 
-      margin-bottom: 14px;
+#toast {
 
-      scrollbar-width: none;
-    }
+  position: fixed;
 
-    .phasebar::-webkit-scrollbar {
+  left: 50%;
+  bottom: 20px;
 
-      display: none;
-    }
+  transform: translateX(-50%);
 
-    .phasebar span {
+  max-width:
+    calc(100% - 30px);
 
-      white-space: nowrap;
+  background: var(--cream);
+  color: #102018;
 
-      padding:
-        7px
-        10px;
+  padding: 10px 16px;
 
-      border-radius: 99px;
+  border-radius: 100px;
 
-      background: #0b1d16;
+  font-weight: 800;
 
-      color: #7d9488;
+  text-align: center;
 
-      font-size: 12px;
-    }
+  opacity: 0;
 
-    .phasebar span.active {
+  pointer-events: none;
 
-      color: #102018;
+  transition: .2s;
 
-      background: var(--accent);
+  z-index: 1000;
+}
 
-      font-weight: 800;
-    }
+#toast.show {
+  opacity: 1;
+}
 
-    .playerBoard {
-
-      min-height: 120px;
-    }
-
-    .turn {
-
-      background: var(--accent);
-
-      color: #102018;
-
-      font-weight: 900;
-
-      padding: 12px;
-
-      border-radius: 14px;
-
-      text-align: center;
-
-      margin-bottom: 12px;
-    }
-
-    .success {
-
-      color: var(--accent);
-    }
-
-    .error {
-
-      color: var(--danger);
-    }
-
-    .bigResult {
-
-      text-align: center;
-
-      font-size:
-        clamp(
-          32px,
-          8vw,
-          72px
-        );
-
-      font-weight: 900;
-    }
-
-    .hidden {
-
-      display: none !important;
-    }
-
-    #toast {
-
-      position: fixed;
-
-      bottom: 20px;
-      left: 50%;
-
-      transform:
-        translateX(-50%);
-
-      padding:
-        10px
-        16px;
-
-      border-radius: 100px;
-
-      background: #f5f0e2;
-
-      color: #102018;
-
-      font-weight: 800;
-
-      opacity: 0;
-
-      pointer-events: none;
-
-      transition: 0.2s;
-
-      z-index: 1000;
-
-      max-width:
-        calc(100% - 30px);
-
-      text-align: center;
-    }
-
-    #toast.show {
-
-      opacity: 1;
-    }
-
-    small {
-
-      color: var(--muted);
-    }
-
-    hr {
-
-      border: 0;
-
-      border-top:
-        1px
-        solid
-        var(--line);
-
-      margin:
-        18px
-        0;
-    }
-
-    .footer {
-
-      margin-top: 40px;
-
-      text-align: center;
-
-      color: var(--muted);
-
-      font-size: 12px;
-    }
-
-    .loading {
-
-      text-align: center;
-
-      padding: 60px 20px;
-
-      color: var(--muted);
-    }
-
-  </style>
+</style>
 
 </head>
 
+
 <body>
 
-  <div class="shell">
 
-    <header>
+<div class="shell">
 
-      <div class="brand">
-        RASEN<span>SCHACH</span>
-      </div>
 
-      <div
-        id="roomHeader"
-        class="room"
-      ></div>
+<header>
 
-    </header>
-
-    <main id="app">
-
-      <div class="loading">
-        Rasenschach wird geladen …
-      </div>
-
-    </main>
-
-    <div class="footer">
-      Rasenschach Duo · Fan-Projekt
-    </div>
-
+  <div class="brand">
+    RASEN<span>SCHACH</span>
   </div>
 
-  <div id="toast"></div>
+  <div
+    id="roomHeader"
+    class="room"
+  ></div>
+
+</header>
+
+
+<main id="app">
+
+  <div class="loading">
+    Rasenschach wird geladen …
+  </div>
+
+</main>
+
+
+<div class="footer">
+  Rasenschach Duo · Fan-Projekt
+</div>
+
+
+</div>
+
+
+<div id="toast"></div>
+
 
 <script>
 
-/* =========================================================
-   1. SUPABASE EINSTELLUNGEN
 
-   HIER MUSST DU NUR DEINE BEIDEN WERTE EINTRAGEN.
+/* =========================================================
+   SUPABASE
+
+   NUR DIESE BEIDEN WERTE ERSETZEN
 ========================================================= */
+
 
 const SUPABASE_URL =
   "https://myqerixfnmjgvgwculiw.supabase.co";
 
+
 const SUPABASE_KEY =
   "sb_publishable_dr_f5ic0-aiiY3wSkX_Rng_1Ye3Vy73";
 
-
-/* =========================================================
-   2. SUPABASE CLIENT
-========================================================= */
 
 const db =
   window.supabase.createClient(
@@ -674,9 +568,11 @@ const db =
   );
 
 
+
 /* =========================================================
-   3. APP STATE
+   STATE
 ========================================================= */
+
 
 let state = {
 
@@ -701,23 +597,10 @@ let state = {
 };
 
 
-/* =========================================================
-   4. SPIELREGELN
-========================================================= */
 
-const thesisSequence =
-  [
-    1,
-    2,
-    2,
-    1,
-    1,
-    2,
-    2,
-    1,
-    1,
-    2
-  ];
+/* =========================================================
+   SPIELREGELN
+========================================================= */
 
 
 const figureSequence =
@@ -810,11 +693,15 @@ const phases = [
 ];
 
 
+
 /* =========================================================
-   5. HILFSFUNKTIONEN
+   HILFSFUNKTIONEN
 ========================================================= */
 
-function esc(value) {
+
+function esc(
+  value
+) {
 
   return String(
     value ?? ""
@@ -843,19 +730,25 @@ function esc(value) {
 }
 
 
-function toast(message) {
+
+function toast(
+  message
+) {
 
   const element =
     document.getElementById(
       "toast"
     );
 
+
   element.textContent =
     message;
+
 
   element.classList.add(
     "show"
   );
+
 
   setTimeout(
     () => {
@@ -873,11 +766,15 @@ function toast(message) {
 }
 
 
-function errorMessage(error) {
+
+function errorMessage(
+  error
+) {
 
   console.error(
     error
   );
+
 
   toast(
     error?.message ||
@@ -886,18 +783,6 @@ function errorMessage(error) {
 
 }
 
-
-function playerByUser(
-  userId
-) {
-
-  return state.players.find(
-    player =>
-      player.user_id ===
-      userId
-  );
-
-}
 
 
 function draftedTheses() {
@@ -910,18 +795,72 @@ function draftedTheses() {
 }
 
 
+
+/*
+   Der Starter des Thesendrafts wird
+   von Supabase zufällig festgelegt.
+
+   Wenn Sitz 1 beginnt:
+
+   1 → 2 → 2 → 1 → 1 → 2 → ...
+
+   Wenn Sitz 2 beginnt:
+
+   2 → 1 → 1 → 2 → 2 → 1 → ...
+*/
+
+
 function currentThesisSeat() {
 
   const count =
     draftedTheses()
       .length;
 
+
+  const starter =
+    state.game
+      ?.thesis_start_seat ||
+    1;
+
+
+  const sequence =
+
+    starter === 1
+
+      ? [
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2
+        ]
+
+      : [
+          2,
+          1,
+          1,
+          2,
+          2,
+          1,
+          1,
+          2,
+          2,
+          1
+        ];
+
+
   return (
-    thesisSequence[count] ??
+    sequence[count] ??
     null
   );
 
 }
+
 
 
 function currentFigureSeat() {
@@ -929,12 +868,14 @@ function currentFigureSeat() {
   const count =
     state.figures.length;
 
+
   return (
     figureSequence[count] ??
     null
   );
 
 }
+
 
 
 function phaseBar() {
@@ -966,26 +907,35 @@ function phaseBar() {
 }
 
 
+
 function shareUrl() {
 
   return (
+
     location.origin +
+
     location.pathname +
+
     "?room=" +
+
     state.game.code
+
   );
 
 }
+
 
 
 async function copyInvite() {
 
   try {
 
-    await navigator.clipboard
+    await navigator
+      .clipboard
       .writeText(
         shareUrl()
       );
+
 
     toast(
       "Einladungslink kopiert"
@@ -1004,27 +954,35 @@ async function copyInvite() {
 }
 
 
+
 function resetLocalGame() {
 
   const confirmed =
     confirm(
-      "Zur Startseite zurückkehren? Das Spiel bleibt in der Datenbank gespeichert."
+      "Zur Startseite zurückkehren? Das Spiel bleibt in Supabase gespeichert."
     );
 
-  if (!confirmed) {
+
+  if (
+    !confirmed
+  ) {
 
     return;
 
   }
 
-  localStorage.removeItem(
-    "rasenschach_game"
-  );
+
+  localStorage
+    .removeItem(
+      "rasenschach_game"
+    );
+
 
   location.href =
     location.pathname;
 
 }
+
 
 
 function thesisPoints(
@@ -1033,20 +991,26 @@ function thesisPoints(
 ) {
 
   if (
+
     thesis?.resolved === null ||
+
     thesis?.resolved === undefined
+
   ) {
 
     return 0;
 
   }
 
+
   const correct =
     thesis.resolved;
+
 
   switch (
     placement.field
   ) {
+
 
     case "P1":
 
@@ -1086,19 +1050,22 @@ function thesisPoints(
 
   }
 
+
   return 0;
 
 }
+
 
 
 function playerScore(
   userId
 ) {
 
-  let thesisPointsTotal =
+  let thesisTotal =
     0;
 
-  let figurePointsTotal =
+
+  let figureTotal =
     0;
 
 
@@ -1120,7 +1087,8 @@ function playerScore(
               placement.thesis_id
           );
 
-        thesisPointsTotal +=
+
+        thesisTotal +=
           thesisPoints(
             placement,
             thesis
@@ -1141,7 +1109,7 @@ function playerScore(
     .forEach(
       figure => {
 
-        figurePointsTotal +=
+        figureTotal +=
           Number(
             figure.points ||
             0
@@ -1154,36 +1122,45 @@ function playerScore(
   return {
 
     thesis:
-      thesisPointsTotal,
+      thesisTotal,
 
     figures:
-      figurePointsTotal,
+      figureTotal,
 
     total:
-      thesisPointsTotal +
-      figurePointsTotal
+      thesisTotal +
+      figureTotal
 
   };
 
 }
 
 
+
 /* =========================================================
-   6. START / AUTHENTIFIZIERUNG
+   APP STARTEN / LOGIN
 ========================================================= */
+
 
 async function boot() {
 
   try {
 
+
     if (
+
       SUPABASE_URL.includes(
         "HIER_"
-      ) ||
+      )
+
+      ||
+
       SUPABASE_KEY.includes(
         "HIER_"
       )
+
     ) {
+
 
       document.getElementById(
         "app"
@@ -1196,45 +1173,54 @@ async function boot() {
           </h2>
 
           <p>
-            Öffne die Datei
-            <strong>index.html</strong>
-            und trage oben im JavaScript-Bereich
-            deine Supabase Project URL
-            und deinen Publishable Key ein.
+            Trage oben in der index.html
+            deine Project URL und deinen
+            Publishable Key ein.
           </p>
 
         </div>
 
       `;
 
+
       return;
 
     }
 
 
+
     const {
+
       data: {
         session
       }
+
     } =
       await db.auth
         .getSession();
+
 
 
     let activeSession =
       session;
 
 
+
     if (
       !activeSession
     ) {
 
+
       const {
+
         data,
+
         error
+
       } =
         await db.auth
           .signInAnonymously();
+
 
 
       if (
@@ -1252,8 +1238,10 @@ async function boot() {
     }
 
 
+
     state.user =
       activeSession.user;
+
 
 
     const storedGame =
@@ -1262,79 +1250,96 @@ async function boot() {
       );
 
 
+
     const incomingRoom =
       new URLSearchParams(
         location.search
       )
+
       .get(
         "room"
       )
+
       ?.trim()
+
       .toUpperCase();
+
 
 
     if (
       storedGame
     ) {
 
+
       state.gameId =
         storedGame;
 
+
       try {
+
 
         await refresh();
 
 
-        /*
-          Wenn über einen Einladungslink
-          ein anderer Raum geöffnet wurde,
-          zeigen wir stattdessen die
-          Beitrittsseite.
-        */
 
         if (
-          incomingRoom &&
+
+          incomingRoom
+
+          &&
+
           state.game?.code !==
           incomingRoom
+
         ) {
+
 
           localStorage
             .removeItem(
               "rasenschach_game"
             );
 
+
           state.gameId =
             null;
+
 
           state.game =
             null;
 
+
           renderLanding();
+
 
           return;
 
         }
 
 
+
         subscribe();
+
 
         return;
 
       }
 
+
       catch (
         error
       ) {
 
+
         console.warn(
-          "Gespeichertes Spiel konnte nicht geladen werden.",
           error
         );
+
 
         localStorage
           .removeItem(
             "rasenschach_game"
           );
+
 
         state.gameId =
           null;
@@ -1344,13 +1349,16 @@ async function boot() {
     }
 
 
+
     renderLanding();
 
   }
 
+
   catch (
     error
   ) {
+
 
     console.error(
       error
@@ -1392,8 +1400,7 @@ async function boot() {
           </li>
 
           <li>
-            ob der SQL-Code erfolgreich
-            ausgeführt wurde
+            SQL-Funktionen
           </li>
 
         </ul>
@@ -1407,9 +1414,11 @@ async function boot() {
 }
 
 
+
 /* =========================================================
-   7. STARTSEITE
+   LANDINGPAGE
 ========================================================= */
+
 
 function renderLanding() {
 
@@ -1417,9 +1426,12 @@ function renderLanding() {
     new URLSearchParams(
       location.search
     )
+
     .get(
       "room"
-    ) || "";
+    )
+
+    || "";
 
 
   document.getElementById(
@@ -1432,11 +1444,13 @@ function renderLanding() {
     "app"
   ).innerHTML = `
 
+
     <div class="card">
 
       <h1>
         Rasenschach für zwei.
       </h1>
+
 
       <p class="muted">
         Thesen draften.
@@ -1446,6 +1460,7 @@ function renderLanding() {
       </p>
 
     </div>
+
 
 
     <div class="grid2">
@@ -1463,7 +1478,6 @@ function renderLanding() {
           <input
             id="createName"
             maxlength="30"
-            autocomplete="name"
             placeholder="Dein Name"
           >
 
@@ -1480,6 +1494,7 @@ function renderLanding() {
       </div>
 
 
+
       <div class="card">
 
         <h2>
@@ -1492,7 +1507,6 @@ function renderLanding() {
           <input
             id="joinName"
             maxlength="30"
-            autocomplete="name"
             placeholder="Dein Name"
           >
 
@@ -1525,46 +1539,60 @@ function renderLanding() {
 }
 
 
+
 /* =========================================================
-   8. SPIEL ERSTELLEN
+   SPIEL ERSTELLEN
 ========================================================= */
+
 
 async function createGame() {
 
   try {
 
+
     const name =
       document.getElementById(
         "createName"
       )
+
       .value
       .trim();
+
 
 
     if (
       !name
     ) {
 
+
       toast(
         "Bitte Namen eingeben"
       );
+
 
       return;
 
     }
 
 
+
     const {
+
       data,
+
       error
+
     } =
       await db.rpc(
         "create_game",
         {
+
           p_name:
             name
+
         }
       );
+
 
 
     if (
@@ -1576,8 +1604,10 @@ async function createGame() {
     }
 
 
+
     state.gameId =
       data[0].game_id;
+
 
 
     localStorage
@@ -1587,6 +1617,7 @@ async function createGame() {
       );
 
 
+
     await refresh();
 
 
@@ -1594,9 +1625,11 @@ async function createGame() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -1607,29 +1640,36 @@ async function createGame() {
 }
 
 
+
 /* =========================================================
-   9. SPIEL BEITRETEN
+   SPIEL BEITRETEN
 ========================================================= */
+
 
 async function joinGame() {
 
   try {
 
+
     const name =
       document.getElementById(
         "joinName"
       )
+
       .value
       .trim();
+
 
 
     const code =
       document.getElementById(
         "joinCode"
       )
+
       .value
       .trim()
       .toUpperCase();
+
 
 
     if (
@@ -1637,18 +1677,24 @@ async function joinGame() {
       !code
     ) {
 
+
       toast(
         "Name und Raumcode eingeben"
       );
+
 
       return;
 
     }
 
 
+
     const {
+
       data,
+
       error
+
     } =
       await db.rpc(
         "join_game",
@@ -1664,6 +1710,7 @@ async function joinGame() {
       );
 
 
+
     if (
       error
     ) {
@@ -1673,8 +1720,10 @@ async function joinGame() {
     }
 
 
+
     state.gameId =
       data[0].game_id;
+
 
 
     localStorage
@@ -1684,6 +1733,7 @@ async function joinGame() {
       );
 
 
+
     await refresh();
 
 
@@ -1691,9 +1741,11 @@ async function joinGame() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -1704,9 +1756,11 @@ async function joinGame() {
 }
 
 
+
 /* =========================================================
-   10. DATEN LADEN
+   DATEN LADEN
 ========================================================= */
+
 
 async function refresh() {
 
@@ -1717,6 +1771,7 @@ async function refresh() {
     return;
 
   }
+
 
 
   const [
@@ -1738,77 +1793,96 @@ async function refresh() {
       .from(
         "games"
       )
+
       .select(
         "*"
       )
+
       .eq(
         "id",
         state.gameId
       )
+
       .single(),
+
 
 
     db
       .from(
         "players"
       )
+
       .select(
         "*"
       )
+
       .eq(
         "game_id",
         state.gameId
       )
+
       .order(
         "seat"
       ),
+
 
 
     db
       .from(
         "theses"
       )
+
       .select(
         "*"
       )
+
       .eq(
         "game_id",
         state.gameId
       )
+
       .order(
         "created_at"
       ),
+
 
 
     db
       .from(
         "placements"
       )
+
       .select(
         "*"
       )
+
       .eq(
         "game_id",
         state.gameId
       ),
 
 
+
     db
       .from(
         "figure_picks"
       )
+
       .select(
         "*"
       )
+
       .eq(
         "game_id",
         state.gameId
       )
+
       .order(
         "draft_order"
       )
 
   ]);
+
 
 
   if (
@@ -1820,6 +1894,7 @@ async function refresh() {
   }
 
 
+
   if (
     playerResult.error
   ) {
@@ -1827,6 +1902,7 @@ async function refresh() {
     throw playerResult.error;
 
   }
+
 
 
   if (
@@ -1838,6 +1914,7 @@ async function refresh() {
   }
 
 
+
   if (
     placementResult.error
   ) {
@@ -1845,6 +1922,7 @@ async function refresh() {
     throw placementResult.error;
 
   }
+
 
 
   if (
@@ -1856,8 +1934,10 @@ async function refresh() {
   }
 
 
+
   state.game =
     gameResult.data;
+
 
 
   state.players =
@@ -1865,9 +1945,11 @@ async function refresh() {
     [];
 
 
+
   state.theses =
     thesisResult.data ||
     [];
+
 
 
   state.placements =
@@ -1875,9 +1957,11 @@ async function refresh() {
     [];
 
 
+
   state.figures =
     figureResult.data ||
     [];
+
 
 
   state.me =
@@ -1888,14 +1972,17 @@ async function refresh() {
     );
 
 
+
   render();
 
 }
 
 
+
 /* =========================================================
-   11. REALTIME SYNCHRONISIERUNG
+   REALTIME
 ========================================================= */
+
 
 let refreshTimer;
 
@@ -1917,10 +2004,11 @@ function scheduleRefresh() {
           );
 
       },
-      120
+      150
     );
 
 }
+
 
 
 function subscribe() {
@@ -1936,22 +2024,31 @@ function subscribe() {
   }
 
 
+
   const channel =
     db.channel(
       `rasenschach-${state.gameId}`
     );
 
 
+
   [
+
     "games",
+
     "players",
+
     "theses",
+
     "placements",
+
     "figure_picks"
+
   ]
 
   .forEach(
     table => {
+
 
       channel.on(
 
@@ -1986,6 +2083,7 @@ function subscribe() {
   );
 
 
+
   channel.subscribe();
 
 
@@ -1995,9 +2093,11 @@ function subscribe() {
 }
 
 
+
 /* =========================================================
-   12. HAUPTANSICHT
+   HAUPTANSICHT
 ========================================================= */
+
 
 function render() {
 
@@ -2008,6 +2108,7 @@ function render() {
     return;
 
   }
+
 
 
   document.getElementById(
@@ -2023,12 +2124,14 @@ function render() {
       </strong>
     </span>
 
+
     <button
       class="ghost"
       onclick="copyInvite()"
     >
       Link teilen
     </button>
+
 
     <button
       class="ghost"
@@ -2040,13 +2143,16 @@ function render() {
   `;
 
 
+
   let content =
     "";
+
 
 
   switch (
     state.game.status
   ) {
+
 
     case "lobby":
 
@@ -2054,6 +2160,7 @@ function render() {
         renderLobby();
 
       break;
+
 
 
     case "thesis_draft":
@@ -2064,6 +2171,7 @@ function render() {
       break;
 
 
+
     case "thesis_placement":
 
       content =
@@ -2072,12 +2180,14 @@ function render() {
       break;
 
 
+
     case "figure_draft":
 
       content =
         renderFigureDraft();
 
       break;
+
 
 
     case "scoring":
@@ -2090,6 +2200,7 @@ function render() {
       break;
 
 
+
     case "finished":
 
       content =
@@ -2100,21 +2211,8 @@ function render() {
       break;
 
 
-    default:
-
-      content = `
-
-        <div class="card">
-
-          <h2>
-            Unbekannter Spielstatus
-          </h2>
-
-        </div>
-
-      `;
-
   }
+
 
 
   document.getElementById(
@@ -2122,36 +2220,47 @@ function render() {
   ).innerHTML =
 
     phaseBar() +
+
     content;
 
 }
 
 
+
 /* =========================================================
-   13. LOBBY
+   LOBBY
+
+   NUR SPIELER 1 DARF THESEN ANLEGEN
 ========================================================= */
 
+
 function renderLobby() {
+
 
   const owner =
     state.game.created_by ===
     state.user.id;
 
 
+
   return `
+
 
     <div class="grid2">
 
 
       <div class="card">
 
+
         <h2>
           Spieler
         </h2>
 
 
-        ${[1, 2].map(
+
+        ${[1,2].map(
           seat => {
+
 
             const player =
               state.players.find(
@@ -2182,8 +2291,13 @@ function renderLobby() {
 
                 <div class="muted">
 
-                  Spieler
-                  ${seat}
+                  Spieler ${seat}
+
+                  ${
+                    seat === 1
+                      ? " · Gastgeber"
+                      : ""
+                  }
 
                 </div>
 
@@ -2195,7 +2309,9 @@ function renderLobby() {
         ).join("")}
 
 
+
         <hr>
+
 
 
         <button
@@ -2205,19 +2321,25 @@ function renderLobby() {
         </button>
 
 
+
         <p
           class="muted"
           style="margin-top:12px"
         >
-          Schicke den Link an deinen
-          Mitspieler. Er braucht keinen
-          Account.
+
+          Spieler 2 öffnet den Link
+          am besten auf einem anderen Gerät
+          oder in einem privaten Browserfenster.
+
         </p>
+
 
       </div>
 
 
+
       <div class="card">
+
 
         <h2>
           Thesenpool ·
@@ -2225,75 +2347,188 @@ function renderLobby() {
         </h2>
 
 
-        <div class="row">
 
-          <input
-            id="newThesis"
-            maxlength="180"
-            placeholder="Neue These …"
-            ${
-              state.theses.length >= 12
-                ? "disabled"
-                : ""
-            }
-          >
+        ${
+          owner
+
+            ? `
 
 
-          <button
-            onclick="addThesis()"
-            ${
-              state.theses.length >= 12
-                ? "disabled"
-                : ""
-            }
-          >
-            +
-          </button>
+              <p class="muted">
 
-        </div>
+                Du bist Spieler 1 und bereitest
+                alle zwölf Thesen vor.
+
+                Spieler 2 kann sie gleichzeitig
+                mitlesen.
+
+              </p>
+
+
+
+              <div class="row">
+
+
+                <input
+
+                  id="newThesis"
+
+                  maxlength="180"
+
+                  placeholder="Neue These …"
+
+                  ${
+                    state.theses.length >= 12
+
+                      ? "disabled"
+
+                      : ""
+                  }
+
+                >
+
+
+
+                <button
+
+                  onclick="addThesis()"
+
+                  ${
+                    state.theses.length >= 12
+
+                      ? "disabled"
+
+                      : ""
+                  }
+
+                >
+                  +
+                </button>
+
+
+              </div>
+
+
+            `
+
+            : `
+
+
+              <p class="muted">
+
+                Spieler 1 bereitet gerade
+                die zwölf Thesen vor.
+
+                Du kannst alle Thesen bereits
+                live mitlesen.
+
+              </p>
+
+
+            `
+        }
+
 
 
         <div
           class="stack"
-          style="margin-top:12px"
+          style="margin-top:14px"
         >
 
-          ${state.theses.map(
-            thesis => `
 
-              <div class="thesis">
+          ${
+            state.theses.length
 
-                <div
-                  class="row"
-                  style="justify-content:space-between"
-                >
+              ? state.theses.map(
+                  (
+                    thesis,
+                    index
+                  ) => `
 
-                  <span>
-                    ${esc(
-                      thesis.text
-                    )}
+
+                    <div class="thesis">
+
+
+                      <div
+                        class="row"
+                        style="
+                          justify-content:
+                          space-between
+                        "
+                      >
+
+
+                        <span>
+
+                          <strong>
+                            ${index + 1}.
+                          </strong>
+
+                          ${esc(
+                            thesis.text
+                          )}
+
+                        </span>
+
+
+
+                        ${
+                          owner
+
+                            ? `
+
+
+                              <button
+
+                                class="danger"
+
+                                onclick="
+                                  deleteThesis(
+                                    '${thesis.id}'
+                                  )
+                                "
+
+                              >
+                                ×
+                              </button>
+
+
+                            `
+
+                            : ""
+                        }
+
+
+                      </div>
+
+
+                    </div>
+
+
+                  `
+                ).join("")
+
+              : `
+
+
+                <div class="thesis">
+
+                  <span class="muted">
+
+                    Noch keine Thesen
+                    eingetragen.
+
                   </span>
-
-
-                  <button
-                    class="danger"
-                    onclick="
-                      deleteThesis(
-                        '${thesis.id}'
-                      )
-                    "
-                  >
-                    ×
-                  </button>
 
                 </div>
 
-              </div>
 
-            `
-          ).join("")}
+              `
+          }
+
 
         </div>
+
 
 
         ${
@@ -2301,10 +2536,13 @@ function renderLobby() {
 
             ? `
 
+
               <hr>
 
 
+
               <button
+
                 class="primary"
 
                 onclick="
@@ -2312,40 +2550,59 @@ function renderLobby() {
                 "
 
                 ${
-                  state.players.length !== 2 ||
+                  state.players.length !== 2
+
+                  ||
+
                   state.theses.length !== 12
 
                     ? "disabled"
 
                     : ""
                 }
+
               >
-                Thesendraft starten
+                🎲 Thesendraft auslosen
               </button>
+
 
 
               <p
                 class="muted"
                 style="margin-top:10px"
               >
-                Benötigt zwei Spieler
-                und genau zwölf Thesen.
+
+                Sobald zwei Spieler
+                und genau zwölf Thesen
+                vorhanden sind, kannst
+                du starten.
+
+                Wer den ersten Pick erhält,
+                wird zufällig ausgelost.
+
               </p>
+
 
             `
 
             : `
 
-              <p
-                class="muted"
-                style="margin-top:16px"
-              >
-                Spieler 1 startet anschließend
-                den Draft.
+
+              <hr>
+
+
+              <p class="muted">
+
+                Sobald zwölf Thesen
+                vorhanden sind, startet
+                Spieler 1 die Auslosung.
+
               </p>
+
 
             `
         }
+
 
       </div>
 
@@ -2357,11 +2614,14 @@ function renderLobby() {
 }
 
 
+
 /* =========================================================
-   14. THESE HINZUFÜGEN
+   THESE HINZUFÜGEN
 ========================================================= */
 
+
 async function addThesis() {
+
 
   const element =
     document.getElementById(
@@ -2369,8 +2629,21 @@ async function addThesis() {
     );
 
 
+  if (
+    !element
+  ) {
+
+    return;
+
+  }
+
+
+
   const text =
-    element.value.trim();
+    element
+      .value
+      .trim();
+
 
 
   if (
@@ -2382,15 +2655,21 @@ async function addThesis() {
   }
 
 
+
   try {
 
+
     const {
+
       error
+
     } =
       await db
+
         .from(
           "theses"
         )
+
         .insert(
           {
 
@@ -2403,6 +2682,7 @@ async function addThesis() {
         );
 
 
+
     if (
       error
     ) {
@@ -2412,14 +2692,17 @@ async function addThesis() {
     }
 
 
+
     element.value =
       "";
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -2430,9 +2713,11 @@ async function addThesis() {
 }
 
 
+
 /* =========================================================
-   15. THESE LÖSCHEN
+   THESE LÖSCHEN
 ========================================================= */
+
 
 async function deleteThesis(
   id
@@ -2440,8 +2725,11 @@ async function deleteThesis(
 
   try {
 
+
     const {
+
       error
+
     } =
       await db
 
@@ -2457,6 +2745,7 @@ async function deleteThesis(
         );
 
 
+
     if (
       error
     ) {
@@ -2467,9 +2756,11 @@ async function deleteThesis(
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -2480,16 +2771,21 @@ async function deleteThesis(
 }
 
 
+
 /* =========================================================
-   16. THESENDRAFT STARTEN
+   THESENDRAFT STARTEN
 ========================================================= */
+
 
 async function startDraft() {
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "start_draft",
@@ -2502,6 +2798,7 @@ async function startDraft() {
       );
 
 
+
     if (
       error
     ) {
@@ -2512,9 +2809,11 @@ async function startDraft() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -2525,14 +2824,18 @@ async function startDraft() {
 }
 
 
+
 /* =========================================================
-   17. THESENDRAFT
+   THESENDRAFT
 ========================================================= */
+
 
 function renderThesisDraft() {
 
+
   const seat =
     currentThesisSeat();
+
 
 
   const currentPlayer =
@@ -2543,9 +2846,66 @@ function renderThesisDraft() {
     );
 
 
+
+  const starter =
+    state.players.find(
+      player =>
+        player.seat ===
+        state.game.thesis_start_seat
+    );
+
+
+
+  const sequenceText =
+
+    state.game.thesis_start_seat === 1
+
+      ? "1 → 2 → 2 → 1 → 1 → 2 …"
+
+      : "2 → 1 → 1 → 2 → 2 → 1 …";
+
+
+
   return `
 
+
+    <div class="card drawCard">
+
+
+      <div class="drawIcon">
+        🎲
+      </div>
+
+
+      <div class="muted">
+        AUSLOSUNG
+      </div>
+
+
+      <div class="drawWinner">
+
+        ${esc(
+          starter?.name ||
+          ""
+        )} beginnt!
+
+      </div>
+
+
+      <div class="muted">
+
+        Snake Draft ·
+        ${sequenceText}
+
+      </div>
+
+
+    </div>
+
+
+
     <div class="turn">
+
 
       ${
         seat ===
@@ -2561,7 +2921,9 @@ function renderThesisDraft() {
             } ist am Zug`
       }
 
+
     </div>
+
 
 
     <div class="grid2">
@@ -2569,22 +2931,28 @@ function renderThesisDraft() {
 
       <div class="card">
 
+
         <h2>
           Verfügbare Thesen
         </h2>
 
 
+
         <p class="muted">
+
           Pick
           ${
             draftedTheses().length +
             1
           }
           von 10
+
         </p>
 
 
+
         <div class="stack">
+
 
           ${
             state.theses
@@ -2597,15 +2965,18 @@ function renderThesisDraft() {
               .map(
                 thesis => `
 
-                  <div
-                    class="thesis available"
-                  >
+
+                  <div class="thesis available">
+
 
                     <div>
+
                       ${esc(
                         thesis.text
                       )}
+
                     </div>
+
 
 
                     ${
@@ -2614,45 +2985,57 @@ function renderThesisDraft() {
 
                         ? `
 
+
                           <button
 
-                            style="margin-top:10px"
+                            style="
+                              margin-top:10px
+                            "
 
                             onclick="
                               pickThesis(
                                 '${thesis.id}'
                               )
                             "
+
                           >
                             Auswählen
                           </button>
+
 
                         `
 
                         : ""
                     }
 
+
                   </div>
 
+
                 `
-              )
-              .join("")
+              ).join("")
           }
 
+
         </div>
+
 
       </div>
 
 
+
       <div class="card">
 
+
         <h2>
-          Draft
+          Draftboard
         </h2>
+
 
 
         ${state.players.map(
           player => {
+
 
             const picks =
               draftedTheses()
@@ -2673,15 +3056,21 @@ function renderThesisDraft() {
                 );
 
 
+
             return `
 
-              <div class="playerBoard">
+
+              <div>
+
 
                 <h3>
+
                   ${esc(
                     player.name
                   )}
+
                 </h3>
+
 
 
                 ${
@@ -2690,37 +3079,57 @@ function renderThesisDraft() {
                     ? picks.map(
                         thesis => `
 
-                          <div class="badge">
 
-                            ${
-                              thesis.draft_order
-                            }.
+                          <div class="thesis">
 
-                            ${esc(
-                              thesis.text
-                            )}
+                            <span class="badge">
+
+                              Pick
+                              ${thesis.draft_order}
+
+                            </span>
+
+
+                            <div
+                              style="
+                                margin-top:8px
+                              "
+                            >
+
+                              ${esc(
+                                thesis.text
+                              )}
+
+                            </div>
 
                           </div>
 
+
                         `
-                      )
-                      .join(" ")
+                      ).join("")
 
                     : `
 
+
                       <span class="muted">
+
                         Noch kein Pick
+
                       </span>
+
 
                     `
                 }
 
+
               </div>
+
 
             `;
 
           }
         ).join("<hr>")}
+
 
       </div>
 
@@ -2732,9 +3141,11 @@ function renderThesisDraft() {
 }
 
 
+
 /* =========================================================
-   18. THESE DRAFTEN
+   THESE DRAFTEN
 ========================================================= */
+
 
 async function pickThesis(
   id
@@ -2742,8 +3153,11 @@ async function pickThesis(
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "pick_thesis",
@@ -2759,6 +3173,7 @@ async function pickThesis(
       );
 
 
+
     if (
       error
     ) {
@@ -2769,9 +3184,11 @@ async function pickThesis(
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -2782,11 +3199,14 @@ async function pickThesis(
 }
 
 
+
 /* =========================================================
-   19. THESEN PLATZIEREN
+   THESEN PLATZIEREN
 ========================================================= */
 
+
 function renderPlacement() {
+
 
   const ownTheses =
     state.theses.filter(
@@ -2794,6 +3214,7 @@ function renderPlacement() {
         thesis.drafted_by ===
         state.user.id
     );
+
 
 
   const ownPlacements =
@@ -2804,26 +3225,38 @@ function renderPlacement() {
     );
 
 
+
   const locked =
-    state.me.placement_locked;
+    state.me?.placement_locked;
+
 
 
   return `
+
 
     <div class="grid2">
 
 
       <div class="card">
 
+
         <h2>
           Dein Brett
         </h2>
 
 
+
         <p class="muted">
-          Dein Gegner sieht deine Platzierung
-          erst, wenn ihr beide bestätigt habt.
+
+          Ordne deine fünf Thesen
+          den fünf Feldern zu.
+
+          Dein Gegner sieht deine
+          Platzierung erst, nachdem
+          ihr beide bestätigt habt.
+
         </p>
+
 
 
         <div class="fields">
@@ -2847,7 +3280,9 @@ function renderPlacement() {
                 );
 
 
+
               return `
+
 
                 <div class="field">
 
@@ -2861,6 +3296,7 @@ function renderPlacement() {
                     }
 
                   </div>
+
 
 
                   <select
@@ -2879,22 +3315,29 @@ function renderPlacement() {
                         )
                       }
                     "
+
                   >
 
+
                     <option value="">
+
                       These auswählen
+
                     </option>
+
 
 
                     ${ownTheses.map(
                       thesis => `
+
 
                         <option
 
                           value="${thesis.id}"
 
                           ${
-                            placement?.thesis_id ===
+                            placement
+                              ?.thesis_id ===
                             thesis.id
 
                               ? "selected"
@@ -2910,13 +3353,16 @@ function renderPlacement() {
 
                         </option>
 
+
                       `
                     ).join("")}
+
 
                   </select>
 
 
                 </div>
+
 
               `;
 
@@ -2927,7 +3373,9 @@ function renderPlacement() {
         </div>
 
 
+
         <hr>
+
 
 
         ${
@@ -2935,15 +3383,18 @@ function renderPlacement() {
 
             ? `
 
+
               <div class="success">
 
                 ✓ Dein Brett ist gesperrt.
 
               </div>
 
+
             `
 
             : `
+
 
               <button
 
@@ -2955,7 +3406,9 @@ function renderPlacement() {
 
                 ${
                   ownPlacements.length !== 5
+
                     ? "disabled"
+
                     : ""
                 }
 
@@ -2963,17 +3416,22 @@ function renderPlacement() {
                 Platzierung bestätigen
               </button>
 
+
             `
         }
+
 
       </div>
 
 
+
       <div class="card">
+
 
         <h2>
           Gegner
         </h2>
+
 
 
         ${
@@ -2988,16 +3446,22 @@ function renderPlacement() {
             .map(
               player => `
 
+
                 <div class="thesis">
 
+
                   <strong>
+
                     ${esc(
                       player.name
                     )}
+
                   </strong>
 
 
+
                   <p class="muted">
+
 
                     ${
                       player.placement_locked
@@ -3007,27 +3471,32 @@ function renderPlacement() {
                         : "setzt noch …"
                     }
 
+
                   </p>
+
 
 
                   <div
                     style="
                       font-size:48px;
-                      text-align:center;
+                      text-align:center
                     "
                   >
                     ♟
                   </div>
 
+
                 </div>
 
+
               `
-            )
-            .join("")
+            ).join("")
         }
 
 
+
         <hr>
+
 
 
         <div class="badge">
@@ -3038,20 +3507,24 @@ function renderPlacement() {
         </div>
 
 
+
         <p
           class="muted"
           style="margin-top:10px"
         >
 
-          Beim ?-Feld gilt:
+          ? richtig:
 
-          These richtig =
-          +${state.game.random_value},
+          +${state.game.random_value}
 
-          These falsch =
-          −${state.game.random_value}.
+          ·
+
+          ? falsch:
+
+          −${state.game.random_value}
 
         </p>
+
 
       </div>
 
@@ -3063,9 +3536,11 @@ function renderPlacement() {
 }
 
 
+
 /* =========================================================
-   20. THESE AUF FELD SETZEN
+   THESE PLATZIEREN
 ========================================================= */
+
 
 async function placeThesis(
   id,
@@ -3074,8 +3549,11 @@ async function placeThesis(
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "place_thesis",
@@ -3094,6 +3572,7 @@ async function placeThesis(
       );
 
 
+
     if (
       error
     ) {
@@ -3104,9 +3583,11 @@ async function placeThesis(
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -3117,16 +3598,21 @@ async function placeThesis(
 }
 
 
+
 /* =========================================================
-   21. BRETT SPERREN
+   BRETT SPERREN
 ========================================================= */
+
 
 async function lockPlacements() {
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "lock_placements",
@@ -3139,6 +3625,7 @@ async function lockPlacements() {
       );
 
 
+
     if (
       error
     ) {
@@ -3149,9 +3636,11 @@ async function lockPlacements() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -3162,13 +3651,16 @@ async function lockPlacements() {
 }
 
 
+
 /* =========================================================
-   22. BRETT ANZEIGEN
+   BRETT ANZEIGEN
 ========================================================= */
+
 
 function renderBoard(
   userId
 ) {
+
 
   const placements =
     state.placements.filter(
@@ -3178,7 +3670,9 @@ function renderBoard(
     );
 
 
+
   return `
+
 
     <div class="fields">
 
@@ -3201,6 +3695,7 @@ function renderBoard(
             );
 
 
+
           const thesis =
             placement
 
@@ -3213,9 +3708,12 @@ function renderBoard(
               : null;
 
 
+
           return `
 
+
             <div class="field">
+
 
               <div class="fieldLabel">
 
@@ -3226,6 +3724,7 @@ function renderBoard(
                 }
 
               </div>
+
 
 
               <div>
@@ -3242,7 +3741,9 @@ function renderBoard(
 
               </div>
 
+
             </div>
+
 
           `;
 
@@ -3257,14 +3758,18 @@ function renderBoard(
 }
 
 
+
 /* =========================================================
-   23. FIGURENDRAFT
+   FIGURENDRAFT
 ========================================================= */
+
 
 function renderFigureDraft() {
 
+
   const seat =
     currentFigureSeat();
+
 
 
   const activePlayer =
@@ -3275,12 +3780,14 @@ function renderFigureDraft() {
     );
 
 
+
   const myFigures =
     state.figures.filter(
       figure =>
         figure.user_id ===
         state.user.id
     );
+
 
 
   const unusedFigures =
@@ -3298,47 +3805,60 @@ function renderFigureDraft() {
     );
 
 
+
   return `
 
 
     <div class="card">
+
 
       <h2>
         Bretter aufgedeckt
       </h2>
 
 
+
       <div class="grid2">
+
 
         ${state.players.map(
           player => `
 
+
             <div>
 
+
               <h3>
+
                 ${esc(
                   player.name
                 )}
+
               </h3>
 
 
-              ${
-                renderBoard(
-                  player.user_id
-                )
-              }
+
+              ${renderBoard(
+                player.user_id
+              )}
+
 
             </div>
+
 
           `
         ).join("")}
 
+
       </div>
+
 
     </div>
 
 
+
     <div class="turn">
+
 
       ${
         seat ===
@@ -3354,7 +3874,9 @@ function renderFigureDraft() {
             } ist am Zug`
       }
 
+
     </div>
+
 
 
     <div class="grid2">
@@ -3362,9 +3884,11 @@ function renderFigureDraft() {
 
       <div class="card">
 
+
         <h2>
           Fußballer wählen
         </h2>
+
 
 
         ${
@@ -3373,6 +3897,7 @@ function renderFigureDraft() {
 
             ? `
 
+
               <div class="stack">
 
 
@@ -3380,8 +3905,10 @@ function renderFigureDraft() {
                   id="figureSelect"
                 >
 
+
                   ${unusedFigures.map(
                     figure => `
+
 
                       <option
                         value="${figure}"
@@ -3395,32 +3922,33 @@ function renderFigureDraft() {
 
                       </option>
 
+
                     `
                   ).join("")}
 
+
                 </select>
+
 
 
                 <input
 
                   id="footballerInput"
 
-                  placeholder="
-                    z. B. Harry Kane
-                  "
+                  placeholder="z. B. Harry Kane"
 
                 >
+
 
 
                 <input
 
                   id="clubInput"
 
-                  placeholder="
-                    Verein (optional)
-                  "
+                  placeholder="Verein (optional)"
 
                 >
+
 
 
                 <button
@@ -3438,9 +3966,11 @@ function renderFigureDraft() {
 
               </div>
 
+
             `
 
             : `
+
 
               <p class="muted">
 
@@ -3449,17 +3979,22 @@ function renderFigureDraft() {
 
               </p>
 
+
             `
         }
+
 
       </div>
 
 
+
       <div class="card">
+
 
         <h2>
           Draftboard
         </h2>
+
 
 
         ${state.players.map(
@@ -3474,15 +4009,21 @@ function renderFigureDraft() {
               );
 
 
+
             return `
+
 
               <div>
 
+
                 <h3>
+
                   ${esc(
                     player.name
                   )}
+
                 </h3>
+
 
 
                 <div class="stack">
@@ -3502,9 +4043,12 @@ function renderFigureDraft() {
                         );
 
 
+
                       return `
 
+
                         <div class="thesis">
+
 
                           <strong>
 
@@ -3517,7 +4061,9 @@ function renderFigureDraft() {
                           </strong>
 
 
+
                           <div class="muted">
+
 
                             ${
                               pick
@@ -3537,9 +4083,12 @@ function renderFigureDraft() {
                                 : "noch frei"
                             }
 
+
                           </div>
 
+
                         </div>
+
 
                       `;
 
@@ -3549,12 +4098,15 @@ function renderFigureDraft() {
 
                 </div>
 
+
               </div>
+
 
             `;
 
           }
         ).join("<hr>")}
+
 
       </div>
 
@@ -3566,11 +4118,14 @@ function renderFigureDraft() {
 }
 
 
+
 /* =========================================================
-   24. FIGUR DRAFTEN
+   FIGUR DRAFTEN
 ========================================================= */
 
+
 async function pickFigure() {
+
 
   const figure =
     document.getElementById(
@@ -3578,39 +4133,50 @@ async function pickFigure() {
     ).value;
 
 
+
   const footballer =
     document.getElementById(
       "footballerInput"
     )
+
     .value
     .trim();
+
 
 
   const club =
     document.getElementById(
       "clubInput"
     )
+
     .value
     .trim();
+
 
 
   if (
     !footballer
   ) {
 
+
     toast(
       "Fußballer eingeben"
     );
+
 
     return;
 
   }
 
 
+
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "pick_figure",
@@ -3633,6 +4199,7 @@ async function pickFigure() {
       );
 
 
+
     if (
       error
     ) {
@@ -3643,9 +4210,11 @@ async function pickFigure() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -3656,20 +4225,25 @@ async function pickFigure() {
 }
 
 
+
 /* =========================================================
-   25. AUSWERTUNG / ERGEBNIS
+   AUSWERTUNG
 ========================================================= */
+
 
 function renderScoring(
   finished
 ) {
 
+
   const player1 =
     state.players[0];
 
 
+
   const player2 =
     state.players[1];
+
 
 
   if (
@@ -3677,13 +4251,12 @@ function renderScoring(
     !player2
   ) {
 
+
     return `
 
       <div class="card">
 
-        <p>
-          Spielerdaten werden geladen …
-        </p>
+        Spielerdaten werden geladen …
 
       </div>
 
@@ -3692,16 +4265,19 @@ function renderScoring(
   }
 
 
+
   const score1 =
     playerScore(
       player1.user_id
     );
 
 
+
   const score2 =
     playerScore(
       player2.user_id
     );
+
 
 
   const winner =
@@ -3714,9 +4290,14 @@ function renderScoring(
       : score1.total >
         score2.total
 
-        ? `${player1.name.toUpperCase()} GEWINNT`
+        ? `${
+            player1.name.toUpperCase()
+          } GEWINNT`
 
-        : `${player2.name.toUpperCase()} GEWINNT`;
+        : `${
+            player2.name.toUpperCase()
+          } GEWINNT`;
+
 
 
   return `
@@ -3726,6 +4307,7 @@ function renderScoring(
       finished
 
         ? `
+
 
           <div class="card">
 
@@ -3739,10 +4321,12 @@ function renderScoring(
 
           </div>
 
+
         `
 
         : ""
     }
+
 
 
     <div class="card score">
@@ -3750,18 +4334,25 @@ function renderScoring(
 
       <div>
 
+
         <strong>
+
           ${esc(
             player1.name
           )}
+
         </strong>
 
 
         <div class="points">
+
           ${score1.total}
+
         </div>
 
+
       </div>
+
 
 
       <div class="vs">
@@ -3769,23 +4360,31 @@ function renderScoring(
       </div>
 
 
+
       <div>
 
+
         <strong>
+
           ${esc(
             player2.name
           )}
+
         </strong>
 
 
         <div class="points">
+
           ${score2.total}
+
         </div>
+
 
       </div>
 
 
     </div>
+
 
 
     <div class="grid2">
@@ -3801,12 +4400,14 @@ function renderScoring(
             );
 
 
+
           const placements =
             state.placements.filter(
               placement =>
                 placement.user_id ===
                 player.user_id
             );
+
 
 
           const figures =
@@ -3817,16 +4418,21 @@ function renderScoring(
             );
 
 
+
           return `
+
 
             <div class="card">
 
 
               <h2>
+
                 ${esc(
                   player.name
                 )}
+
               </h2>
+
 
 
               <div class="badge">
@@ -3837,6 +4443,7 @@ function renderScoring(
               </div>
 
 
+
               <div class="badge">
 
                 Figuren
@@ -3845,12 +4452,15 @@ function renderScoring(
               </div>
 
 
+
               <hr>
+
 
 
               <h3>
                 Thesen
               </h3>
+
 
 
               <div class="stack">
@@ -3868,6 +4478,7 @@ function renderScoring(
                       );
 
 
+
                     const points =
                       thesisPoints(
                         placement,
@@ -3875,12 +4486,15 @@ function renderScoring(
                       );
 
 
+
                     return `
+
 
                       <div class="thesis">
 
 
                         <strong>
+
 
                           ${
                             fieldNames[
@@ -3894,9 +4508,13 @@ function renderScoring(
                             points >= 0
                               ? "+"
                               : ""
-                          }${points}
+                          }
+
+                          ${points}
+
 
                         </strong>
+
 
 
                         <div>
@@ -3908,10 +4526,12 @@ function renderScoring(
                         </div>
 
 
+
                         ${
                           finished
 
                             ? `
+
 
                               <div class="muted">
 
@@ -3925,9 +4545,11 @@ function renderScoring(
 
                               </div>
 
+
                             `
 
                             : `
+
 
                               <div
                                 class="row"
@@ -3940,7 +4562,8 @@ function renderScoring(
                                 <button
 
                                   class="${
-                                    thesis.resolved === true
+                                    thesis.resolved ===
+                                    true
 
                                       ? "primary"
 
@@ -3953,17 +4576,18 @@ function renderScoring(
                                       true
                                     )
                                   "
+
                                 >
-
                                   Eingetreten
-
                                 </button>
+
 
 
                                 <button
 
                                   class="${
-                                    thesis.resolved === false
+                                    thesis.resolved ===
+                                    false
 
                                       ? "primary"
 
@@ -3976,20 +4600,21 @@ function renderScoring(
                                       false
                                     )
                                   "
+
                                 >
-
                                   Nicht eingetreten
-
                                 </button>
 
 
                               </div>
+
 
                             `
                         }
 
 
                       </div>
+
 
                     `;
 
@@ -4000,12 +4625,15 @@ function renderScoring(
               </div>
 
 
+
               <hr>
+
 
 
               <h3>
                 Figuren
               </h3>
+
 
 
               <div class="stack">
@@ -4019,6 +4647,7 @@ function renderScoring(
 
 
                       <div>
+
 
                         <strong>
 
@@ -4036,7 +4665,9 @@ function renderScoring(
                           figure.footballer
                         )}
 
+
                       </div>
+
 
 
                       <div
@@ -4052,17 +4683,23 @@ function renderScoring(
 
                             ? `
 
+
                               <strong>
+
 
                                 ${
                                   figure.points >= 0
                                     ? "+"
                                     : ""
-                                }${figure.points}
+                                }
+
+                                ${figure.points}
 
                                 Punkte
 
+
                               </strong>
+
 
                             `
 
@@ -4083,12 +4720,15 @@ function renderScoring(
                                     }
                                   )
                                 "
+
                               >
                                 −
                               </button>
 
 
+
                               <strong>
+
 
                                 ${
                                   Number(
@@ -4102,7 +4742,9 @@ function renderScoring(
 
                                 ${figure.points}
 
+
                               </strong>
+
 
 
                               <button
@@ -4119,6 +4761,7 @@ function renderScoring(
                                     }
                                   )
                                 "
+
                               >
                                 +
                               </button>
@@ -4143,6 +4786,7 @@ function renderScoring(
 
             </div>
 
+
           `;
 
         }
@@ -4152,10 +4796,12 @@ function renderScoring(
     </div>
 
 
+
     ${
       !finished
 
         ? `
+
 
           <div class="card">
 
@@ -4167,9 +4813,10 @@ function renderScoring(
 
             <p class="muted">
 
-              Sobald alle zehn gedrafteten
+              Sobald alle gedrafteten
               Thesen ausgewertet wurden,
-              könnt ihr das Ergebnis sperren.
+              könnt ihr das Ergebnis
+              abschließen.
 
             </p>
 
@@ -4189,9 +4836,11 @@ function renderScoring(
 
           </div>
 
+
         `
 
         : `
+
 
           <div class="card">
 
@@ -4205,17 +4854,21 @@ function renderScoring(
 
           </div>
 
+
         `
     }
+
 
   `;
 
 }
 
 
+
 /* =========================================================
-   26. THESE AUSWERTEN
+   THESE AUSWERTEN
 ========================================================= */
+
 
 async function resolveThesis(
   id,
@@ -4224,8 +4877,11 @@ async function resolveThesis(
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "resolve_thesis",
@@ -4241,6 +4897,7 @@ async function resolveThesis(
       );
 
 
+
     if (
       error
     ) {
@@ -4251,9 +4908,11 @@ async function resolveThesis(
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -4264,9 +4923,11 @@ async function resolveThesis(
 }
 
 
+
 /* =========================================================
-   27. FIGURENPUNKTE ÄNDERN
+   FIGURENPUNKTE
 ========================================================= */
+
 
 async function setFigurePoints(
   id,
@@ -4275,8 +4936,11 @@ async function setFigurePoints(
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "set_figure_points",
@@ -4292,6 +4956,7 @@ async function setFigurePoints(
       );
 
 
+
     if (
       error
     ) {
@@ -4302,9 +4967,11 @@ async function setFigurePoints(
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -4315,16 +4982,21 @@ async function setFigurePoints(
 }
 
 
+
 /* =========================================================
-   28. SPIEL ABSCHLIESSEN
+   SPIEL ABSCHLIESSEN
 ========================================================= */
+
 
 async function finishGame() {
 
   try {
 
+
     const {
+
       error
+
     } =
       await db.rpc(
         "finish_game",
@@ -4337,6 +5009,7 @@ async function finishGame() {
       );
 
 
+
     if (
       error
     ) {
@@ -4347,9 +5020,11 @@ async function finishGame() {
 
   }
 
+
   catch (
     error
   ) {
+
 
     errorMessage(
       error
@@ -4360,13 +5035,18 @@ async function finishGame() {
 }
 
 
+
 /* =========================================================
-   29. APP STARTEN
+   START
 ========================================================= */
+
 
 boot();
 
+
 </script>
 
+
 </body>
+
 </html>
