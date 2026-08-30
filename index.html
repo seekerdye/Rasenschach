@@ -183,6 +183,23 @@ header{
   gap:12px;
 }
 
+.figurePlayerGrid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,minmax(0,1fr));
+
+  gap:12px;
+}
+
+.figurePlayerColumn{
+  min-width:0;
+}
+
+.figurePlayerColumn h3{
+  margin-bottom:10px;
+}
+
 .matchdayGrid{
   display:grid;
 
@@ -351,6 +368,10 @@ header{
 
   .grid2,
   .grid3{
+    grid-template-columns:1fr;
+  }
+
+  .figurePlayerGrid{
     grid-template-columns:1fr;
   }
 
@@ -1420,6 +1441,7 @@ function renderMatchdayFixtures(
       </div>
 
     </div>
+
 
   `;
 
@@ -5087,6 +5109,15 @@ function renderGameLobby(){
 
   return `
 
+    <div class="card fixtureCard">
+
+      ${renderMatchdayFixtures(
+        state.game.matchday
+      )}
+
+    </div>
+
+
     <div class="grid2">
 
       <div class="card">
@@ -5993,41 +6024,6 @@ function renderFigureDraft(){
     </div>
 
 
-    <div class="card">
-
-      <h2>
-        Thesenbretter
-      </h2>
-
-
-      <div class="grid2">
-
-        ${state.players.map(
-          player => `
-
-            <div>
-
-              <h3>
-                ${esc(
-                  player.name
-                )}
-              </h3>
-
-
-              ${renderBoard(
-                player.user_id
-              )}
-
-            </div>
-
-          `
-        ).join("")}
-
-      </div>
-
-    </div>
-
-
     <div class="turn">
 
       ${
@@ -6128,18 +6124,112 @@ function renderFigureDraft(){
         </h2>
 
 
+        <div class="figurePlayerGrid">
+
+          ${state.players.map(
+            player => {
+
+              const figures =
+                state.figures.filter(
+                  figure =>
+                    figure.user_id ===
+                    player.user_id
+                );
+
+
+              return `
+
+                <div class="figurePlayerColumn">
+
+                  <h3>
+                    ${esc(
+                      player.name
+                    )}
+                  </h3>
+
+
+                  <div class="stack">
+
+                    ${Object.keys(
+                      figureNames
+                    ).map(
+                      figure => {
+
+                        const pick =
+                          figures.find(
+                            item =>
+                              item.figure ===
+                              figure
+                          );
+
+
+                        return `
+
+                          <div class="thesis">
+
+                            <strong>
+                              ${figureNames[figure]}
+                            </strong>
+
+
+                            <div class="muted">
+
+                              ${
+                                pick
+
+                                  ? `${esc(
+                                      pick.footballer
+                                    )}${
+                                      pick.club
+
+                                        ? ` · ${esc(
+                                            pick.club
+                                          )}`
+
+                                        : ""
+                                    }`
+
+                                  : "frei"
+                              }
+
+                            </div>
+
+                          </div>
+
+                        `;
+
+                      }
+                    ).join("")}
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          ).join("")}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Thesenbretter
+      </h2>
+
+
+      <div class="grid2">
+
         ${state.players.map(
-          player => {
+          player => `
 
-            const figures =
-              state.figures.filter(
-                figure =>
-                  figure.user_id ===
-                  player.user_id
-              );
-
-
-            return `
+            <div>
 
               <h3>
                 ${esc(
@@ -6148,63 +6238,13 @@ function renderFigureDraft(){
               </h3>
 
 
-              ${Object.keys(
-                figureNames
-              ).map(
-                figure => {
+              ${renderBoard(
+                player.user_id
+              )}
 
-                  const pick =
-                    figures.find(
-                      item =>
-                        item.figure ===
-                        figure
-                    );
+            </div>
 
-
-                  return `
-
-                    <div class="thesis">
-
-                      <strong>
-                        ${figureNames[figure]}
-                      </strong>
-
-
-                      <div class="muted">
-
-                        ${
-                          pick
-
-                            ? `${esc(
-                                pick.footballer
-                              )}${
-                                pick.club
-
-                                  ? ` · ${esc(
-                                      pick.club
-                                    )}`
-
-                                  : ""
-                              }`
-
-                            : "frei"
-                        }
-
-                      </div>
-
-                    </div>
-
-                  `;
-
-                }
-              ).join("")}
-
-
-              <hr>
-
-            `;
-
-          }
+          `
         ).join("")}
 
       </div>
