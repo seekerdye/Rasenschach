@@ -1155,16 +1155,24 @@ function openThesisOverview(){
 
 
 function inviteUrl(
-  code
+  code,
+  accessToken=""
 ){
 
-  return (
+  const url =
     appBase() +
     "?room=" +
     encodeURIComponent(
       code
-    )
-  );
+    );
+
+  return accessToken
+    ? url +
+      "&access=" +
+      encodeURIComponent(
+        accessToken
+      )
+    : url;
 
 }
 
@@ -1255,7 +1263,8 @@ function displayFieldName(field){
 
 
 async function copyLobbyInvite(
-  code
+  code,
+  accessToken
 ){
 
   try{
@@ -1263,7 +1272,8 @@ async function copyLobbyInvite(
     await navigator.clipboard
       .writeText(
         inviteUrl(
-          code
+          code,
+          accessToken
         )
       );
 
@@ -1768,6 +1778,15 @@ async function boot(){
         ?.trim()
         .toUpperCase();
 
+    const accessToken =
+      params
+        .get(
+          "access"
+        )
+        ?.trim()
+      ||
+      "";
+
 
 
     if(
@@ -1866,7 +1885,8 @@ async function boot(){
     ){
 
       renderGuestJoinPage(
-        roomCode
+        roomCode,
+        accessToken
       );
 
       return;
@@ -2127,7 +2147,8 @@ function renderStartPage(
 
 
 function renderGuestJoinPage(
-  room
+  room,
+  accessToken
 ){
 
   document.getElementById(
@@ -2177,6 +2198,13 @@ function renderGuestJoinPage(
           maxlength="6"
           value="${esc(room)}"
           readonly
+        >
+
+
+        <input
+          id="joinAccess"
+          type="hidden"
+          value="${esc(accessToken)}"
         >
 
 
@@ -3024,6 +3052,8 @@ function renderLobbyCard(
                 class="ghost"
                 onclick='copyLobbyInvite(${jsArg(
                   lobby.code
+                )},${jsArg(
+                  lobby.rejoin_token
                 )})'
               >
                 Einladen
@@ -3178,6 +3208,17 @@ async function joinLobby(){
         .toUpperCase();
 
 
+    const accessToken =
+      document
+        .getElementById(
+          "joinAccess"
+        )
+        ?.value
+        .trim()
+      ||
+      null;
+
+
     if(
       !name ||
       !code
@@ -3202,14 +3243,17 @@ async function joinLobby(){
       error
     } =
       await db.rpc(
-        "join_lobby",
+        "join_or_rejoin_lobby",
         {
 
           p_code:
             code,
 
           p_name:
-            name
+            name,
+
+          p_access_token:
+            accessToken
 
         }
       );
@@ -3637,6 +3681,8 @@ function renderLobbySeason(){
               <button
                 onclick='copyLobbyInvite(${jsArg(
                   state.lobby.code
+                )},${jsArg(
+                  state.lobby.rejoin_token
                 )})'
               >
                 Einladen
