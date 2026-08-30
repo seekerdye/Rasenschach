@@ -10,7 +10,7 @@
   content="width=device-width,initial-scale=1,viewport-fit=cover"
 >
 
-<title>Rasenschach Bundesliga</title>
+<title>Rasenschach | by max x Calcio Berlin</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -25,6 +25,7 @@
   --line:#484c52;
   --accent:#f4f4f5;
   --danger:#ff7d7d;
+  --calcio-pink:#feb8ec;
 }
 
 *{
@@ -87,6 +88,11 @@ header{
 }
 
 .brand{
+  display:flex;
+  align-items:baseline;
+  flex-wrap:wrap;
+  gap:8px;
+
   font-size:
     clamp(
       25px,
@@ -101,6 +107,23 @@ header{
 
 .brand span{
   color:var(--accent);
+}
+
+.brandByline{
+  font-size:clamp(11px,1.8vw,16px);
+  font-weight:750;
+  letter-spacing:.02em;
+}
+
+.calcio{
+  color:var(--calcio-pink) !important;
+}
+
+.titleByline{
+  font-size:.46em;
+  font-weight:750;
+  letter-spacing:.01em;
+  white-space:nowrap;
 }
 
 .headerActions{
@@ -169,6 +192,96 @@ header{
   gap:9px;
 }
 
+.fixtureGrid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,minmax(0,1fr));
+
+  gap:9px;
+
+  margin:14px 0 18px;
+}
+
+.fixture{
+  display:grid;
+
+  grid-template-columns:
+    minmax(0,1fr) auto minmax(0,1fr);
+
+  align-items:center;
+
+  gap:8px;
+
+  min-height:54px;
+
+  padding:9px 10px;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:13px;
+
+  background:#1c1e21;
+}
+
+.fixtureTeam{
+  display:flex;
+
+  align-items:center;
+
+  gap:7px;
+
+  min-width:0;
+
+  color:var(--text);
+
+  font-size:13px;
+
+  font-weight:900;
+}
+
+.fixtureTeam.away{
+  flex-direction:row-reverse;
+
+  text-align:right;
+}
+
+.fixtureLogo{
+  width:30px;
+
+  height:30px;
+
+  flex:0 0 30px;
+
+  object-fit:contain;
+
+  padding:3px;
+
+  border-radius:9px;
+
+  background:#fff;
+}
+
+.fixtureVs{
+  color:var(--muted);
+
+  font-size:10px;
+
+  font-weight:900;
+
+  letter-spacing:.08em;
+}
+
+.fixtureSource{
+  margin:-6px 0 18px;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
+
 @media(max-width:900px){
 
   .grid3{
@@ -179,6 +292,11 @@ header{
   .matchdayGrid{
     grid-template-columns:
       repeat(3,1fr);
+  }
+
+  .fixtureGrid{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
   }
 
 }
@@ -193,6 +311,10 @@ header{
   .matchdayGrid{
     grid-template-columns:
       repeat(2,1fr);
+  }
+
+  .fixtureGrid{
+    grid-template-columns:1fr;
   }
 
   header{
@@ -759,7 +881,11 @@ hr{
 <header>
 
   <div class="brand">
-    RASEN<span>SCHACH</span>
+    <span>RASENSCHACH</span>
+    <span class="brandByline">
+      | by max x
+      <span class="calcio">CALCIO BERLIN</span>
+    </span>
   </div>
 
 
@@ -774,14 +900,19 @@ hr{
 <main id="app">
 
   <div class="loading">
-    Rasenschach wird geladen …
+    <strong>RASENSCHACH</strong>
+    | by max x
+    <span class="calcio">CALCIO BERLIN</span>
+    wird geladen …
   </div>
 
 </main>
 
 
 <div class="footer">
-  Rasenschach Bundesliga · Fan-Projekt
+  <strong>RASENSCHACH</strong>
+  | by max x
+  <span class="calcio">CALCIO BERLIN</span>
 </div>
 
 
@@ -912,6 +1043,70 @@ const matchdayDates = {
 
 };
 
+
+const clubData = {
+
+  FCA:{abbr:"FCA",name:"FC Augsburg",logo:"DFL-CLU-000010.svg"},
+  FCU:{abbr:"FCU",name:"1. FC Union Berlin",logo:"DFL-CLU-00000V.svg"},
+  SVW:{abbr:"SVW",name:"SV Werder Bremen",logo:"DFL-CLU-00000E.svg"},
+  BVB:{abbr:"BVB",name:"Borussia Dortmund",logo:"DFL-CLU-000007.svg"},
+  ELV:{abbr:"ELV",name:"SV Elversberg",logo:"DFL-CLU-000N6L.svg"},
+  SGE:{abbr:"SGE",name:"Eintracht Frankfurt",logo:"DFL-CLU-00000F.svg"},
+  SCF:{abbr:"SCF",name:"Sport-Club Freiburg",logo:"DFL-CLU-00000A.svg"},
+  HSV:{abbr:"HSV",name:"Hamburger SV",logo:"DFL-CLU-00000C.svg"},
+  TSG:{abbr:"TSG",name:"TSG Hoffenheim",logo:"DFL-CLU-000002.svg"},
+  KOE:{abbr:"KOE",name:"1. FC Köln",logo:"DFL-CLU-000008.svg"},
+  RBL:{abbr:"RBL",name:"RB Leipzig",logo:"DFL-CLU-000017.svg"},
+  B04:{abbr:"B04",name:"Bayer 04 Leverkusen",logo:"DFL-CLU-00000B.svg"},
+  M05:{abbr:"M05",name:"1. FSV Mainz 05",logo:"DFL-CLU-000006.svg"},
+  BMG:{abbr:"BMG",name:"Borussia Mönchengladbach",logo:"DFL-CLU-000004.svg"},
+  FCB:{abbr:"FCB",name:"FC Bayern München",logo:"DFL-CLU-00000G.svg"},
+  SCP:{abbr:"SCP",name:"SC Paderborn 07",logo:"DFL-CLU-00000L.svg"},
+  S04:{abbr:"S04",name:"FC Schalke 04",logo:"DFL-CLU-000009.svg"},
+  VFB:{abbr:"VfB",name:"VfB Stuttgart",logo:"DFL-CLU-00000D.svg"}
+
+};
+
+
+const matchdayFixtures = {
+
+  1:[["FCB","VFB"],["BVB","HSV"],["RBL","BMG"],["SCF","SVW"],["FCA","S04"],["M05","SCP"],["FCU","SGE"],["KOE","TSG"],["ELV","B04"]],
+  2:[["VFB","KOE"],["TSG","BVB"],["B04","FCU"],["SGE","FCA"],["BMG","ELV"],["HSV","M05"],["SVW","RBL"],["S04","FCB"],["SCP","SCF"]],
+  3:[["BVB","SCP"],["RBL","HSV"],["TSG","VFB"],["SCF","BMG"],["FCA","B04"],["M05","SGE"],["FCU","S04"],["KOE","SVW"],["ELV","FCB"]],
+  4:[["FCB","FCU"],["VFB","BVB"],["B04","RBL"],["SGE","SCF"],["BMG","M05"],["HSV","KOE"],["SVW","FCA"],["S04","ELV"],["SCP","TSG"]],
+  5:[["BVB","SVW"],["RBL","SGE"],["TSG","HSV"],["SCF","S04"],["FCA","FCB"],["M05","B04"],["FCU","ELV"],["KOE","BMG"],["SCP","VFB"]],
+  6:[["FCB","RBL"],["B04","SCF"],["SGE","KOE"],["FCU","BVB"],["BMG","TSG"],["HSV","VFB"],["SVW","SCP"],["S04","M05"],["ELV","FCA"]],
+  7:[["BVB","SGE"],["RBL","ELV"],["VFB","BMG"],["TSG","B04"],["SCF","FCB"],["FCA","FCU"],["M05","SVW"],["KOE","S04"],["SCP","HSV"]],
+  8:[["FCB","BVB"],["B04","VFB"],["SGE","HSV"],["FCA","SCF"],["FCU","KOE"],["BMG","SCP"],["SVW","TSG"],["S04","RBL"],["ELV","M05"]],
+  9:[["BVB","ELV"],["RBL","FCA"],["VFB","SVW"],["TSG","S04"],["SCF","FCU"],["M05","FCB"],["HSV","BMG"],["KOE","B04"],["SCP","SGE"]],
+  10:[["FCB","KOE"],["B04","SCP"],["SGE","TSG"],["FCA","M05"],["FCU","RBL"],["BMG","BVB"],["SVW","HSV"],["S04","VFB"],["ELV","SCF"]],
+  11:[["BVB","B04"],["VFB","SGE"],["TSG","FCA"],["SCF","RBL"],["M05","FCU"],["HSV","FCB"],["KOE","ELV"],["SVW","BMG"],["SCP","S04"]],
+  12:[["FCB","SCP"],["RBL","M05"],["B04","BMG"],["SCF","TSG"],["SGE","SVW"],["FCA","KOE"],["FCU","HSV"],["S04","BVB"],["ELV","VFB"]],
+  13:[["BVB","FCA"],["VFB","FCU"],["TSG","FCB"],["M05","SCF"],["BMG","SGE"],["HSV","S04"],["KOE","RBL"],["SVW","B04"],["SCP","ELV"]],
+  14:[["FCB","SVW"],["RBL","BVB"],["B04","SGE"],["SCF","VFB"],["FCA","SCP"],["M05","KOE"],["FCU","TSG"],["S04","BMG"],["ELV","HSV"]],
+  15:[["BVB","M05"],["VFB","FCA"],["TSG","ELV"],["SGE","S04"],["BMG","FCB"],["HSV","B04"],["KOE","SCF"],["SVW","FCU"],["SCP","RBL"]],
+  16:[["FCB","B04"],["RBL","VFB"],["SCF","HSV"],["FCA","BMG"],["M05","TSG"],["FCU","SCP"],["KOE","BVB"],["S04","SVW"],["ELV","SGE"]],
+  17:[["BVB","SCF"],["VFB","M05"],["TSG","RBL"],["B04","S04"],["SGE","FCB"],["BMG","FCU"],["HSV","FCA"],["SVW","ELV"],["SCP","KOE"]],
+  18:[["VFB","FCB"],["TSG","KOE"],["B04","ELV"],["SGE","FCU"],["BMG","RBL"],["HSV","BVB"],["SVW","SCF"],["S04","FCA"],["SCP","M05"]],
+  19:[["FCB","S04"],["BVB","TSG"],["RBL","SVW"],["SCF","SCP"],["FCA","SGE"],["M05","HSV"],["FCU","B04"],["KOE","VFB"],["ELV","BMG"]],
+  20:[["FCB","ELV"],["VFB","TSG"],["B04","FCA"],["SGE","M05"],["BMG","SCF"],["HSV","RBL"],["SVW","KOE"],["S04","FCU"],["SCP","BVB"]],
+  21:[["BVB","VFB"],["RBL","B04"],["TSG","SCP"],["SCF","SGE"],["FCA","SVW"],["M05","BMG"],["FCU","FCB"],["KOE","HSV"],["ELV","S04"]],
+  22:[["FCB","FCA"],["VFB","SCP"],["B04","M05"],["SGE","RBL"],["BMG","KOE"],["HSV","TSG"],["SVW","BVB"],["S04","SCF"],["ELV","FCU"]],
+  23:[["BVB","FCU"],["RBL","FCB"],["VFB","HSV"],["TSG","BMG"],["SCF","B04"],["FCA","ELV"],["M05","S04"],["KOE","SGE"],["SCP","SVW"]],
+  24:[["FCB","SCF"],["B04","TSG"],["SGE","BVB"],["FCU","FCA"],["BMG","VFB"],["HSV","SCP"],["SVW","M05"],["S04","KOE"],["ELV","RBL"]],
+  25:[["BVB","FCB"],["RBL","S04"],["VFB","B04"],["TSG","SVW"],["SCF","FCA"],["M05","ELV"],["HSV","SGE"],["KOE","FCU"],["SCP","BMG"]],
+  26:[["FCB","M05"],["B04","KOE"],["SGE","SCP"],["FCA","RBL"],["FCU","SCF"],["BMG","HSV"],["SVW","VFB"],["S04","TSG"],["ELV","BVB"]],
+  27:[["BVB","BMG"],["RBL","FCU"],["VFB","S04"],["TSG","SGE"],["SCF","ELV"],["M05","FCA"],["HSV","SVW"],["KOE","FCB"],["SCP","B04"]],
+  28:[["FCB","HSV"],["RBL","SCF"],["B04","BVB"],["SGE","VFB"],["FCA","TSG"],["FCU","M05"],["BMG","SVW"],["S04","SCP"],["ELV","KOE"]],
+  29:[["BVB","S04"],["VFB","ELV"],["TSG","SCF"],["M05","RBL"],["BMG","B04"],["HSV","FCU"],["KOE","FCA"],["SVW","SGE"],["SCP","FCB"]],
+  30:[["FCB","TSG"],["RBL","KOE"],["B04","SVW"],["SCF","M05"],["SGE","BMG"],["FCA","BVB"],["FCU","VFB"],["S04","HSV"],["ELV","SCP"]],
+  31:[["BVB","RBL"],["VFB","SCF"],["TSG","FCU"],["SGE","B04"],["BMG","S04"],["HSV","ELV"],["KOE","M05"],["SVW","FCB"],["SCP","FCA"]],
+  32:[["FCB","BMG"],["RBL","SCP"],["B04","HSV"],["SCF","KOE"],["FCA","VFB"],["M05","BVB"],["FCU","SVW"],["S04","SGE"],["ELV","TSG"]],
+  33:[["BVB","KOE"],["VFB","RBL"],["TSG","M05"],["B04","FCB"],["SGE","ELV"],["BMG","FCA"],["HSV","SCF"],["SVW","S04"],["SCP","FCU"]],
+  34:[["FCB","SGE"],["RBL","TSG"],["SCF","BVB"],["FCA","HSV"],["M05","VFB"],["FCU","BMG"],["KOE","SCP"],["S04","B04"],["ELV","SVW"]]
+
+};
+
 const matchdayStartDates = {
   1:"2026-08-28",2:"2026-09-04",3:"2026-09-11",4:"2026-09-18",
   5:"2026-10-09",6:"2026-10-16",7:"2026-10-23",8:"2026-10-30",
@@ -1035,6 +1230,97 @@ function jsArg(
     "</",
     "<\\/"
   );
+
+}
+
+
+
+function clubLogoUrl(
+  club
+){
+
+  return `https://www.bundesliga.com/assets/clublogo/${club.logo}`;
+
+}
+
+
+
+function renderFixtureTeam(
+  code,
+  away = false
+){
+
+  const club =
+    clubData[code];
+
+
+  if(!club){
+
+    return "";
+
+  }
+
+
+  return `
+
+    <div
+      class="fixtureTeam ${away ? "away" : ""}"
+      title="${esc(club.name)}"
+    >
+
+      <img
+        class="fixtureLogo"
+        src="${clubLogoUrl(club)}"
+        alt="Logo ${esc(club.name)}"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        onerror="this.remove()"
+      >
+
+      <span>${esc(club.abbr)}</span>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderMatchdayFixtures(
+  matchday
+){
+
+  const fixtures =
+    matchdayFixtures[matchday] || [];
+
+
+  return `
+
+    <div class="fixtureGrid">
+
+      ${fixtures.map(
+        ([home,away]) => `
+
+          <div
+            class="fixture"
+            aria-label="${esc(clubData[home].name)} gegen ${esc(clubData[away].name)}"
+          >
+
+            ${renderFixtureTeam(home)}
+
+            <span class="fixtureVs">VS</span>
+
+            ${renderFixtureTeam(away,true)}
+
+          </div>
+
+        `
+      ).join("")}
+
+    </div>
+
+  `;
 
 }
 
@@ -2056,7 +2342,13 @@ function renderStartPage(
     <div class="card">
 
       <h1>
-        Rasenschach Bundesliga
+        RASENSCHACH
+        <span class="titleByline">
+          | by max x
+          <span class="calcio">
+            CALCIO BERLIN
+          </span>
+        </span>
       </h1>
 
 
@@ -2589,6 +2881,21 @@ function renderThesisOverview(){
         <strong>
           ${matchdayDates[selected]}
         </strong>
+      </p>
+
+
+      <h3>
+        Spielpaarungen
+      </h3>
+
+
+      ${renderMatchdayFixtures(selected)}
+
+
+      <p class="fixtureSource">
+        Heimteam links · Kürzel mit vollständigem
+        Vereinsnamen als Hinweis · offizieller
+        DFL-Spielplan, Änderungen vorbehalten
       </p>
 
 
