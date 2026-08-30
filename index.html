@@ -23,9 +23,9 @@
   --cream:#ffffff;
   --muted:#b8bcc2;
   --line:#484c52;
-  --accent:#f4f4f5;
-  --danger:#ff7d7d;
   --calcio-pink:#feb8ec;
+  --accent:var(--calcio-pink);
+  --danger:#ff7d7d;
 }
 
 *{
@@ -106,7 +106,7 @@ header{
 }
 
 .brand span{
-  color:var(--accent);
+  color:var(--cream);
 }
 
 .brandByline{
@@ -205,7 +205,7 @@ header{
 
   padding:22px 20px 20px;
 
-  background:#101213;
+  background:transparent;
 }
 
 .fixtureBoardTitle{
@@ -220,20 +220,10 @@ header{
   letter-spacing:.035em;
 }
 
-.fixtureShield{
-  display:block;
-
-  width:76px;
-
-  height:94px;
-
-  margin:10px auto 13px;
-}
-
 .fixtureDivider{
   height:1px;
 
-  margin:0 0 13px;
+  margin:12px 0 13px;
 
   background:linear-gradient(
     90deg,
@@ -477,7 +467,7 @@ button{
 
   padding:11px 14px;
 
-  background:var(--cream);
+  background:var(--accent);
 
   color:#17181a;
 
@@ -1397,43 +1387,6 @@ function renderMatchdayFixtures(
       <div class="fixtureBoardTitle">
         SPIELTAG ${matchdayNumber}
       </div>
-
-
-      <svg
-        class="fixtureShield"
-        viewBox="0 0 76 94"
-        role="img"
-        aria-label="Spieltag ${matchdayNumber}"
-      >
-
-        <path
-          d="M38 4 L69 14 V43 C69 64 56 79 38 90 C20 79 7 64 7 43 V14 Z"
-          fill="none"
-          stroke="#feb8ec"
-          stroke-width="4"
-          stroke-linejoin="round"
-        />
-
-        <text
-          x="38"
-          y="49"
-          text-anchor="middle"
-          fill="#ffffff"
-          font-size="28"
-          font-weight="900"
-          font-family="Arial, sans-serif"
-        >${matchdayNumber}</text>
-
-        <text
-          x="38"
-          y="70"
-          text-anchor="middle"
-          fill="#feb8ec"
-          font-size="14"
-          font-family="Arial, sans-serif"
-        >★</text>
-
-      </svg>
 
 
       <div class="fixtureDivider"></div>
@@ -6030,6 +5983,15 @@ function renderFigureDraft(){
 
 
   return `
+
+    <div class="card fixtureCard">
+
+      ${renderMatchdayFixtures(
+        state.game.matchday
+      )}
+
+    </div>
+
 
     <div class="card">
 
