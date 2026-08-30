@@ -72,12 +72,12 @@ button{
 
   margin:auto;
 
-  padding:
-    20px 0 60px;
+  padding:20px 0 60px;
 }
 
 header{
   display:flex;
+
   justify-content:space-between;
   align-items:center;
 
@@ -87,12 +87,7 @@ header{
 }
 
 .brand{
-  font-size:
-    clamp(
-      25px,
-      5vw,
-      42px
-    );
+  font-size:clamp(25px,5vw,42px);
 
   font-weight:900;
 
@@ -109,9 +104,9 @@ header{
   align-items:center;
   justify-content:flex-end;
 
-  flex-wrap:wrap;
-
   gap:6px;
+
+  flex-wrap:wrap;
 
   color:var(--muted);
 
@@ -119,17 +114,9 @@ header{
 }
 
 .card{
-  background:
-    rgba(
-      23,
-      55,
-      43,
-      .94
-    );
+  background:rgba(23,55,43,.94);
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 
   border-radius:20px;
 
@@ -217,9 +204,7 @@ select{
 
   color:var(--cream);
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 
   border-radius:12px;
 
@@ -238,8 +223,7 @@ button{
 
   border-radius:12px;
 
-  padding:
-    11px 14px;
+  padding:11px 14px;
 
   background:var(--cream);
 
@@ -257,9 +241,7 @@ button.ghost{
 
   color:var(--cream);
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 }
 
 button.danger{
@@ -269,16 +251,11 @@ button.danger{
 
   border:
     1px solid
-    rgba(
-      255,
-      129,
-      111,
-      .35
-    );
+    rgba(255,129,111,.35);
 }
 
 button:disabled{
-  opacity:.45;
+  opacity:.4;
   cursor:not-allowed;
 }
 
@@ -301,9 +278,7 @@ button:disabled{
 .thesis{
   background:#0d2119;
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 
   border-radius:14px;
 
@@ -317,16 +292,13 @@ button:disabled{
 
   gap:6px;
 
-  padding:
-    5px 9px;
+  padding:5px 9px;
 
   border-radius:100px;
 
   background:#0c2119;
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 
   color:var(--muted);
 
@@ -335,44 +307,35 @@ button:disabled{
   margin:2px;
 }
 
-.lobbyCard{
+.fieldButtons{
   display:flex;
-
-  flex-direction:column;
-
-  min-height:220px;
-}
-
-.lobbyCode{
-  font-size:26px;
-
-  font-weight:900;
-
-  letter-spacing:.08em;
-
-  margin-top:14px;
-}
-
-.lobbyActions{
-  margin-top:auto;
-
-  padding-top:16px;
-
-  display:flex;
-
-  gap:8px;
 
   flex-wrap:wrap;
+
+  gap:7px;
+
+  margin-top:10px;
 }
 
-.accountBox{
-  display:flex;
+.fieldButton{
+  min-width:52px;
 
-  align-items:center;
+  background:transparent;
 
-  gap:8px;
+  color:var(--cream);
 
-  flex-wrap:wrap;
+  border:1px solid var(--line);
+}
+
+.fieldButton:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.fieldButton.strong{
+  background:var(--accent);
+
+  color:#102018;
 }
 
 .turn{
@@ -410,8 +373,7 @@ button:disabled{
 .phasebar span{
   white-space:nowrap;
 
-  padding:
-    7px 10px;
+  padding:7px 10px;
 
   border-radius:99px;
 
@@ -448,9 +410,7 @@ button:disabled{
 
   background:#0c2119;
 
-  border:
-    1px solid
-    var(--line);
+  border:1px solid var(--line);
 
   border-radius:14px;
 
@@ -478,18 +438,43 @@ button:disabled{
 }
 
 .drawWinner{
-  font-size:
-    clamp(
-      25px,
-      6vw,
-      42px
-    );
+  font-size:clamp(25px,6vw,42px);
 
   font-weight:900;
 
   color:var(--accent);
 
   margin:6px 0;
+}
+
+.lobbyCard{
+  display:flex;
+
+  flex-direction:column;
+
+  min-height:210px;
+}
+
+.lobbyCode{
+  font-size:25px;
+
+  font-weight:900;
+
+  letter-spacing:.08em;
+
+  margin-top:14px;
+}
+
+.lobbyActions{
+  display:flex;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+
+  margin-top:auto;
+
+  padding-top:16px;
 }
 
 .score{
@@ -506,12 +491,7 @@ button:disabled{
 }
 
 .score .points{
-  font-size:
-    clamp(
-      34px,
-      8vw,
-      64px
-    );
+  font-size:clamp(34px,8vw,64px);
 
   font-weight:900;
 }
@@ -527,12 +507,7 @@ button:disabled{
 .bigResult{
   text-align:center;
 
-  font-size:
-    clamp(
-      32px,
-      8vw,
-      70px
-    );
+  font-size:clamp(32px,8vw,70px);
 
   font-weight:900;
 }
@@ -540,12 +515,9 @@ button:disabled{
 hr{
   border:0;
 
-  border-top:
-    1px solid
-    var(--line);
+  border-top:1px solid var(--line);
 
-  margin:
-    18px 0;
+  margin:18px 0;
 }
 
 .footer{
@@ -559,8 +531,7 @@ hr{
 }
 
 .loading{
-  padding:
-    60px 20px;
+  padding:60px 20px;
 
   text-align:center;
 
@@ -573,18 +544,15 @@ hr{
   left:50%;
   bottom:20px;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
-  max-width:
-    calc(100% - 30px);
+  max-width:calc(100% - 30px);
 
   background:var(--cream);
 
   color:#102018;
 
-  padding:
-    10px 16px;
+  padding:10px 16px;
 
   border-radius:100px;
 
@@ -612,7 +580,9 @@ hr{
 
 <body>
 
+
 <div class="shell">
+
 
 <header>
 
@@ -640,6 +610,7 @@ hr{
 <div class="footer">
   Rasenschach · Fan-Projekt
 </div>
+
 
 </div>
 
@@ -712,22 +683,29 @@ let state = {
 
 
 /* =========================================================
-   KONSTANTEN
+   SPIELREGELN
 ========================================================= */
+
+
+const fieldNames = {
+
+  P1:"+1",
+
+  N1:"−1",
+
+  P3:"±3",
+
+  N3:"∓3",
+
+  Q:"?"
+
+};
 
 
 const figureSequence =
   [
-    1,
-    2,
-    2,
-    1,
-    1,
-    2,
-    2,
-    1,
-    1,
-    2
+    1,2,2,1,1,
+    2,2,1,1,2
   ];
 
 
@@ -746,28 +724,11 @@ const figureNames = {
 };
 
 
-const fieldNames = {
-
-  P1:"+1",
-
-  N1:"−1",
-
-  P3:"±3",
-
-  N3:"∓3",
-
-  Q:"?"
-
-};
-
-
 const phases = [
 
   ["lobby","Vorbereitung"],
 
   ["thesis_draft","Thesendraft"],
-
-  ["thesis_placement","Setzen"],
 
   ["figure_draft","Figurendraft"],
 
@@ -784,8 +745,6 @@ const statusNames = {
 
   thesis_draft:"Thesendraft",
 
-  thesis_placement:"Thesen setzen",
-
   figure_draft:"Figurendraft",
 
   scoring:"Auswertung",
@@ -801,41 +760,25 @@ const statusNames = {
 ========================================================= */
 
 
-function esc(
-  value
-){
+function esc(value){
 
   return String(
     value ?? ""
   )
 
-  .replaceAll(
-    "&",
-    "&amp;"
-  )
+  .replaceAll("&","&amp;")
 
-  .replaceAll(
-    "<",
-    "&lt;"
-  )
+  .replaceAll("<","&lt;")
 
-  .replaceAll(
-    ">",
-    "&gt;"
-  )
+  .replaceAll(">","&gt;")
 
-  .replaceAll(
-    '"',
-    "&quot;"
-  );
+  .replaceAll('"',"&quot;");
 
 }
 
 
 
-function toast(
-  message
-){
+function toast(message){
 
   const element =
     document.getElementById(
@@ -853,30 +796,20 @@ function toast(
 
 
   setTimeout(
-    () => {
-
-      element
-        .classList
-        .remove(
-          "show"
-        );
-
-    },
-    2400
+    () =>
+      element.classList.remove(
+        "show"
+      ),
+    2300
   );
 
 }
 
 
 
-function errorMessage(
-  error
-){
+function errorMessage(error){
 
-  console.error(
-    error
-  );
-
+  console.error(error);
 
   toast(
     error?.message ||
@@ -898,46 +831,34 @@ function appBase(){
 
 
 
-function gameUrl(
-  id
-){
+function gameUrl(id){
 
   return (
     appBase() +
     "?game=" +
-    encodeURIComponent(
-      id
-    )
+    encodeURIComponent(id)
   );
 
 }
 
 
 
-function inviteUrl(
-  code
-){
+function inviteUrl(code){
 
   return (
     appBase() +
     "?room=" +
-    encodeURIComponent(
-      code
-    )
+    encodeURIComponent(code)
   );
 
 }
 
 
 
-function openGame(
-  id
-){
+function openGame(id){
 
   location.href =
-    gameUrl(
-      id
-    );
+    gameUrl(id);
 
 }
 
@@ -965,6 +886,7 @@ function isMainAccount(){
 function accountName(){
 
   return (
+
     state.user
       ?.user_metadata
       ?.display_name
@@ -978,6 +900,7 @@ function accountName(){
     ||
 
     ""
+
   );
 
 }
@@ -998,8 +921,7 @@ function draftedTheses(){
 function currentThesisSeat(){
 
   const count =
-    draftedTheses()
-      .length;
+    draftedTheses().length;
 
 
   const starter =
@@ -1040,7 +962,9 @@ function currentFigureSeat(){
     figureSequence[
       state.figures.length
     ]
+
     ??
+
     null
   );
 
@@ -1054,21 +978,23 @@ function phaseBar(){
 
     <div class="phasebar">
 
-      ${phases.map(
-        ([id,label]) => `
+      ${
+        phases.map(
+          ([id,label]) => `
 
-          <span
-            class="${
-              state.game?.status === id
-                ? "active"
-                : ""
-            }"
-          >
-            ${label}
-          </span>
+            <span
+              class="${
+                state.game?.status === id
+                  ? "active"
+                  : ""
+              }"
+            >
+              ${label}
+            </span>
 
-        `
-      ).join("")}
+          `
+        ).join("")
+      }
 
     </div>
 
@@ -1080,9 +1006,7 @@ function phaseBar(){
 
 async function copyInvite(){
 
-  if(
-    !state.game
-  ){
+  if(!state.game){
     return;
   }
 
@@ -1095,18 +1019,13 @@ async function copyInvite(){
 
 
 
-async function copyInviteCode(
-  code
-){
+async function copyInviteCode(code){
 
   try{
 
-    await navigator
-      .clipboard
+    await navigator.clipboard
       .writeText(
-        inviteUrl(
-          code
-        )
+        inviteUrl(code)
       );
 
 
@@ -1129,7 +1048,7 @@ async function copyInviteCode(
 
 
 /* =========================================================
-   LOGIN / REGISTRIERUNG
+   AUTH
 ========================================================= */
 
 
@@ -1140,11 +1059,9 @@ async function removeAnonymousSession(){
     !state.user.email
   ){
 
-    await db.auth.signOut(
-      {
-        scope:"local"
-      }
-    );
+    await db.auth.signOut({
+      scope:"local"
+    });
 
 
     state.user =
@@ -1202,19 +1119,6 @@ async function registerMainPlayer(){
     }
 
 
-    if(
-      password.length < 6
-    ){
-
-      toast(
-        "Passwort muss mindestens 6 Zeichen haben"
-      );
-
-      return;
-
-    }
-
-
     await removeAnonymousSession();
 
 
@@ -1222,49 +1126,35 @@ async function registerMainPlayer(){
       data,
       error
     } =
-      await db.auth.signUp(
-        {
+      await db.auth.signUp({
 
-          email,
+        email,
 
-          password,
+        password,
 
-          options:{
+        options:{
 
-            data:{
-              display_name:name
-            },
+          data:{
+            display_name:name
+          },
 
-            emailRedirectTo:
-              appBase()
-
-          }
+          emailRedirectTo:
+            appBase()
 
         }
-      );
+
+      });
 
 
-    if(
-      error
-    ){
-
+    if(error){
       throw error;
-
     }
 
 
-    if(
-      data.session
-    ){
+    if(data.session){
 
       state.user =
         data.session.user;
-
-
-      toast(
-        "Konto erstellt"
-      );
-
 
       goHome();
 
@@ -1272,42 +1162,26 @@ async function registerMainPlayer(){
 
     else{
 
-      const message =
-        document.getElementById(
-          "authMessage"
-        );
+      document.getElementById(
+        "authMessage"
+      ).innerHTML = `
 
+        <div class="success">
 
-      if(
-        message
-      ){
+          ✓ Konto erstellt.
+          Bitte bestätige deine E-Mail.
 
-        message.innerHTML = `
+        </div>
 
-          <div class="success">
-
-            ✓ Konto angelegt.
-            Bitte bestätige jetzt
-            die E-Mail, die Supabase
-            dir geschickt hat.
-
-          </div>
-
-        `;
-
-      }
+      `;
 
     }
 
   }
 
-  catch(
-    error
-  ){
+  catch(error){
 
-    errorMessage(
-      error
-    );
+    errorMessage(error);
 
   }
 
@@ -1359,20 +1233,16 @@ async function loginMainPlayer(){
       error
     } =
       await db.auth
-        .signInWithPassword(
-          {
-            email,
-            password
-          }
-        );
+        .signInWithPassword({
+
+          email,
+          password
+
+        });
 
 
-    if(
-      error
-    ){
-
+    if(error){
       throw error;
-
     }
 
 
@@ -1380,22 +1250,13 @@ async function loginMainPlayer(){
       data.user;
 
 
-    toast(
-      "Erfolgreich angemeldet"
-    );
-
-
     location.reload();
 
   }
 
-  catch(
-    error
-  ){
+  catch(error){
 
-    errorMessage(
-      error
-    );
+    errorMessage(error);
 
   }
 
@@ -1405,52 +1266,19 @@ async function loginMainPlayer(){
 
 async function logoutMainPlayer(){
 
-  try{
-
-    const {
-      error
-    } =
-      await db.auth.signOut(
-        {
-          scope:"local"
-        }
-      );
+  await db.auth.signOut({
+    scope:"local"
+  });
 
 
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
+  state.user =
+    null;
 
 
-    state.user =
-      null;
-
-
-    goHome();
-
-  }
-
-  catch(
-    error
-  ){
-
-    errorMessage(
-      error
-    );
-
-  }
+  goHome();
 
 }
 
-
-
-/* =========================================================
-   ANONYMER GAST
-========================================================= */
 
 
 async function ensureGuestSession(){
@@ -1464,14 +1292,12 @@ async function ensureGuestSession(){
       .getSession();
 
 
-  if(
-    session
-  ){
+  if(session){
 
     state.user =
       session.user;
 
-    return session;
+    return;
 
   }
 
@@ -1484,20 +1310,13 @@ async function ensureGuestSession(){
       .signInAnonymously();
 
 
-  if(
-    error
-  ){
-
+  if(error){
     throw error;
-
   }
 
 
   state.user =
     data.session.user;
-
-
-  return data.session;
 
 }
 
@@ -1515,20 +1334,10 @@ async function boot(){
     const {
       data:{
         session
-      },
-      error
+      }
     } =
       await db.auth
         .getSession();
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
 
 
     state.user =
@@ -1558,17 +1367,9 @@ async function boot(){
 
 
 
-    /*
-      DIREKTE SPIEL-URL
-    */
+    if(gameId){
 
-    if(
-      gameId
-    ){
-
-      if(
-        !state.user
-      ){
+      if(!state.user){
 
         renderLoginRequired();
 
@@ -1593,13 +1394,7 @@ async function boot(){
 
 
 
-    /*
-      EINLADUNGSLINK
-    */
-
-    if(
-      roomCode
-    ){
+    if(roomCode){
 
       renderStartPage(
         roomCode
@@ -1611,13 +1406,7 @@ async function boot(){
 
 
 
-    /*
-      HAUPTSPIELER DASHBOARD
-    */
-
-    if(
-      isMainAccount()
-    ){
+    if(isMainAccount()){
 
       await loadDashboard();
 
@@ -1627,24 +1416,11 @@ async function boot(){
 
 
 
-    /*
-      NICHT EINGELOGGT
-    */
-
-    renderStartPage(
-      ""
-    );
+    renderStartPage("");
 
   }
 
-  catch(
-    error
-  ){
-
-    console.error(
-      error
-    );
-
+  catch(error){
 
     document.getElementById(
       "app"
@@ -1653,22 +1429,12 @@ async function boot(){
       <div class="card">
 
         <h2>
-          Fehler beim Laden
+          Fehler
         </h2>
 
         <p class="error">
-
-          ${esc(
-            error.message
-          )}
-
+          ${esc(error.message)}
         </p>
-
-        <button
-          onclick="goHome()"
-        >
-          Zur Startseite
-        </button>
 
       </div>
 
@@ -1681,11 +1447,125 @@ async function boot(){
 
 
 /* =========================================================
-   LOGIN FÜR DIREKTE SPIEL-URL
+   STARTSEITE
 ========================================================= */
 
 
-function renderLoginRequired(){
+function renderAuthCard(){
+
+  return `
+
+    <div class="card">
+
+      <h2>
+        Hauptspieler
+      </h2>
+
+      <p class="muted">
+
+        Melde dich an,
+        um deine Lobbys auf
+        allen Geräten zu sehen.
+
+      </p>
+
+
+      <div class="stack">
+
+        <input
+          id="authName"
+          placeholder="Dein Anzeigename"
+        >
+
+        <input
+          id="authEmail"
+          type="email"
+          placeholder="E-Mail"
+        >
+
+        <input
+          id="authPassword"
+          type="password"
+          placeholder="Passwort"
+        >
+
+        <button
+          class="primary"
+          onclick="loginMainPlayer()"
+        >
+          Einloggen
+        </button>
+
+        <button
+          class="ghost"
+          onclick="registerMainPlayer()"
+        >
+          Konto erstellen
+        </button>
+
+        <div
+          id="authMessage"
+          class="muted"
+        ></div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderJoinCard(roomCode=""){
+
+  return `
+
+    <div class="card">
+
+      <h2>
+        Spieler 2
+      </h2>
+
+      <p class="muted">
+
+        Als eingeladener Spieler
+        brauchst du kein Konto.
+
+      </p>
+
+      <div class="stack">
+
+        <input
+          id="joinName"
+          placeholder="Dein Name"
+        >
+
+        <input
+          id="joinCode"
+          maxlength="6"
+          placeholder="Raumcode"
+          value="${esc(roomCode)}"
+        >
+
+        <button
+          onclick="joinGame()"
+        >
+          Lobby beitreten
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderStartPage(roomCode=""){
 
   document.getElementById(
     "headerActions"
@@ -1700,78 +1580,14 @@ function renderLoginRequired(){
     <div class="card">
 
       <h1>
-        Anmeldung erforderlich
+        Rasenschach
       </h1>
 
       <p class="muted">
 
-        Melde dich mit deinem
-        Rasenschach-Konto an,
-        um diese Lobby zu öffnen.
-
-      </p>
-
-    </div>
-
-
-    ${renderAuthCard()}
-
-  `;
-
-}
-
-
-
-/* =========================================================
-   STARTSEITE
-========================================================= */
-
-
-function renderStartPage(
-  roomCode=""
-){
-
-  document.getElementById(
-    "headerActions"
-  ).innerHTML =
-
-    isMainAccount()
-
-      ? `
-
-          <span>
-            ${esc(
-              state.user.email
-            )}
-          </span>
-
-          <button
-            class="ghost"
-            onclick="goHome()"
-          >
-            Meine Lobbys
-          </button>
-
-        `
-
-      : "";
-
-
-  document.getElementById(
-    "app"
-  ).innerHTML = `
-
-    <div class="card">
-
-      <h1>
-        Rasenschach für zwei.
-      </h1>
-
-      <p class="muted">
-
-        Erstelle mehrere parallele
-        Duelle und spiele gegen
-        unterschiedliche Freunde.
+        Mehrere Zweier-Lobbys.
+        Ein Hauptspieler-Konto.
+        Unterschiedliche Gegner.
 
       </p>
 
@@ -1779,7 +1595,6 @@ function renderStartPage(
 
 
     <div class="grid2">
-
 
       ${
         isMainAccount()
@@ -1789,22 +1604,15 @@ function renderStartPage(
             <div class="card">
 
               <h2>
-                Hauptspieler
+                Angemeldet
               </h2>
 
-              <p>
-                Angemeldet als
-                <strong>
-                  ${esc(
-                    accountName()
-                  )}
-                </strong>
-              </p>
+              <strong>
+                ${esc(accountName())}
+              </strong>
 
               <p class="muted">
-                ${esc(
-                  state.user.email
-                )}
+                ${esc(state.user.email)}
               </p>
 
               <button
@@ -1822,10 +1630,7 @@ function renderStartPage(
       }
 
 
-      ${renderJoinCard(
-        roomCode
-      )}
-
+      ${renderJoinCard(roomCode)}
 
     </div>
 
@@ -1835,133 +1640,21 @@ function renderStartPage(
 
 
 
-function renderAuthCard(){
+function renderLoginRequired(){
 
-  return `
-
-    <div class="card">
-
-      <h2>
-        Hauptspieler
-      </h2>
-
-      <p class="muted">
-
-        Melde dich an, damit deine
-        Lobbys auf allen Geräten
-        verfügbar sind.
-
-      </p>
-
-
-      <div class="stack">
-
-
-        <input
-          id="authName"
-          maxlength="40"
-          placeholder="Dein Anzeigename"
-        >
-
-
-        <input
-          id="authEmail"
-          type="email"
-          autocomplete="email"
-          placeholder="E-Mail-Adresse"
-        >
-
-
-        <input
-          id="authPassword"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Passwort"
-        >
-
-
-        <button
-          class="primary"
-          onclick="loginMainPlayer()"
-        >
-          Einloggen
-        </button>
-
-
-        <button
-          class="ghost"
-          onclick="registerMainPlayer()"
-        >
-          Neues Konto erstellen
-        </button>
-
-
-        <div
-          id="authMessage"
-          class="muted"
-        ></div>
-
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-
-function renderJoinCard(
-  roomCode=""
-){
-
-  return `
+  document.getElementById(
+    "app"
+  ).innerHTML = `
 
     <div class="card">
 
       <h2>
-        Einladung erhalten?
+        Anmeldung erforderlich
       </h2>
 
-      <p class="muted">
-
-        Spieler 2 benötigt
-        kein Konto.
-
-      </p>
-
-
-      <div class="stack">
-
-
-        <input
-          id="joinName"
-          maxlength="30"
-          placeholder="Dein Name"
-        >
-
-
-        <input
-          id="joinCode"
-          maxlength="6"
-          placeholder="Raumcode"
-          value="${esc(
-            roomCode
-          )}"
-        >
-
-
-        <button
-          onclick="joinGame()"
-        >
-          Lobby beitreten
-        </button>
-
-
-      </div>
-
     </div>
+
+    ${renderAuthCard()}
 
   `;
 
@@ -1976,67 +1669,21 @@ function renderJoinCard(
 
 async function loadDashboard(){
 
-  if(
-    !isMainAccount()
-  ){
-
-    renderStartPage();
-
-    return;
-
-  }
-
-
-  state.gameId =
-    null;
-
-
-  state.game =
-    null;
-
-
-  if(
-    state.channel
-  ){
-
-    db.removeChannel(
-      state.channel
-    );
-
-
-    state.channel =
-      null;
-
-  }
-
-
-
   const membershipResult =
     await db
-
-      .from(
-        "players"
-      )
-
+      .from("players")
       .select(
         "game_id,seat,user_id"
       )
-
       .eq(
         "user_id",
         state.user.id
       );
 
 
-
-  if(
-    membershipResult.error
-  ){
-
+  if(membershipResult.error){
     throw membershipResult.error;
-
   }
-
 
 
   const memberships =
@@ -2045,39 +1692,29 @@ async function loadDashboard(){
     [];
 
 
-
-  if(
-    !memberships.length
-  ){
+  if(!memberships.length){
 
     state.myGames =
       [];
 
-
     state.myGamePlayers =
       [];
 
-
     renderDashboard();
-
 
     return;
 
   }
 
 
-
-  const gameIds =
-
-    [
-      ...new Set(
-        memberships.map(
-          membership =>
-            membership.game_id
-        )
+  const gameIds = [
+    ...new Set(
+      memberships.map(
+        membership =>
+          membership.game_id
       )
-    ];
-
+    )
+  ];
 
 
   const [
@@ -2086,21 +1723,10 @@ async function loadDashboard(){
   ] =
     await Promise.all([
 
-
       db
-        .from(
-          "games"
-        )
-
-        .select(
-          "*"
-        )
-
-        .in(
-          "id",
-          gameIds
-        )
-
+        .from("games")
+        .select("*")
+        .in("id",gameIds)
         .order(
           "created_at",
           {
@@ -2108,48 +1734,23 @@ async function loadDashboard(){
           }
         ),
 
-
       db
-        .from(
-          "players"
-        )
-
-        .select(
-          "*"
-        )
-
-        .in(
-          "game_id",
-          gameIds
-        )
-
-        .order(
-          "seat"
-        )
-
+        .from("players")
+        .select("*")
+        .in("game_id",gameIds)
+        .order("seat")
 
     ]);
 
 
-
-  if(
-    gameResult.error
-  ){
-
+  if(gameResult.error){
     throw gameResult.error;
-
   }
 
 
-
-  if(
-    playerResult.error
-  ){
-
+  if(playerResult.error){
     throw playerResult.error;
-
   }
-
 
 
   state.myGames =
@@ -2177,11 +1778,7 @@ function renderDashboard(){
   ).innerHTML = `
 
     <span>
-
-      ${esc(
-        state.user.email
-      )}
-
+      ${esc(state.user.email)}
     </span>
 
     <button
@@ -2198,30 +1795,20 @@ function renderDashboard(){
     "app"
   ).innerHTML = `
 
-
     <div class="card">
 
       <h1>
-
-        Hallo
-        ${esc(
-          accountName()
-        )}
-
+        Hallo ${esc(accountName())}
       </h1>
 
       <p class="muted">
 
-        Diese Lobbys gehören zu
-        deinem Konto und erscheinen
-        auch auf anderen Geräten,
-        sobald du dich dort mit
-        derselben E-Mail anmeldest.
+        Alle deine Lobbys
+        werden hier gesammelt.
 
       </p>
 
     </div>
-
 
 
     <div class="card">
@@ -2230,45 +1817,32 @@ function renderDashboard(){
         Neue Lobby
       </h2>
 
-
       <div class="row">
-
 
         <input
           id="createName"
-          maxlength="30"
-          placeholder="Dein Spielername"
-          value="${esc(
-            accountName()
-          )}"
+          value="${esc(accountName())}"
           style="flex:1;min-width:220px"
         >
-
 
         <button
           class="primary"
           onclick="createGame()"
         >
-          Neue Lobby erstellen
+          Lobby erstellen
         </button>
-
 
       </div>
 
     </div>
 
 
-
     <div class="card">
 
       <h2>
-
-        Meine Lobbys
-        ·
+        Meine Lobbys ·
         ${state.myGames.length}
-
       </h2>
-
 
       ${
         state.myGames.length
@@ -2294,22 +1868,9 @@ function renderDashboard(){
 
             <div class="thesis">
 
-              <strong>
-                Noch keine Lobby
-              </strong>
-
-              <p
-                class="muted"
-                style="
-                  margin-top:6px;
-                  margin-bottom:0
-                "
-              >
-
-                Erstelle oben dein
-                erstes Duell.
-
-              </p>
+              <span class="muted">
+                Noch keine Lobby.
+              </span>
 
             </div>
 
@@ -2324,23 +1885,13 @@ function renderDashboard(){
 
 
 
-function renderLobbyCard(
-  game
-){
+function renderLobbyCard(game){
 
   const players =
     state.myGamePlayers.filter(
       player =>
         player.game_id ===
         game.id
-    );
-
-
-  const me =
-    players.find(
-      player =>
-        player.user_id ===
-        state.user.id
     );
 
 
@@ -2356,77 +1907,46 @@ function renderLobbyCard(
 
     <div class="thesis lobbyCard">
 
+      <span class="badge">
 
-      <div>
-
-        <span class="badge">
-
-          ${
-            me?.seat === 1
-              ? "Spieler 1"
-              : "Spieler 2"
-          }
-
-        </span>
-
-
-        <span class="badge">
-
-          ${
-            statusNames[
-              game.status
-            ]
-            ||
+        ${
+          statusNames[
             game.status
-          }
+          ]
+          ||
+          game.status
+        }
 
-        </span>
-
-      </div>
-
+      </span>
 
 
       <div class="lobbyCode">
-
-        ${esc(
-          game.code
-        )}
-
+        ${esc(game.code)}
       </div>
 
 
-
-      <p
-        style="
-          margin-top:10px;
-          margin-bottom:6px
-        "
-      >
+      <p style="margin-top:12px">
 
         ${
           opponent
 
             ? `gegen <strong>${
-                esc(
-                  opponent.name
-                )
+                esc(opponent.name)
               }</strong>`
 
             : `
 
-                <span class="muted">
-                  Wartet auf Spieler 2
-                </span>
+              <span class="muted">
+                Wartet auf Spieler 2
+              </span>
 
-              `
+            `
         }
 
       </p>
 
 
-
       <div class="lobbyActions">
-
 
         <button
           class="primary"
@@ -2439,31 +1959,18 @@ function renderLobbyCard(
           Öffnen
         </button>
 
-
-        ${
-          me?.seat === 1
-
-            ? `
-
-              <button
-                class="ghost"
-                onclick="
-                  copyInviteCode(
-                    '${game.code}'
-                  )
-                "
-              >
-                Einladen
-              </button>
-
-            `
-
-            : ""
-        }
-
+        <button
+          class="ghost"
+          onclick="
+            copyInviteCode(
+              '${game.code}'
+            )
+          "
+        >
+          Einladen
+        </button>
 
       </div>
-
 
     </div>
 
@@ -2474,7 +1981,7 @@ function renderLobbyCard(
 
 
 /* =========================================================
-   NEUE LOBBY
+   SPIEL ERSTELLEN / JOIN
 ========================================================= */
 
 
@@ -2482,34 +1989,16 @@ async function createGame(){
 
   try{
 
-    if(
-      !isMainAccount()
-    ){
-
-      toast(
-        "Bitte zuerst als Hauptspieler einloggen"
-      );
-
-      return;
-
-    }
-
-
-    const element =
-      document.getElementById(
-        "createName"
-      );
-
-
     const name =
-      element
-        ?.value
-        ?.trim();
+      document
+        .getElementById(
+          "createName"
+        )
+        .value
+        .trim();
 
 
-    if(
-      !name
-    ){
+    if(!name){
 
       toast(
         "Spielername eingeben"
@@ -2518,7 +2007,6 @@ async function createGame(){
       return;
 
     }
-
 
 
     const {
@@ -2533,15 +2021,9 @@ async function createGame(){
       );
 
 
-
-    if(
-      error
-    ){
-
+    if(error){
       throw error;
-
     }
-
 
 
     openGame(
@@ -2550,23 +2032,14 @@ async function createGame(){
 
   }
 
-  catch(
-    error
-  ){
+  catch(error){
 
-    errorMessage(
-      error
-    );
+    errorMessage(error);
 
   }
 
 }
 
-
-
-/* =========================================================
-   LOBBY BEITRETEN
-========================================================= */
 
 
 async function joinGame(){
@@ -2592,7 +2065,6 @@ async function joinGame(){
         .toUpperCase();
 
 
-
     if(
       !name ||
       !code
@@ -2607,9 +2079,7 @@ async function joinGame(){
     }
 
 
-
     await ensureGuestSession();
-
 
 
     const {
@@ -2619,24 +2089,15 @@ async function joinGame(){
       await db.rpc(
         "join_game",
         {
-
           p_code:code,
-
           p_name:name
-
         }
       );
 
 
-
-    if(
-      error
-    ){
-
+    if(error){
       throw error;
-
     }
-
 
 
     openGame(
@@ -2645,13 +2106,9 @@ async function joinGame(){
 
   }
 
-  catch(
-    error
-  ){
+  catch(error){
 
-    errorMessage(
-      error
-    );
+    errorMessage(error);
 
   }
 
@@ -2660,183 +2117,88 @@ async function joinGame(){
 
 
 /* =========================================================
-   SPIELDATEN LADEN
+   GAME DATA
 ========================================================= */
 
 
 async function refreshGame(){
 
-  if(
-    !state.gameId
-  ){
-
-    return;
-
-  }
-
-
-
   const [
-
     gameResult,
-
     playerResult,
-
     thesisResult,
-
     placementResult,
-
     figureResult
-
   ] =
     await Promise.all([
 
-
       db
-        .from(
-          "games"
-        )
-
-        .select(
-          "*"
-        )
-
-        .eq(
-          "id",
-          state.gameId
-        )
-
+        .from("games")
+        .select("*")
+        .eq("id",state.gameId)
         .single(),
 
-
-
       db
-        .from(
-          "players"
-        )
-
-        .select(
-          "*"
-        )
-
+        .from("players")
+        .select("*")
         .eq(
           "game_id",
           state.gameId
         )
-
-        .order(
-          "seat"
-        ),
-
-
+        .order("seat"),
 
       db
-        .from(
-          "theses"
-        )
-
-        .select(
-          "*"
-        )
-
+        .from("theses")
+        .select("*")
         .eq(
           "game_id",
           state.gameId
         )
-
-        .order(
-          "created_at"
-        ),
-
-
+        .order("created_at"),
 
       db
-        .from(
-          "placements"
-        )
-
-        .select(
-          "*"
-        )
-
+        .from("placements")
+        .select("*")
         .eq(
           "game_id",
           state.gameId
         ),
 
-
-
       db
-        .from(
-          "figure_picks"
-        )
-
-        .select(
-          "*"
-        )
-
+        .from("figure_picks")
+        .select("*")
         .eq(
           "game_id",
           state.gameId
         )
-
-        .order(
-          "draft_order"
-        )
-
+        .order("draft_order")
 
     ]);
 
 
-
-  if(
-    gameResult.error
-  ){
-
+  if(gameResult.error){
     throw gameResult.error;
-
   }
 
 
-
-  if(
-    playerResult.error
-  ){
-
+  if(playerResult.error){
     throw playerResult.error;
-
   }
 
 
-
-  if(
-    thesisResult.error
-  ){
-
+  if(thesisResult.error){
     throw thesisResult.error;
-
   }
 
 
-
-  if(
-    placementResult.error
-  ){
-
+  if(placementResult.error){
     throw placementResult.error;
-
   }
 
 
-
-  if(
-    figureResult.error
-  ){
-
+  if(figureResult.error){
     throw figureResult.error;
-
   }
-
 
 
   state.game =
@@ -2844,27 +2206,19 @@ async function refreshGame(){
 
 
   state.players =
-    playerResult.data
-    ||
-    [];
+    playerResult.data || [];
 
 
   state.theses =
-    thesisResult.data
-    ||
-    [];
+    thesisResult.data || [];
 
 
   state.placements =
-    placementResult.data
-    ||
-    [];
+    placementResult.data || [];
 
 
   state.figures =
-    figureResult.data
-    ||
-    [];
+    figureResult.data || [];
 
 
   state.me =
@@ -2873,19 +2227,6 @@ async function refreshGame(){
         player.user_id ===
         state.user.id
     );
-
-
-
-  if(
-    !state.me
-  ){
-
-    throw new Error(
-      "Du bist kein Mitglied dieser Lobby."
-    );
-
-  }
-
 
 
   renderGame();
@@ -2911,14 +2252,11 @@ function scheduleRefresh(){
 
   refreshTimer =
     setTimeout(
-      () => {
-
+      () =>
         refreshGame()
           .catch(
             errorMessage
-          );
-
-      },
+          ),
       150
     );
 
@@ -2928,9 +2266,7 @@ function scheduleRefresh(){
 
 function subscribe(){
 
-  if(
-    state.channel
-  ){
+  if(state.channel){
 
     db.removeChannel(
       state.channel
@@ -2939,29 +2275,19 @@ function subscribe(){
   }
 
 
-
   const channel =
     db.channel(
       `rasenschach-${state.gameId}`
     );
 
 
-
   [
-
     "games",
-
     "players",
-
     "theses",
-
     "placements",
-
     "figure_picks"
-
-  ]
-
-  .forEach(
+  ].forEach(
     table => {
 
       channel.on(
@@ -2969,11 +2295,8 @@ function subscribe(){
         "postgres_changes",
 
         {
-
           event:"*",
-
           schema:"public",
-
           table,
 
           filter:
@@ -2984,7 +2307,6 @@ function subscribe(){
               ? `id=eq.${state.gameId}`
 
               : `game_id=eq.${state.gameId}`
-
         },
 
         scheduleRefresh
@@ -2993,7 +2315,6 @@ function subscribe(){
 
     }
   );
-
 
 
   channel.subscribe();
@@ -3021,13 +2342,10 @@ function renderGame(){
 
       Raum
       <strong>
-        ${esc(
-          state.game.code
-        )}
+        ${esc(state.game.code)}
       </strong>
 
     </span>
-
 
     <button
       class="ghost"
@@ -3035,7 +2353,6 @@ function renderGame(){
     >
       Link teilen
     </button>
-
 
     ${
       isMainAccount()
@@ -3057,10 +2374,7 @@ function renderGame(){
   `;
 
 
-
-  let content =
-    "";
-
+  let content = "";
 
 
   switch(
@@ -3083,14 +2397,6 @@ function renderGame(){
       break;
 
 
-    case "thesis_placement":
-
-      content =
-        renderPlacement();
-
-      break;
-
-
     case "figure_draft":
 
       content =
@@ -3102,9 +2408,7 @@ function renderGame(){
     case "scoring":
 
       content =
-        renderScoring(
-          false
-        );
+        renderScoring(false);
 
       break;
 
@@ -3112,14 +2416,11 @@ function renderGame(){
     case "finished":
 
       content =
-        renderScoring(
-          true
-        );
+        renderScoring(true);
 
       break;
 
   }
-
 
 
   document.getElementById(
@@ -3148,11 +2449,9 @@ function renderLobby(){
     state.user.id;
 
 
-
   return `
 
     <div class="grid2">
-
 
       <div class="card">
 
@@ -3160,55 +2459,55 @@ function renderLobby(){
           Spieler
         </h2>
 
+        ${
+          [1,2].map(
+            seat => {
 
-        ${[1,2].map(
-          seat => {
-
-            const player =
-              state.players.find(
-                item =>
-                  item.seat ===
-                  seat
-              );
-
-
-            return `
-
-              <div class="thesis">
-
-                <strong>
-
-                  ${
-                    player
-                      ? esc(
-                          player.name
-                        )
-
-                      : "Warte auf Mitspieler …"
-                  }
-
-                </strong>
+              const player =
+                state.players.find(
+                  item =>
+                    item.seat ===
+                    seat
+                );
 
 
-                <div class="muted">
+              return `
 
-                  Spieler
-                  ${seat}
+                <div class="thesis">
 
-                  ${
-                    seat === 1
-                      ? " · Gastgeber"
-                      : ""
-                  }
+                  <strong>
+
+                    ${
+                      player
+
+                        ? esc(player.name)
+
+                        : "Warte auf Mitspieler …"
+                    }
+
+                  </strong>
+
+                  <div class="muted">
+
+                    Spieler ${seat}
+
+                    ${
+                      seat === 1
+
+                        ? " · Gastgeber"
+
+                        : ""
+                    }
+
+                  </div>
 
                 </div>
 
-              </div>
+              `;
 
-            `;
-
-          }
-        ).join("")}
+            }
+          ).join("")
+        }
 
 
         <hr>
@@ -3217,18 +2516,17 @@ function renderLobby(){
         <button
           onclick="copyInvite()"
         >
-          Einladungslink kopieren
+          Einladungslink
         </button>
 
       </div>
-
 
 
       <div class="card">
 
         <h2>
 
-          Thesenpool ·
+          Thesen ·
           ${state.theses.length}/12
 
         </h2>
@@ -3241,33 +2539,34 @@ function renderLobby(){
 
               <p class="muted">
 
-                Du bereitest für diese
-                Lobby alle zwölf Thesen vor.
+                Du trägst alle
+                zwölf Thesen ein.
 
               </p>
-
 
               <div class="row">
 
                 <input
                   id="newThesis"
-                  maxlength="180"
                   placeholder="Neue These …"
 
                   ${
                     state.theses.length >= 12
+
                       ? "disabled"
+
                       : ""
                   }
                 >
-
 
                 <button
                   onclick="addThesis()"
 
                   ${
                     state.theses.length >= 12
+
                       ? "disabled"
+
                       : ""
                   }
                 >
@@ -3285,9 +2584,6 @@ function renderLobby(){
                 Spieler 1 bereitet
                 die Thesen vor.
 
-                Du kannst sie live
-                mitlesen.
-
               </p>
 
             `
@@ -3299,81 +2595,56 @@ function renderLobby(){
           style="margin-top:14px"
         >
 
-
           ${
-            state.theses.length
-
-              ? state.theses.map(
-                  (
-                    thesis,
-                    index
-                  ) => `
-
-                    <div class="thesis">
-
-                      <div
-                        class="row"
-                        style="
-                          justify-content:
-                          space-between
-                        "
-                      >
-
-                        <span>
-
-                          <strong>
-                            ${index + 1}.
-                          </strong>
-
-                          ${esc(
-                            thesis.text
-                          )}
-
-                        </span>
-
-
-                        ${
-                          owner
-
-                            ? `
-
-                              <button
-                                class="danger"
-
-                                onclick="
-                                  deleteThesis(
-                                    '${thesis.id}'
-                                  )
-                                "
-                              >
-                                ×
-                              </button>
-
-                            `
-
-                            : ""
-                        }
-
-                      </div>
-
-                    </div>
-
-                  `
-                ).join("")
-
-              : `
+            state.theses.map(
+              (
+                thesis,
+                index
+              ) => `
 
                 <div class="thesis">
 
-                  <span class="muted">
-                    Noch keine Thesen.
-                  </span>
+                  <div class="row">
+
+                    <strong>
+                      ${index + 1}.
+                    </strong>
+
+                    <span style="flex:1">
+
+                      ${esc(thesis.text)}
+
+                    </span>
+
+                    ${
+                      owner
+
+                        ? `
+
+                          <button
+                            class="danger"
+
+                            onclick="
+                              deleteThesis(
+                                '${thesis.id}'
+                              )
+                            "
+                          >
+                            ×
+                          </button>
+
+                        `
+
+                        : ""
+                    }
+
+                  </div>
 
                 </div>
 
               `
+            ).join("")
           }
-
 
         </div>
 
@@ -3385,13 +2656,10 @@ function renderLobby(){
 
               <hr>
 
-
               <button
                 class="primary"
 
-                onclick="
-                  startDraft()
-                "
+                onclick="startDraft()"
 
                 ${
                   state.players.length !== 2
@@ -3404,7 +2672,7 @@ function renderLobby(){
                 }
               >
 
-                🎲 Thesendraft auslosen
+                🎲 Thesendraft starten
 
               </button>
 
@@ -3423,135 +2691,62 @@ function renderLobby(){
 
 
 
-/* =========================================================
-   THESEN
-========================================================= */
-
-
 async function addThesis(){
 
-  const element =
+  const input =
     document.getElementById(
       "newThesis"
     );
 
 
-  if(
-    !element
-  ){
-
-    return;
-
-  }
-
-
   const text =
-    element
-      .value
-      .trim();
+    input.value.trim();
 
 
-  if(
-    !text
-  ){
+  if(!text){
+    return;
+  }
+
+
+  const {
+    error
+  } =
+    await db
+      .from("theses")
+      .insert({
+        game_id:state.gameId,
+        text
+      });
+
+
+  if(error){
+
+    errorMessage(error);
 
     return;
 
   }
 
 
-  try{
-
-    const {
-      error
-    } =
-      await db
-
-        .from(
-          "theses"
-        )
-
-        .insert(
-          {
-
-            game_id:
-              state.gameId,
-
-            text
-
-          }
-        );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-
-    element.value =
-      "";
-
-  }
-
-  catch(
-    error
-  ){
-
-    errorMessage(
-      error
-    );
-
-  }
+  input.value = "";
 
 }
 
 
 
-async function deleteThesis(
-  id
-){
+async function deleteThesis(id){
 
-  try{
-
-    const {
-      error
-    } =
-      await db
-
-        .from(
-          "theses"
-        )
-
-        .delete()
-
-        .eq(
-          "id",
-          id
-        );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
+  } =
+    await db
+      .from("theses")
+      .delete()
+      .eq("id",id);
 
-    errorMessage(
-      error
-    );
 
+  if(error){
+    errorMessage(error);
   }
 
 }
@@ -3560,40 +2755,20 @@ async function deleteThesis(
 
 async function startDraft(){
 
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "start_draft",
-        {
-
-          p_game_id:
-            state.gameId
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
-
-    errorMessage(
-      error
+  } =
+    await db.rpc(
+      "start_draft",
+      {
+        p_game_id:
+          state.gameId
+      }
     );
 
+
+  if(error){
+    errorMessage(error);
   }
 
 }
@@ -3601,7 +2776,7 @@ async function startDraft(){
 
 
 /* =========================================================
-   THESENDRAFT
+   THESENDRAFT + DIREKTES SETZEN
 ========================================================= */
 
 
@@ -3627,9 +2802,33 @@ function renderThesisDraft(){
     );
 
 
+  const myPlacements =
+    state.placements.filter(
+      placement =>
+        placement.user_id ===
+        state.user.id
+    );
+
+
+  const usedFields =
+    myPlacements.map(
+      placement =>
+        placement.field
+    );
+
+
+  const freeFields =
+    Object.keys(
+      fieldNames
+    ).filter(
+      field =>
+        !usedFields.includes(
+          field
+        )
+    );
+
 
   return `
-
 
     <div class="card drawCard">
 
@@ -3644,15 +2843,13 @@ function renderThesisDraft(){
       <div class="drawWinner">
 
         ${esc(
-          starter?.name ||
-          ""
+          starter?.name || ""
         )}
         beginnt!
 
       </div>
 
     </div>
-
 
 
     <div class="turn">
@@ -3664,13 +2861,11 @@ function renderThesisDraft(){
           ? "Du bist am Zug"
 
           : `${esc(
-              currentPlayer?.name ||
-              ""
+              currentPlayer?.name || ""
             )} ist am Zug`
       }
 
     </div>
-
 
 
     <div class="grid2">
@@ -3689,7 +2884,10 @@ function renderThesisDraft(){
             draftedTheses().length +
             1
           }
-          von 10
+          von 10.
+
+          Jede These wird sofort
+          auf ein Feld gesetzt.
 
         </p>
 
@@ -3709,11 +2907,14 @@ function renderThesisDraft(){
 
                   <div class="thesis">
 
-                    <div>
+                    <strong>
+
                       ${esc(
                         thesis.text
                       )}
-                    </div>
+
+                    </strong>
+
 
                     ${
                       seat ===
@@ -3721,17 +2922,51 @@ function renderThesisDraft(){
 
                         ? `
 
-                          <button
-                            style="margin-top:10px"
-
-                            onclick="
-                              pickThesis(
-                                '${thesis.id}'
-                              )
+                          <div
+                            class="muted"
+                            style="
+                              margin-top:10px
                             "
                           >
-                            Auswählen
-                          </button>
+                            Direkt setzen auf:
+                          </div>
+
+
+                          <div class="fieldButtons">
+
+                            ${
+                              freeFields.map(
+                                field => `
+
+                                  <button
+                                    class="fieldButton ${
+                                      field === "P3" ||
+                                      field === "N3"
+                                        ? "strong"
+                                        : ""
+                                    }"
+
+                                    onclick="
+                                      pickThesis(
+                                        '${thesis.id}',
+                                        '${field}'
+                                      )
+                                    "
+                                  >
+
+                                    ${
+                                      fieldNames[
+                                        field
+                                      ]
+                                    }
+
+                                  </button>
+
+                                `
+                              ).join("")
+                            }
+
+                          </div>
 
                         `
 
@@ -3749,98 +2984,114 @@ function renderThesisDraft(){
       </div>
 
 
-
-      <div class="card">
-
-        <h2>
-          Draftboard
-        </h2>
+      <div>
 
 
-        ${
-          state.players.map(
-            player => {
+        <div class="card">
 
-              const picks =
-                draftedTheses()
+          <h2>
+            Dein aktuelles Brett
+          </h2>
 
-                .filter(
-                  thesis =>
-                    thesis.drafted_by ===
-                    player.user_id
-                )
+          <p class="muted">
 
-                .sort(
-                  (
-                    a,
-                    b
-                  ) =>
-                    a.draft_order -
-                    b.draft_order
-                );
+            Dein Gegner sieht
+            deine Feldzuordnung
+            noch nicht.
+
+          </p>
+
+          ${renderBoard(
+            state.user.id
+          )}
+
+        </div>
 
 
-              return `
+        <div class="card">
 
-                <div>
+          <h2>
+            Draft
+          </h2>
 
-                  <h3>
-                    ${esc(
-                      player.name
-                    )}
-                  </h3>
+          ${
+            state.players.map(
+              player => {
+
+                const picks =
+                  draftedTheses()
+
+                    .filter(
+                      thesis =>
+                        thesis.drafted_by ===
+                        player.user_id
+                    )
+
+                    .sort(
+                      (a,b) =>
+                        a.draft_order -
+                        b.draft_order
+                    );
 
 
-                  ${
-                    picks.length
+                return `
 
-                      ? picks.map(
-                          thesis => `
+                  <div>
 
-                            <div class="thesis">
+                    <h3>
+                      ${esc(player.name)}
+                    </h3>
 
-                              <span class="badge">
+                    ${
+                      picks.length
 
-                                Pick
-                                ${
-                                  thesis.draft_order
-                                }
+                        ? picks.map(
+                            thesis => `
 
-                              </span>
+                              <div class="thesis">
 
-                              <div
-                                style="
-                                  margin-top:8px
-                                "
-                              >
+                                <span class="badge">
 
-                                ${esc(
-                                  thesis.text
-                                )}
+                                  Pick
+                                  ${thesis.draft_order}
+
+                                </span>
+
+                                <div
+                                  style="
+                                    margin-top:7px
+                                  "
+                                >
+
+                                  ${esc(
+                                    thesis.text
+                                  )}
+
+                                </div>
 
                               </div>
 
-                            </div>
+                            `
+                          ).join("")
 
-                          `
-                        ).join("")
+                        : `
 
-                      : `
+                          <span class="muted">
+                            Noch kein Pick
+                          </span>
 
-                        <span class="muted">
-                          Noch kein Pick
-                        </span>
+                        `
+                    }
 
-                      `
-                  }
+                  </div>
 
-                </div>
+                `;
 
-              `;
+              }
+            ).join("<hr>")
+          }
 
-            }
-          ).join("<hr>")
-        }
+        </div>
 
       </div>
 
@@ -3854,7 +3105,8 @@ function renderThesisDraft(){
 
 
 async function pickThesis(
-  id
+  id,
+  field
 ){
 
   try{
@@ -3870,317 +3122,6 @@ async function pickThesis(
             state.gameId,
 
           p_thesis_id:
-            id
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
-    error
-  ){
-
-    errorMessage(
-      error
-    );
-
-  }
-
-}
-
-
-
-/* =========================================================
-   THESEN SETZEN
-========================================================= */
-
-
-function renderPlacement(){
-
-  const ownTheses =
-    state.theses.filter(
-      thesis =>
-        thesis.drafted_by ===
-        state.user.id
-    );
-
-
-  const ownPlacements =
-    state.placements.filter(
-      placement =>
-        placement.user_id ===
-        state.user.id
-    );
-
-
-  const locked =
-    state.me
-      ?.placement_locked;
-
-
-
-  return `
-
-    <div class="grid2">
-
-
-      <div class="card">
-
-        <h2>
-          Dein Brett
-        </h2>
-
-        <p class="muted">
-
-          Dein Gegner sieht deine
-          Platzierung erst,
-          wenn ihr beide bestätigt habt.
-
-        </p>
-
-
-        <div class="fields">
-
-          ${[
-            "P1",
-            "N1",
-            "P3",
-            "N3",
-            "Q"
-          ].map(
-            field => {
-
-              const placement =
-                ownPlacements.find(
-                  item =>
-                    item.field ===
-                    field
-                );
-
-
-              return `
-
-                <div class="field">
-
-                  <div class="fieldLabel">
-
-                    ${
-                      fieldNames[
-                        field
-                      ]
-                    }
-
-                  </div>
-
-
-                  <select
-
-                    ${
-                      locked
-                        ? "disabled"
-                        : ""
-                    }
-
-                    onchange="
-                      if(this.value){
-                        placeThesis(
-                          this.value,
-                          '${field}'
-                        )
-                      }
-                    "
-                  >
-
-                    <option value="">
-                      These auswählen
-                    </option>
-
-
-                    ${ownTheses.map(
-                      thesis => `
-
-                        <option
-
-                          value="${thesis.id}"
-
-                          ${
-                            placement
-                              ?.thesis_id ===
-                            thesis.id
-
-                              ? "selected"
-
-                              : ""
-                          }
-
-                        >
-
-                          ${esc(
-                            thesis.text
-                          )}
-
-                        </option>
-
-                      `
-                    ).join("")}
-
-                  </select>
-
-                </div>
-
-              `;
-
-            }
-          ).join("")}
-
-        </div>
-
-
-        <hr>
-
-
-        ${
-          locked
-
-            ? `
-
-              <div class="success">
-                ✓ Dein Brett ist gesperrt.
-              </div>
-
-            `
-
-            : `
-
-              <button
-
-                class="primary"
-
-                onclick="
-                  lockPlacements()
-                "
-
-                ${
-                  ownPlacements.length !== 5
-                    ? "disabled"
-                    : ""
-                }
-
-              >
-                Platzierung bestätigen
-              </button>
-
-            `
-        }
-
-      </div>
-
-
-
-      <div class="card">
-
-        <h2>
-          Gegner
-        </h2>
-
-
-        ${
-          state.players
-
-            .filter(
-              player =>
-                player.user_id !==
-                state.user.id
-            )
-
-            .map(
-              player => `
-
-                <div class="thesis">
-
-                  <strong>
-                    ${esc(
-                      player.name
-                    )}
-                  </strong>
-
-                  <p class="muted">
-
-                    ${
-                      player.placement_locked
-
-                        ? "✓ Brett gesperrt"
-
-                        : "setzt noch …"
-                    }
-
-                  </p>
-
-                  <div
-                    style="
-                      font-size:48px;
-                      text-align:center
-                    "
-                  >
-                    ♟
-                  </div>
-
-                </div>
-
-              `
-            ).join("")
-        }
-
-
-        <hr>
-
-
-        <span class="badge">
-
-          ? =
-          ${state.game.random_value}
-
-        </span>
-
-      </div>
-
-
-    </div>
-
-  `;
-
-}
-
-
-
-async function placeThesis(
-  id,
-  field
-){
-
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "place_thesis",
-        {
-
-          p_game_id:
-            state.gameId,
-
-          p_thesis_id:
             id,
 
           p_field:
@@ -4190,65 +3131,15 @@ async function placeThesis(
       );
 
 
-    if(
-      error
-    ){
-
+    if(error){
       throw error;
-
     }
 
   }
 
-  catch(
-    error
-  ){
+  catch(error){
 
-    errorMessage(
-      error
-    );
-
-  }
-
-}
-
-
-
-async function lockPlacements(){
-
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "lock_placements",
-        {
-
-          p_game_id:
-            state.gameId
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
-    error
-  ){
-
-    errorMessage(
-      error
-    );
+    errorMessage(error);
 
   }
 
@@ -4277,68 +3168,67 @@ function renderBoard(
 
     <div class="fields">
 
-      ${[
-        "P1",
-        "N1",
-        "P3",
-        "N3",
-        "Q"
-      ].map(
-        field => {
+      ${
+        Object.keys(
+          fieldNames
+        ).map(
+          field => {
 
-          const placement =
-            placements.find(
-              item =>
-                item.field ===
-                field
-            );
+            const placement =
+              placements.find(
+                item =>
+                  item.field ===
+                  field
+              );
 
 
-          const thesis =
-            placement
+            const thesis =
+              placement
 
-              ? state.theses.find(
-                  item =>
-                    item.id ===
-                    placement.thesis_id
-                )
+                ? state.theses.find(
+                    item =>
+                      item.id ===
+                      placement.thesis_id
+                  )
 
-              : null;
+                : null;
 
 
-          return `
+            return `
 
-            <div class="field">
+              <div class="field">
 
-              <div class="fieldLabel">
+                <div class="fieldLabel">
 
-                ${
-                  fieldNames[
-                    field
-                  ]
-                }
+                  ${
+                    fieldNames[
+                      field
+                    ]
+                  }
+
+                </div>
+
+                <div>
+
+                  ${
+                    thesis
+
+                      ? esc(
+                          thesis.text
+                        )
+
+                      : "frei"
+                  }
+
+                </div>
 
               </div>
 
-              <div>
+            `;
 
-                ${
-                  thesis
-                    ? esc(
-                        thesis.text
-                      )
-
-                    : "–"
-                }
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      ).join("")}
+          }
+        ).join("")
+      }
 
     </div>
 
@@ -4378,9 +3268,7 @@ function renderFigureDraft(){
   const unusedFigures =
     Object.keys(
       figureNames
-    )
-
-    .filter(
+    ).filter(
       figure =>
         !myFigures.some(
           item =>
@@ -4390,43 +3278,39 @@ function renderFigureDraft(){
     );
 
 
-
   return `
-
 
     <div class="card">
 
       <h2>
-        Bretter aufgedeckt
+        Thesenbretter aufgedeckt
       </h2>
-
 
       <div class="grid2">
 
-        ${state.players.map(
-          player => `
+        ${
+          state.players.map(
+            player => `
 
-            <div>
+              <div>
 
-              <h3>
-                ${esc(
-                  player.name
+                <h3>
+                  ${esc(player.name)}
+                </h3>
+
+                ${renderBoard(
+                  player.user_id
                 )}
-              </h3>
 
-              ${renderBoard(
-                player.user_id
-              )}
+              </div>
 
-            </div>
-
-          `
-        ).join("")}
+            `
+          ).join("")
+        }
 
       </div>
 
     </div>
-
 
 
     <div class="turn">
@@ -4438,24 +3322,20 @@ function renderFigureDraft(){
           ? "Du bist beim Figurendraft am Zug"
 
           : `${esc(
-              activePlayer?.name ||
-              ""
+              activePlayer?.name || ""
             )} ist am Zug`
       }
 
     </div>
 
 
-
     <div class="grid2">
-
 
       <div class="card">
 
         <h2>
           Fußballer wählen
         </h2>
-
 
         ${
           seat ===
@@ -4469,30 +3349,32 @@ function renderFigureDraft(){
                   id="figureSelect"
                 >
 
-                  ${unusedFigures.map(
-                    figure => `
+                  ${
+                    unusedFigures.map(
+                      figure => `
 
-                      <option
-                        value="${figure}"
-                      >
+                        <option
+                          value="${figure}"
+                        >
 
-                        ${
-                          figureNames[
-                            figure
-                          ]
-                        }
+                          ${
+                            figureNames[
+                              figure
+                            ]
+                          }
 
-                      </option>
+                        </option>
 
-                    `
-                  ).join("")}
+                      `
+                    ).join("")
+                  }
 
                 </select>
 
 
                 <input
                   id="footballerInput"
-                  placeholder="z. B. Harry Kane"
+                  placeholder="Spielername"
                 >
 
 
@@ -4504,10 +3386,7 @@ function renderFigureDraft(){
 
                 <button
                   class="primary"
-
-                  onclick="
-                    pickFigure()
-                  "
+                  onclick="pickFigure()"
                 >
                   Spieler draften
                 </button>
@@ -4519,10 +3398,7 @@ function renderFigureDraft(){
             : `
 
               <p class="muted">
-
-                Warte auf den Pick
-                deines Gegners.
-
+                Gegner ist am Zug.
               </p>
 
             `
@@ -4531,39 +3407,32 @@ function renderFigureDraft(){
       </div>
 
 
-
       <div class="card">
 
         <h2>
-          Draftboard
+          Figuren
         </h2>
 
+        ${
+          state.players.map(
+            player => {
 
-        ${state.players.map(
-          player => {
-
-            const figures =
-              state.figures.filter(
-                figure =>
-                  figure.user_id ===
-                  player.user_id
-              );
+              const figures =
+                state.figures.filter(
+                  figure =>
+                    figure.user_id ===
+                    player.user_id
+                );
 
 
-            return `
-
-              <div>
+              return `
 
                 <h3>
-                  ${esc(
-                    player.name
-                  )}
+                  ${esc(player.name)}
                 </h3>
 
-
-                <div class="stack">
-
-                  ${Object.keys(
+                ${
+                  Object.keys(
                     figureNames
                   ).map(
                     figure => {
@@ -4595,19 +3464,11 @@ function renderFigureDraft(){
                             ${
                               pick
 
-                                ? `${esc(
+                                ? esc(
                                     pick.footballer
-                                  )}${
-                                    pick.club
+                                  )
 
-                                      ? ` · ${esc(
-                                          pick.club
-                                        )}`
-
-                                      : ""
-                                  }`
-
-                                : "noch frei"
+                                : "frei"
                             }
 
                           </div>
@@ -4617,19 +3478,18 @@ function renderFigureDraft(){
                       `;
 
                     }
-                  ).join("")}
+                  ).join("")
+                }
 
-                </div>
+                <hr>
 
-              </div>
+              `;
 
-            `;
-
-          }
-        ).join("<hr>")}
+            }
+          ).join("")
+        }
 
       </div>
-
 
     </div>
 
@@ -4667,13 +3527,10 @@ async function pickFigure(){
       .trim();
 
 
-
-  if(
-    !footballer
-  ){
+  if(!footballer){
 
     toast(
-      "Fußballer eingeben"
+      "Spieler eingeben"
     );
 
     return;
@@ -4681,51 +3538,31 @@ async function pickFigure(){
   }
 
 
-
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "pick_figure",
-        {
-
-          p_game_id:
-            state.gameId,
-
-          p_figure:
-            figure,
-
-          p_footballer:
-            footballer,
-
-          p_club:
-            club ||
-            null
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
+  } =
+    await db.rpc(
+      "pick_figure",
+      {
 
-    errorMessage(
-      error
+        p_game_id:
+          state.gameId,
+
+        p_figure:
+          figure,
+
+        p_footballer:
+          footballer,
+
+        p_club:
+          club || null
+
+      }
     );
 
+
+  if(error){
+    errorMessage(error);
   }
 
 }
@@ -4747,9 +3584,7 @@ function thesisPoints(
     ||
     thesis?.resolved === undefined
   ){
-
     return 0;
-
   }
 
 
@@ -4806,17 +3641,10 @@ function thesisPoints(
 
 
 
-function playerScore(
-  userId
-){
+function playerScore(userId){
 
-  let thesisTotal =
-    0;
-
-
-  let figureTotal =
-    0;
-
+  let thesisTotal = 0;
+  let figureTotal = 0;
 
 
   state.placements
@@ -4848,7 +3676,6 @@ function playerScore(
     );
 
 
-
   state.figures
 
     .filter(
@@ -4862,22 +3689,18 @@ function playerScore(
 
         figureTotal +=
           Number(
-            figure.points ||
-            0
+            figure.points || 0
           );
 
       }
     );
 
 
-
   return {
 
-    thesis:
-      thesisTotal,
+    thesis:thesisTotal,
 
-    figures:
-      figureTotal,
+    figures:figureTotal,
 
     total:
       thesisTotal +
@@ -4894,9 +3717,7 @@ function playerScore(
 ========================================================= */
 
 
-function renderScoring(
-  finished
-){
+function renderScoring(finished){
 
   const player1 =
     state.players[0];
@@ -4904,24 +3725,6 @@ function renderScoring(
 
   const player2 =
     state.players[1];
-
-
-
-  if(
-    !player1 ||
-    !player2
-  ){
-
-    return `
-
-      <div class="card">
-        Spielerdaten werden geladen …
-      </div>
-
-    `;
-
-  }
-
 
 
   const score1 =
@@ -4936,7 +3739,6 @@ function renderScoring(
     );
 
 
-
   const winner =
 
     score1.total ===
@@ -4947,22 +3749,12 @@ function renderScoring(
       : score1.total >
         score2.total
 
-        ? `${
-            player1
-              .name
-              .toUpperCase()
-          } GEWINNT`
+        ? `${player1.name.toUpperCase()} GEWINNT`
 
-        : `${
-            player2
-              .name
-              .toUpperCase()
-          } GEWINNT`;
-
+        : `${player2.name.toUpperCase()} GEWINNT`;
 
 
   return `
-
 
     ${
       finished
@@ -4972,11 +3764,7 @@ function renderScoring(
           <div class="card">
 
             <div class="bigResult">
-
-              ${esc(
-                winner
-              )}
-
+              ${esc(winner)}
             </div>
 
           </div>
@@ -4987,16 +3775,12 @@ function renderScoring(
     }
 
 
-
     <div class="card score">
-
 
       <div>
 
         <strong>
-          ${esc(
-            player1.name
-          )}
+          ${esc(player1.name)}
         </strong>
 
         <div class="points">
@@ -5014,9 +3798,7 @@ function renderScoring(
       <div>
 
         <strong>
-          ${esc(
-            player2.name
-          )}
+          ${esc(player2.name)}
         </strong>
 
         <div class="points">
@@ -5025,127 +3807,188 @@ function renderScoring(
 
       </div>
 
-
     </div>
-
 
 
     <div class="grid2">
 
+      ${
+        state.players.map(
+          player => {
 
-      ${state.players.map(
-        player => {
-
-          const score =
-            playerScore(
-              player.user_id
-            );
-
-
-          const placements =
-            state.placements.filter(
-              placement =>
-                placement.user_id ===
-                player.user_id
-            );
+            const placements =
+              state.placements.filter(
+                placement =>
+                  placement.user_id ===
+                  player.user_id
+              );
 
 
-          const figures =
-            state.figures.filter(
-              figure =>
-                figure.user_id ===
-                player.user_id
-            );
+            const figures =
+              state.figures.filter(
+                figure =>
+                  figure.user_id ===
+                  player.user_id
+              );
 
 
+            return `
 
-          return `
+              <div class="card">
 
-            <div class="card">
-
-              <h2>
-                ${esc(
-                  player.name
-                )}
-              </h2>
+                <h2>
+                  ${esc(player.name)}
+                </h2>
 
 
-              <span class="badge">
-
-                Thesen
-                ${score.thesis}
-
-              </span>
+                <h3>
+                  Thesen
+                </h3>
 
 
-              <span class="badge">
+                ${
+                  placements.map(
+                    placement => {
 
-                Figuren
-                ${score.figures}
-
-              </span>
-
-
-              <hr>
-
-
-              <h3>
-                Thesen
-              </h3>
+                      const thesis =
+                        state.theses.find(
+                          item =>
+                            item.id ===
+                            placement.thesis_id
+                        );
 
 
-              <div class="stack">
-
-                ${placements.map(
-                  placement => {
-
-                    const thesis =
-                      state.theses.find(
-                        item =>
-                          item.id ===
-                          placement.thesis_id
-                      );
+                      const points =
+                        thesisPoints(
+                          placement,
+                          thesis
+                        );
 
 
-                    const points =
-                      thesisPoints(
-                        placement,
-                        thesis
-                      );
+                      return `
+
+                        <div class="thesis">
+
+                          <strong>
+
+                            ${
+                              fieldNames[
+                                placement.field
+                              ]
+                            }
+
+                            ·
+
+                            ${
+                              points >= 0
+                                ? "+"
+                                : ""
+                            }
+
+                            ${points}
+
+                          </strong>
 
 
-                    return `
+                          <p>
+
+                            ${esc(
+                              thesis.text
+                            )}
+
+                          </p>
+
+
+                          ${
+                            finished
+
+                              ? `
+
+                                <span class="muted">
+
+                                  ${
+                                    thesis.resolved
+
+                                      ? "✓ eingetreten"
+
+                                      : "✕ nicht eingetreten"
+                                  }
+
+                                </span>
+
+                              `
+
+                              : `
+
+                                <div class="row">
+
+                                  <button
+                                    onclick="
+                                      resolveThesis(
+                                        '${thesis.id}',
+                                        true
+                                      )
+                                    "
+                                  >
+                                    Eingetreten
+                                  </button>
+
+                                  <button
+                                    class="ghost"
+
+                                    onclick="
+                                      resolveThesis(
+                                        '${thesis.id}',
+                                        false
+                                      )
+                                    "
+                                  >
+                                    Nicht eingetreten
+                                  </button>
+
+                                </div>
+
+                              `
+                          }
+
+                        </div>
+
+                      `;
+
+                    }
+                  ).join("")
+                }
+
+
+                <hr>
+
+
+                <h3>
+                  Figuren
+                </h3>
+
+
+                ${
+                  figures.map(
+                    figure => `
 
                       <div class="thesis">
 
                         <strong>
 
                           ${
-                            fieldNames[
-                              placement.field
+                            figureNames[
+                              figure.figure
                             ]
                           }
 
                           ·
 
-                          ${
-                            points >= 0
-                              ? "+"
-                              : ""
-                          }
-
-                          ${points}
-
-                        </strong>
-
-
-                        <div>
-
                           ${esc(
-                            thesis.text
+                            figure.footballer
                           )}
 
-                        </div>
+                        </strong>
 
 
                         ${
@@ -5153,15 +3996,16 @@ function renderScoring(
 
                             ? `
 
-                              <div class="muted">
+                              <div>
 
                                 ${
-                                  thesis.resolved
-
-                                    ? "✓ eingetreten"
-
-                                    : "✕ nicht eingetreten"
+                                  figure.points >= 0
+                                    ? "+"
+                                    : ""
                                 }
+
+                                ${figure.points}
+                                Punkte
 
                               </div>
 
@@ -5172,49 +4016,46 @@ function renderScoring(
                               <div
                                 class="row"
                                 style="
-                                  margin-top:8px
+                                  margin-top:10px
                                 "
                               >
 
                                 <button
-                                  class="${
-                                    thesis.resolved ===
-                                    true
-
-                                      ? "primary"
-
-                                      : "ghost"
-                                  }"
+                                  class="ghost"
 
                                   onclick="
-                                    resolveThesis(
-                                      '${thesis.id}',
-                                      true
+                                    setFigurePoints(
+                                      '${figure.id}',
+                                      ${
+                                        Number(
+                                          figure.points
+                                        ) - 1
+                                      }
                                     )
                                   "
                                 >
-                                  Eingetreten
+                                  −
                                 </button>
 
+                                <strong>
+                                  ${figure.points}
+                                </strong>
 
                                 <button
-                                  class="${
-                                    thesis.resolved ===
-                                    false
-
-                                      ? "primary"
-
-                                      : "ghost"
-                                  }"
+                                  class="ghost"
 
                                   onclick="
-                                    resolveThesis(
-                                      '${thesis.id}',
-                                      false
+                                    setFigurePoints(
+                                      '${figure.id}',
+                                      ${
+                                        Number(
+                                          figure.points
+                                        ) + 1
+                                      }
                                     )
                                   "
                                 >
-                                  Nicht eingetreten
+                                  +
                                 </button>
 
                               </div>
@@ -5224,151 +4065,19 @@ function renderScoring(
 
                       </div>
 
-                    `;
-
-                  }
-                ).join("")}
-
-              </div>
-
-
-              <hr>
-
-
-              <h3>
-                Figuren
-              </h3>
-
-
-              <div class="stack">
-
-                ${figures.map(
-                  figure => `
-
-                    <div class="thesis">
-
-                      <div>
-
-                        <strong>
-
-                          ${
-                            figureNames[
-                              figure.figure
-                            ]
-                          }
-
-                        </strong>
-
-                        ·
-
-                        ${esc(
-                          figure.footballer
-                        )}
-
-                      </div>
-
-
-                      <div
-                        class="row"
-                        style="
-                          margin-top:8px
-                        "
-                      >
-
-                        ${
-                          finished
-
-                            ? `
-
-                              <strong>
-
-                                ${
-                                  figure.points >= 0
-                                    ? "+"
-                                    : ""
-                                }
-
-                                ${figure.points}
-
-                                Punkte
-
-                              </strong>
-
-                            `
-
-                            : `
-
-                              <button
-                                class="ghost"
-
-                                onclick="
-                                  setFigurePoints(
-                                    '${figure.id}',
-                                    ${
-                                      Number(
-                                        figure.points
-                                      ) - 1
-                                    }
-                                  )
-                                "
-                              >
-                                −
-                              </button>
-
-
-                              <strong>
-
-                                ${
-                                  Number(
-                                    figure.points
-                                  ) >= 0
-                                    ? "+"
-                                    : ""
-                                }
-
-                                ${figure.points}
-
-                              </strong>
-
-
-                              <button
-                                class="ghost"
-
-                                onclick="
-                                  setFigurePoints(
-                                    '${figure.id}',
-                                    ${
-                                      Number(
-                                        figure.points
-                                      ) + 1
-                                    }
-                                  )
-                                "
-                              >
-                                +
-                              </button>
-
-                            `
-                        }
-
-                      </div>
-
-                    </div>
-
-                  `
-                ).join("")}
+                    `
+                  ).join("")
+                }
 
               </div>
 
-            </div>
+            `;
 
-          `;
-
-        }
-      ).join("")}
+          }
+        ).join("")
+      }
 
     </div>
-
 
 
     ${
@@ -5380,10 +4089,7 @@ function renderScoring(
 
             <button
               class="primary"
-
-              onclick="
-                finishGame()
-              "
+              onclick="finishGame()"
             >
               Abpfiff
             </button>
@@ -5392,39 +4098,7 @@ function renderScoring(
 
         `
 
-        : `
-
-          <div class="card">
-
-            ${
-              isMainAccount()
-
-                ? `
-
-                  <button
-                    class="primary"
-
-                    onclick="
-                      goHome()
-                    "
-                  >
-                    Zur Lobbyübersicht
-                  </button>
-
-                `
-
-                : `
-
-                  <strong>
-                    Spiel beendet.
-                  </strong>
-
-                `
-            }
-
-          </div>
-
-        `
+        : ""
     }
 
   `;
@@ -5433,53 +4107,28 @@ function renderScoring(
 
 
 
-/* =========================================================
-   AUSWERTUNGSFUNKTIONEN
-========================================================= */
-
-
 async function resolveThesis(
   id,
   value
 ){
 
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "resolve_thesis",
-        {
-
-          p_thesis_id:
-            id,
-
-          p_resolved:
-            value
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
+  } =
+    await db.rpc(
+      "resolve_thesis",
+      {
 
-    errorMessage(
-      error
+        p_thesis_id:id,
+
+        p_resolved:value
+
+      }
     );
 
+
+  if(error){
+    errorMessage(error);
   }
 
 }
@@ -5491,43 +4140,23 @@ async function setFigurePoints(
   points
 ){
 
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "set_figure_points",
-        {
-
-          p_pick_id:
-            id,
-
-          p_points:
-            points
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
+  } =
+    await db.rpc(
+      "set_figure_points",
+      {
 
-    errorMessage(
-      error
+        p_pick_id:id,
+
+        p_points:points
+
+      }
     );
 
+
+  if(error){
+    errorMessage(error);
   }
 
 }
@@ -5536,40 +4165,20 @@ async function setFigurePoints(
 
 async function finishGame(){
 
-  try{
-
-    const {
-      error
-    } =
-      await db.rpc(
-        "finish_game",
-        {
-
-          p_game_id:
-            state.gameId
-
-        }
-      );
-
-
-    if(
-      error
-    ){
-
-      throw error;
-
-    }
-
-  }
-
-  catch(
+  const {
     error
-  ){
-
-    errorMessage(
-      error
+  } =
+    await db.rpc(
+      "finish_game",
+      {
+        p_game_id:
+          state.gameId
+      }
     );
 
+
+  if(error){
+    errorMessage(error);
   }
 
 }
