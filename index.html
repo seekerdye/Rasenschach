@@ -10,7 +10,7 @@
   content="width=device-width,initial-scale=1,viewport-fit=cover"
 >
 
-<title>Rasenschach</title>
+<title>Rasenschach Bundesliga</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -19,6 +19,7 @@
 :root{
   --bg:#10281f;
   --panel:#17372b;
+  --panel2:#1d4435;
   --dark:#0a1712;
   --cream:#f3eedf;
   --muted:#b7c6bd;
@@ -66,7 +67,7 @@ button{
 
 .shell{
   width:min(
-    1100px,
+    1150px,
     calc(100% - 24px)
   );
 
@@ -77,7 +78,6 @@ button{
 
 header{
   display:flex;
-
   justify-content:space-between;
   align-items:center;
 
@@ -104,9 +104,9 @@ header{
   align-items:center;
   justify-content:flex-end;
 
-  gap:6px;
-
   flex-wrap:wrap;
+
+  gap:6px;
 
   color:var(--muted);
 
@@ -114,9 +114,17 @@ header{
 }
 
 .card{
-  background:rgba(23,55,43,.94);
+  background:
+    rgba(
+      23,
+      55,
+      43,
+      .95
+    );
 
-  border:1px solid var(--line);
+  border:
+    1px solid
+    var(--line);
 
   border-radius:20px;
 
@@ -147,24 +155,48 @@ header{
   gap:12px;
 }
 
-@media(max-width:850px){
+.matchdayGrid{
+  display:grid;
 
-  .grid3{
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:10px;
+
+  margin-top:15px;
+}
+
+@media(max-width:950px){
+
+  .matchdayGrid{
     grid-template-columns:
-      1fr 1fr;
+      repeat(3,1fr);
   }
 
 }
 
-@media(max-width:720px){
+@media(max-width:760px){
 
   .grid2,
   .grid3{
     grid-template-columns:1fr;
   }
 
+  .matchdayGrid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
   header{
     align-items:flex-start;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .matchdayGrid{
+    grid-template-columns:1fr;
   }
 
 }
@@ -251,7 +283,7 @@ button.danger{
 
   border:
     1px solid
-    rgba(255,129,111,.35);
+    rgba(255,129,111,.4);
 }
 
 button:disabled{
@@ -290,7 +322,7 @@ button:disabled{
 
   align-items:center;
 
-  gap:6px;
+  gap:5px;
 
   padding:5px 9px;
 
@@ -307,35 +339,66 @@ button:disabled{
   margin:2px;
 }
 
-.fieldButtons{
+.lobbyCard{
+  display:flex;
+
+  flex-direction:column;
+
+  min-height:235px;
+}
+
+.lobbyName{
+  font-size:22px;
+
+  font-weight:900;
+
+  margin-top:12px;
+}
+
+.lobbyCode{
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-top:4px;
+}
+
+.actions{
   display:flex;
 
   flex-wrap:wrap;
 
   gap:7px;
 
-  margin-top:10px;
+  margin-top:auto;
+
+  padding-top:15px;
 }
 
-.fieldButton{
-  min-width:52px;
-
-  background:transparent;
-
-  color:var(--cream);
+.matchday{
+  background:#0d2119;
 
   border:1px solid var(--line);
+
+  border-radius:15px;
+
+  padding:13px;
+
+  min-height:155px;
+
+  display:flex;
+
+  flex-direction:column;
 }
 
-.fieldButton:hover{
-  border-color:var(--accent);
-  color:var(--accent);
+.matchdayNumber{
+  font-size:22px;
+
+  font-weight:900;
 }
 
-.fieldButton.strong{
-  background:var(--accent);
-
-  color:#102018;
+.matchday .actions{
+  margin-top:auto;
 }
 
 .turn{
@@ -404,9 +467,9 @@ button:disabled{
   grid-template-columns:
     70px 1fr;
 
-  gap:10px;
-
   align-items:center;
+
+  gap:10px;
 
   background:#0c2119;
 
@@ -425,56 +488,42 @@ button:disabled{
   text-align:center;
 }
 
-.drawCard{
-  text-align:center;
-
-  padding:22px;
-}
-
-.drawIcon{
-  font-size:42px;
-
-  margin-bottom:8px;
-}
-
-.drawWinner{
-  font-size:clamp(25px,6vw,42px);
-
-  font-weight:900;
-
-  color:var(--accent);
-
-  margin:6px 0;
-}
-
-.lobbyCard{
+.fieldButtons{
   display:flex;
-
-  flex-direction:column;
-
-  min-height:210px;
-}
-
-.lobbyCode{
-  font-size:25px;
-
-  font-weight:900;
-
-  letter-spacing:.08em;
-
-  margin-top:14px;
-}
-
-.lobbyActions{
-  display:flex;
-
-  gap:8px;
 
   flex-wrap:wrap;
 
-  margin-top:auto;
+  gap:7px;
 
-  padding-top:16px;
+  margin-top:10px;
+}
+
+.fieldButton{
+  background:transparent;
+
+  color:var(--cream);
+
+  border:1px solid var(--line);
+
+  min-width:52px;
+}
+
+.fieldButton:hover{
+  border-color:var(--accent);
+
+  color:var(--accent);
+}
+
+.drawCard{
+  text-align:center;
+}
+
+.drawWinner{
+  color:var(--accent);
+
+  font-size:clamp(25px,6vw,42px);
+
+  font-weight:900;
 }
 
 .score{
@@ -490,7 +539,7 @@ button:disabled{
   text-align:center;
 }
 
-.score .points{
+.points{
   font-size:clamp(34px,8vw,64px);
 
   font-weight:900;
@@ -548,13 +597,13 @@ hr{
 
   max-width:calc(100% - 30px);
 
-  background:var(--cream);
-
-  color:#102018;
-
   padding:10px 16px;
 
   border-radius:100px;
+
+  background:var(--cream);
+
+  color:#102018;
 
   font-weight:800;
 
@@ -583,7 +632,6 @@ hr{
 
 <div class="shell">
 
-
 <header>
 
   <div class="brand">
@@ -608,9 +656,8 @@ hr{
 
 
 <div class="footer">
-  Rasenschach · Fan-Projekt
+  Rasenschach Bundesliga · Fan-Projekt
 </div>
-
 
 </div>
 
@@ -658,23 +705,21 @@ let state = {
 
   user:null,
 
+  lobbyId:null,
+  lobby:null,
+  lobbyPlayers:[],
+  matchdayGames:[],
+
+  myLobbies:[],
+  myLobbyPlayers:[],
+
   gameId:null,
-
   game:null,
-
   players:[],
-
   theses:[],
-
   placements:[],
-
   figures:[],
-
   me:null,
-
-  myGames:[],
-
-  myGamePlayers:[],
 
   channel:null
 
@@ -683,7 +728,7 @@ let state = {
 
 
 /* =========================================================
-   SPIELREGELN
+   KONSTANTEN
 ========================================================= */
 
 
@@ -702,11 +747,10 @@ const fieldNames = {
 };
 
 
-const figureSequence =
-  [
-    1,2,2,1,1,
-    2,2,1,1,2
-  ];
+const figureSequence = [
+  1,2,2,1,1,
+  2,2,1,1,2
+];
 
 
 const figureNames = {
@@ -724,21 +768,6 @@ const figureNames = {
 };
 
 
-const phases = [
-
-  ["lobby","Vorbereitung"],
-
-  ["thesis_draft","Thesendraft"],
-
-  ["figure_draft","Figurendraft"],
-
-  ["scoring","Auswertung"],
-
-  ["finished","Ergebnis"]
-
-];
-
-
 const statusNames = {
 
   lobby:"Vorbereitung",
@@ -752,6 +781,21 @@ const statusNames = {
   finished:"Beendet"
 
 };
+
+
+const phases = [
+
+  ["lobby","Vorbereitung"],
+
+  ["thesis_draft","Thesendraft"],
+
+  ["figure_draft","Figurendraft"],
+
+  ["scoring","Auswertung"],
+
+  ["finished","Ergebnis"]
+
+];
 
 
 
@@ -831,13 +875,32 @@ function appBase(){
 
 
 
-function gameUrl(id){
+function goHome(){
 
-  return (
+  location.href =
+    appBase();
+
+}
+
+
+
+function openLobby(id){
+
+  location.href =
+    appBase() +
+    "?lobby=" +
+    encodeURIComponent(id);
+
+}
+
+
+
+function openGame(id){
+
+  location.href =
     appBase() +
     "?game=" +
-    encodeURIComponent(id)
-  );
+    encodeURIComponent(id);
 
 }
 
@@ -850,24 +913,6 @@ function inviteUrl(code){
     "?room=" +
     encodeURIComponent(code)
   );
-
-}
-
-
-
-function openGame(id){
-
-  location.href =
-    gameUrl(id);
-
-}
-
-
-
-function goHome(){
-
-  location.href =
-    appBase();
 
 }
 
@@ -902,6 +947,34 @@ function accountName(){
     ""
 
   );
+
+}
+
+
+
+async function copyLobbyInvite(code){
+
+  try{
+
+    await navigator.clipboard
+      .writeText(
+        inviteUrl(code)
+      );
+
+
+    toast(
+      "Einladungslink kopiert"
+    );
+
+  }
+
+  catch{
+
+    toast(
+      "Link konnte nicht kopiert werden"
+    );
+
+  }
 
 }
 
@@ -962,9 +1035,7 @@ function currentFigureSeat(){
     figureSequence[
       state.figures.length
     ]
-
     ??
-
     null
   );
 
@@ -1004,49 +1075,6 @@ function phaseBar(){
 
 
 
-async function copyInvite(){
-
-  if(!state.game){
-    return;
-  }
-
-
-  await copyInviteCode(
-    state.game.code
-  );
-
-}
-
-
-
-async function copyInviteCode(code){
-
-  try{
-
-    await navigator.clipboard
-      .writeText(
-        inviteUrl(code)
-      );
-
-
-    toast(
-      "Einladungslink kopiert"
-    );
-
-  }
-
-  catch{
-
-    toast(
-      "Link konnte nicht kopiert werden"
-    );
-
-  }
-
-}
-
-
-
 /* =========================================================
    AUTH
 ========================================================= */
@@ -1064,8 +1092,7 @@ async function removeAnonymousSession(){
     });
 
 
-    state.user =
-      null;
+    state.user = null;
 
   }
 
@@ -1156,6 +1183,7 @@ async function registerMainPlayer(){
       state.user =
         data.session.user;
 
+
       goHome();
 
     }
@@ -1232,13 +1260,10 @@ async function loginMainPlayer(){
       data,
       error
     } =
-      await db.auth
-        .signInWithPassword({
-
-          email,
-          password
-
-        });
+      await db.auth.signInWithPassword({
+        email,
+        password
+      });
 
 
     if(error){
@@ -1250,7 +1275,7 @@ async function loginMainPlayer(){
       data.user;
 
 
-    location.reload();
+    goHome();
 
   }
 
@@ -1271,8 +1296,7 @@ async function logoutMainPlayer(){
   });
 
 
-  state.user =
-    null;
+  state.user = null;
 
 
   goHome();
@@ -1288,8 +1312,7 @@ async function ensureGuestSession(){
       session
     }
   } =
-    await db.auth
-      .getSession();
+    await db.auth.getSession();
 
 
   if(session){
@@ -1352,18 +1375,19 @@ async function boot(){
       );
 
 
+    const lobbyId =
+      params.get("lobby");
+
+
     const gameId =
-      params.get(
-        "game"
-      );
+      params.get("game");
 
 
-    const roomCode =
-      params.get(
-        "room"
-      )
-      ?.trim()
-      .toUpperCase();
+    const room =
+      params
+        .get("room")
+        ?.trim()
+        .toUpperCase();
 
 
 
@@ -1371,7 +1395,7 @@ async function boot(){
 
       if(!state.user){
 
-        renderLoginRequired();
+        renderLogin();
 
         return;
 
@@ -1385,7 +1409,7 @@ async function boot(){
       await refreshGame();
 
 
-      subscribe();
+      subscribeGame();
 
 
       return;
@@ -1394,10 +1418,37 @@ async function boot(){
 
 
 
-    if(roomCode){
+    if(lobbyId){
+
+      if(!state.user){
+
+        renderLogin();
+
+        return;
+
+      }
+
+
+      state.lobbyId =
+        lobbyId;
+
+
+      await refreshLobby();
+
+
+      subscribeLobby();
+
+
+      return;
+
+    }
+
+
+
+    if(room){
 
       renderStartPage(
-        roomCode
+        room
       );
 
       return;
@@ -1422,6 +1473,9 @@ async function boot(){
 
   catch(error){
 
+    console.error(error);
+
+
     document.getElementById(
       "app"
     ).innerHTML = `
@@ -1436,6 +1490,12 @@ async function boot(){
           ${esc(error.message)}
         </p>
 
+        <button
+          onclick="goHome()"
+        >
+          Startseite
+        </button>
+
       </div>
 
     `;
@@ -1447,7 +1507,7 @@ async function boot(){
 
 
 /* =========================================================
-   STARTSEITE
+   START / LOGIN
 ========================================================= */
 
 
@@ -1464,8 +1524,8 @@ function renderAuthCard(){
       <p class="muted">
 
         Melde dich an,
-        um deine Lobbys auf
-        allen Geräten zu sehen.
+        um deine Bundesliga-Lobbys
+        auf allen Geräten zu sehen.
 
       </p>
 
@@ -1474,7 +1534,7 @@ function renderAuthCard(){
 
         <input
           id="authName"
-          placeholder="Dein Anzeigename"
+          placeholder="Anzeigename"
         >
 
         <input
@@ -1518,59 +1578,11 @@ function renderAuthCard(){
 
 
 
-function renderJoinCard(roomCode=""){
-
-  return `
-
-    <div class="card">
-
-      <h2>
-        Spieler 2
-      </h2>
-
-      <p class="muted">
-
-        Als eingeladener Spieler
-        brauchst du kein Konto.
-
-      </p>
-
-      <div class="stack">
-
-        <input
-          id="joinName"
-          placeholder="Dein Name"
-        >
-
-        <input
-          id="joinCode"
-          maxlength="6"
-          placeholder="Raumcode"
-          value="${esc(roomCode)}"
-        >
-
-        <button
-          onclick="joinGame()"
-        >
-          Lobby beitreten
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-
-function renderStartPage(roomCode=""){
+function renderStartPage(room=""){
 
   document.getElementById(
     "headerActions"
-  ).innerHTML =
-    "";
+  ).innerHTML = "";
 
 
   document.getElementById(
@@ -1580,14 +1592,14 @@ function renderStartPage(roomCode=""){
     <div class="card">
 
       <h1>
-        Rasenschach
+        Rasenschach Bundesliga
       </h1>
 
       <p class="muted">
 
-        Mehrere Zweier-Lobbys.
-        Ein Hauptspieler-Konto.
-        Unterschiedliche Gegner.
+        Eine Lobby.
+        Zwei Spieler.
+        34 Bundesliga-Spieltage.
 
       </p>
 
@@ -1604,12 +1616,8 @@ function renderStartPage(roomCode=""){
             <div class="card">
 
               <h2>
-                Angemeldet
-              </h2>
-
-              <strong>
                 ${esc(accountName())}
-              </strong>
+              </h2>
 
               <p class="muted">
                 ${esc(state.user.email)}
@@ -1630,7 +1638,39 @@ function renderStartPage(roomCode=""){
       }
 
 
-      ${renderJoinCard(roomCode)}
+      <div class="card">
+
+        <h2>
+          Lobby beitreten
+        </h2>
+
+        <p class="muted">
+          Spieler 2 benötigt keinen Account.
+        </p>
+
+        <div class="stack">
+
+          <input
+            id="joinName"
+            placeholder="Dein Name"
+          >
+
+          <input
+            id="joinCode"
+            maxlength="6"
+            placeholder="Lobby-Code"
+            value="${esc(room)}"
+          >
+
+          <button
+            onclick="joinLobby()"
+          >
+            Beitreten
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
@@ -1640,18 +1680,14 @@ function renderStartPage(roomCode=""){
 
 
 
-function renderLoginRequired(){
+function renderLogin(){
 
   document.getElementById(
     "app"
   ).innerHTML = `
 
     <div class="card">
-
-      <h2>
-        Anmeldung erforderlich
-      </h2>
-
+      <h2>Anmeldung erforderlich</h2>
     </div>
 
     ${renderAuthCard()}
@@ -1669,11 +1705,11 @@ function renderLoginRequired(){
 
 async function loadDashboard(){
 
-  const membershipResult =
+  const membership =
     await db
-      .from("players")
+      .from("lobby_players")
       .select(
-        "game_id,seat,user_id"
+        "lobby_id,user_id,seat,name"
       )
       .eq(
         "user_id",
@@ -1681,24 +1717,19 @@ async function loadDashboard(){
       );
 
 
-  if(membershipResult.error){
-    throw membershipResult.error;
+  if(membership.error){
+    throw membership.error;
   }
 
 
-  const memberships =
-    membershipResult.data
-    ||
-    [];
+  const entries =
+    membership.data || [];
 
 
-  if(!memberships.length){
+  if(!entries.length){
 
-    state.myGames =
-      [];
-
-    state.myGamePlayers =
-      [];
+    state.myLobbies = [];
+    state.myLobbyPlayers = [];
 
     renderDashboard();
 
@@ -1707,26 +1738,26 @@ async function loadDashboard(){
   }
 
 
-  const gameIds = [
+  const ids = [
     ...new Set(
-      memberships.map(
-        membership =>
-          membership.game_id
+      entries.map(
+        item =>
+          item.lobby_id
       )
     )
   ];
 
 
   const [
-    gameResult,
-    playerResult
+    lobbiesResult,
+    playersResult
   ] =
     await Promise.all([
 
       db
-        .from("games")
+        .from("lobbies")
         .select("*")
-        .in("id",gameIds)
+        .in("id",ids)
         .order(
           "created_at",
           {
@@ -1735,34 +1766,30 @@ async function loadDashboard(){
         ),
 
       db
-        .from("players")
+        .from("lobby_players")
         .select("*")
-        .in("game_id",gameIds)
+        .in("lobby_id",ids)
         .order("seat")
 
     ]);
 
 
-  if(gameResult.error){
-    throw gameResult.error;
+  if(lobbiesResult.error){
+    throw lobbiesResult.error;
   }
 
 
-  if(playerResult.error){
-    throw playerResult.error;
+  if(playersResult.error){
+    throw playersResult.error;
   }
 
 
-  state.myGames =
-    gameResult.data
-    ||
-    [];
+  state.myLobbies =
+    lobbiesResult.data || [];
 
 
-  state.myGamePlayers =
-    playerResult.data
-    ||
-    [];
+  state.myLobbyPlayers =
+    playersResult.data || [];
 
 
   renderDashboard();
@@ -1798,13 +1825,13 @@ function renderDashboard(){
     <div class="card">
 
       <h1>
-        Hallo ${esc(accountName())}
+        Meine Bundesliga-Lobbys
       </h1>
 
       <p class="muted">
 
-        Alle deine Lobbys
-        werden hier gesammelt.
+        Jede Lobby enthält
+        die Spieltage 1 bis 34.
 
       </p>
 
@@ -1817,22 +1844,28 @@ function renderDashboard(){
         Neue Lobby
       </h2>
 
-      <div class="row">
+      <div class="grid2">
 
         <input
-          id="createName"
+          id="createPlayerName"
           value="${esc(accountName())}"
-          style="flex:1;min-width:220px"
+          placeholder="Dein Spielername"
         >
 
-        <button
-          class="primary"
-          onclick="createGame()"
+        <input
+          id="createLobbyName"
+          placeholder="Lobbyname, z. B. Max vs. Ich"
         >
-          Lobby erstellen
-        </button>
 
       </div>
+
+      <button
+        class="primary"
+        style="margin-top:10px"
+        onclick="createLobby()"
+      >
+        Lobby erstellen
+      </button>
 
     </div>
 
@@ -1840,22 +1873,23 @@ function renderDashboard(){
     <div class="card">
 
       <h2>
-        Meine Lobbys ·
-        ${state.myGames.length}
+        Lobbys ·
+        ${state.myLobbies.length}
       </h2>
 
+
       ${
-        state.myGames.length
+        state.myLobbies.length
 
           ? `
 
             <div class="grid3">
 
               ${
-                state.myGames.map(
-                  game =>
+                state.myLobbies.map(
+                  lobby =>
                     renderLobbyCard(
-                      game
+                      lobby
                     )
                 ).join("")
               }
@@ -1869,7 +1903,7 @@ function renderDashboard(){
             <div class="thesis">
 
               <span class="muted">
-                Noch keine Lobby.
+                Noch keine Lobby vorhanden.
               </span>
 
             </div>
@@ -1885,13 +1919,21 @@ function renderDashboard(){
 
 
 
-function renderLobbyCard(game){
+function renderLobbyCard(lobby){
 
   const players =
-    state.myGamePlayers.filter(
+    state.myLobbyPlayers.filter(
       player =>
-        player.game_id ===
-        game.id
+        player.lobby_id ===
+        lobby.id
+    );
+
+
+  const me =
+    players.find(
+      player =>
+        player.user_id ===
+        state.user.id
     );
 
 
@@ -1903,25 +1945,27 @@ function renderLobbyCard(game){
     );
 
 
+  const owner =
+    lobby.created_by ===
+    state.user.id;
+
+
   return `
 
     <div class="thesis lobbyCard">
 
       <span class="badge">
-
-        ${
-          statusNames[
-            game.status
-          ]
-          ||
-          game.status
-        }
-
+        Bundesliga · 34 Spieltage
       </span>
 
 
+      <div class="lobbyName">
+        ${esc(lobby.name)}
+      </div>
+
+
       <div class="lobbyCode">
-        ${esc(game.code)}
+        Code: ${esc(lobby.code)}
       </div>
 
 
@@ -1946,29 +1990,66 @@ function renderLobbyCard(game){
       </p>
 
 
-      <div class="lobbyActions">
+      <div class="actions">
 
         <button
           class="primary"
           onclick="
-            openGame(
-              '${game.id}'
+            openLobby(
+              '${lobby.id}'
             )
           "
         >
           Öffnen
         </button>
 
-        <button
-          class="ghost"
-          onclick="
-            copyInviteCode(
-              '${game.code}'
-            )
-          "
-        >
-          Einladen
-        </button>
+
+        ${
+          owner
+
+            ? `
+
+              <button
+                class="ghost"
+                onclick="
+                  copyLobbyInvite(
+                    '${lobby.code}'
+                  )
+                "
+              >
+                Einladen
+              </button>
+
+
+              <button
+                class="ghost"
+                onclick="
+                  renameLobby(
+                    '${lobby.id}',
+                    '${esc(lobby.name)}'
+                  )
+                "
+              >
+                Umbenennen
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="
+                  deleteLobby(
+                    '${lobby.id}',
+                    '${esc(lobby.name)}'
+                  )
+                "
+              >
+                Löschen
+              </button>
+
+            `
+
+            : ""
+        }
 
       </div>
 
@@ -1981,24 +2062,33 @@ function renderLobbyCard(game){
 
 
 /* =========================================================
-   SPIEL ERSTELLEN / JOIN
+   LOBBY CRUD
 ========================================================= */
 
 
-async function createGame(){
+async function createLobby(){
 
   try{
 
-    const name =
+    const playerName =
       document
         .getElementById(
-          "createName"
+          "createPlayerName"
         )
         .value
         .trim();
 
 
-    if(!name){
+    const lobbyName =
+      document
+        .getElementById(
+          "createLobbyName"
+        )
+        .value
+        .trim();
+
+
+    if(!playerName){
 
       toast(
         "Spielername eingeben"
@@ -2014,9 +2104,15 @@ async function createGame(){
       error
     } =
       await db.rpc(
-        "create_game",
+        "create_lobby",
         {
-          p_name:name
+
+          p_player_name:
+            playerName,
+
+          p_lobby_name:
+            lobbyName
+
         }
       );
 
@@ -2026,8 +2122,8 @@ async function createGame(){
     }
 
 
-    openGame(
-      data[0].game_id
+    openLobby(
+      data[0].lobby_id
     );
 
   }
@@ -2042,7 +2138,7 @@ async function createGame(){
 
 
 
-async function joinGame(){
+async function joinLobby(){
 
   try{
 
@@ -2071,7 +2167,7 @@ async function joinGame(){
     ){
 
       toast(
-        "Name und Raumcode eingeben"
+        "Name und Lobby-Code eingeben"
       );
 
       return;
@@ -2087,10 +2183,587 @@ async function joinGame(){
       error
     } =
       await db.rpc(
-        "join_game",
+        "join_lobby",
         {
+
           p_code:code,
+
           p_name:name
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    openLobby(
+      data[0].lobby_id
+    );
+
+  }
+
+  catch(error){
+
+    errorMessage(error);
+
+  }
+
+}
+
+
+
+async function renameLobby(
+  id,
+  currentName
+){
+
+  const newName =
+    prompt(
+      "Neuer Lobbyname:",
+      currentName
+    );
+
+
+  if(
+    newName === null
+  ){
+    return;
+  }
+
+
+  if(
+    !newName.trim()
+  ){
+
+    toast(
+      "Lobbyname darf nicht leer sein"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "rename_lobby",
+        {
+
+          p_lobby_id:id,
+
+          p_name:
+            newName.trim()
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    toast(
+      "Lobby umbenannt"
+    );
+
+
+    if(
+      state.lobbyId === id
+    ){
+
+      await refreshLobby();
+
+    }
+
+    else{
+
+      await loadDashboard();
+
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(error);
+
+  }
+
+}
+
+
+
+async function deleteLobby(
+  id,
+  name
+){
+
+  const confirmed =
+    confirm(
+      `Lobby "${name}" wirklich löschen?\n\nAlle Spieltage, Thesen, Drafts und Ergebnisse dieser Lobby werden ebenfalls gelöscht.`
+    );
+
+
+  if(!confirmed){
+    return;
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "delete_lobby",
+        {
+          p_lobby_id:id
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    toast(
+      "Lobby gelöscht"
+    );
+
+
+    goHome();
+
+  }
+
+  catch(error){
+
+    errorMessage(error);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   LOBBY-SEITE / 34 SPIELTAGE
+========================================================= */
+
+
+async function refreshLobby(){
+
+  const [
+    lobbyResult,
+    playersResult,
+    gamesResult
+  ] =
+    await Promise.all([
+
+      db
+        .from("lobbies")
+        .select("*")
+        .eq(
+          "id",
+          state.lobbyId
+        )
+        .single(),
+
+      db
+        .from("lobby_players")
+        .select("*")
+        .eq(
+          "lobby_id",
+          state.lobbyId
+        )
+        .order("seat"),
+
+      db
+        .from("games")
+        .select(
+          "id,lobby_id,matchday,status,created_at"
+        )
+        .eq(
+          "lobby_id",
+          state.lobbyId
+        )
+        .order("matchday")
+
+    ]);
+
+
+  if(lobbyResult.error){
+    throw lobbyResult.error;
+  }
+
+
+  if(playersResult.error){
+    throw playersResult.error;
+  }
+
+
+  if(gamesResult.error){
+    throw gamesResult.error;
+  }
+
+
+  state.lobby =
+    lobbyResult.data;
+
+
+  state.lobbyPlayers =
+    playersResult.data || [];
+
+
+  state.matchdayGames =
+    gamesResult.data || [];
+
+
+  renderLobbySeason();
+
+}
+
+
+
+function renderLobbySeason(){
+
+  const owner =
+    state.lobby.created_by ===
+    state.user.id;
+
+
+  const opponent =
+    state.lobbyPlayers.find(
+      player =>
+        player.user_id !==
+        state.user.id
+    );
+
+
+  const finishedCount =
+    state.matchdayGames.filter(
+      game =>
+        game.status ===
+        "finished"
+    ).length;
+
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = `
+
+    ${
+      isMainAccount()
+
+        ? `
+
+          <button
+            class="ghost"
+            onclick="goHome()"
+          >
+            Meine Lobbys
+          </button>
+
+        `
+
+        : ""
+    }
+
+  `;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <span class="badge">
+        Bundesliga
+      </span>
+
+      <span class="badge">
+        ${finishedCount}/34 abgeschlossen
+      </span>
+
+
+      <h1 style="margin-top:12px">
+        ${esc(state.lobby.name)}
+      </h1>
+
+
+      <p class="muted">
+
+        Lobby-Code:
+        <strong>
+          ${esc(state.lobby.code)}
+        </strong>
+
+        ·
+
+        ${
+          opponent
+
+            ? `Gegner: ${esc(
+                opponent.name
+              )}`
+
+            : "Wartet auf Spieler 2"
+        }
+
+      </p>
+
+
+      ${
+        owner
+
+          ? `
+
+            <div class="row">
+
+              <button
+                onclick="
+                  copyLobbyInvite(
+                    '${state.lobby.code}'
+                  )
+                "
+              >
+                Einladen
+              </button>
+
+
+              <button
+                class="ghost"
+                onclick="
+                  renameLobby(
+                    '${state.lobby.id}',
+                    '${esc(state.lobby.name)}'
+                  )
+                "
+              >
+                Lobby umbenennen
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="
+                  deleteLobby(
+                    '${state.lobby.id}',
+                    '${esc(state.lobby.name)}'
+                  )
+                "
+              >
+                Lobby löschen
+              </button>
+
+            </div>
+
+          `
+
+          : ""
+      }
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Bundesliga-Spieltage
+      </h2>
+
+      <p class="muted">
+
+        Für jeden der 34 Spieltage
+        gibt es ein separates
+        Rasenschach-Spiel.
+
+      </p>
+
+
+      <div class="matchdayGrid">
+
+        ${
+          Array.from(
+            {
+              length:34
+            },
+            (
+              _,
+              index
+            ) =>
+              renderMatchday(
+                index + 1,
+                owner,
+                Boolean(opponent)
+              )
+          ).join("")
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderMatchday(
+  matchday,
+  owner,
+  hasOpponent
+){
+
+  const game =
+    state.matchdayGames.find(
+      item =>
+        item.matchday ===
+        matchday
+    );
+
+
+  if(game){
+
+    return `
+
+      <div class="matchday">
+
+        <div class="matchdayNumber">
+          Spieltag ${matchday}
+        </div>
+
+        <div
+          class="badge"
+          style="margin-top:8px"
+        >
+
+          ${
+            statusNames[
+              game.status
+            ]
+            ||
+            game.status
+          }
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="primary"
+            onclick="
+              openGame(
+                '${game.id}'
+              )
+            "
+          >
+            Öffnen
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="matchday">
+
+      <div class="matchdayNumber">
+        Spieltag ${matchday}
+      </div>
+
+
+      <p
+        class="muted"
+        style="margin-top:8px"
+      >
+        Noch nicht erstellt.
+      </p>
+
+
+      <div class="actions">
+
+        ${
+          owner
+
+            ? `
+
+              <button
+                class="primary"
+
+                ${
+                  !hasOpponent
+                    ? "disabled"
+                    : ""
+                }
+
+                onclick="
+                  createMatchdayGame(
+                    ${matchday}
+                  )
+                "
+              >
+                Spiel erstellen
+              </button>
+
+            `
+
+            : `
+
+              <span class="muted">
+                Wartet auf Spieler 1
+              </span>
+
+            `
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function createMatchdayGame(
+  matchday
+){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        "create_matchday_game",
+        {
+
+          p_lobby_id:
+            state.lobbyId,
+
+          p_matchday:
+            matchday
+
         }
       );
 
@@ -2117,7 +2790,7 @@ async function joinGame(){
 
 
 /* =========================================================
-   GAME DATA
+   GAME LOAD
 ========================================================= */
 
 
@@ -2125,17 +2798,20 @@ async function refreshGame(){
 
   const [
     gameResult,
-    playerResult,
-    thesisResult,
-    placementResult,
-    figureResult
+    playersResult,
+    thesesResult,
+    placementsResult,
+    figuresResult
   ] =
     await Promise.all([
 
       db
         .from("games")
         .select("*")
-        .eq("id",state.gameId)
+        .eq(
+          "id",
+          state.gameId
+        )
         .single(),
 
       db
@@ -2181,23 +2857,23 @@ async function refreshGame(){
   }
 
 
-  if(playerResult.error){
-    throw playerResult.error;
+  if(playersResult.error){
+    throw playersResult.error;
   }
 
 
-  if(thesisResult.error){
-    throw thesisResult.error;
+  if(thesesResult.error){
+    throw thesesResult.error;
   }
 
 
-  if(placementResult.error){
-    throw placementResult.error;
+  if(placementsResult.error){
+    throw placementsResult.error;
   }
 
 
-  if(figureResult.error){
-    throw figureResult.error;
+  if(figuresResult.error){
+    throw figuresResult.error;
   }
 
 
@@ -2206,19 +2882,19 @@ async function refreshGame(){
 
 
   state.players =
-    playerResult.data || [];
+    playersResult.data || [];
 
 
   state.theses =
-    thesisResult.data || [];
+    thesesResult.data || [];
 
 
   state.placements =
-    placementResult.data || [];
+    placementsResult.data || [];
 
 
   state.figures =
-    figureResult.data || [];
+    figuresResult.data || [];
 
 
   state.me =
@@ -2227,6 +2903,15 @@ async function refreshGame(){
         player.user_id ===
         state.user.id
     );
+
+
+  if(!state.me){
+
+    throw new Error(
+      "Du bist kein Spieler dieses Spieltags."
+    );
+
+  }
 
 
   renderGame();
@@ -2243,7 +2928,7 @@ async function refreshGame(){
 let refreshTimer;
 
 
-function scheduleRefresh(){
+function scheduleGameRefresh(){
 
   clearTimeout(
     refreshTimer
@@ -2257,14 +2942,14 @@ function scheduleRefresh(){
           .catch(
             errorMessage
           ),
-      150
+      140
     );
 
 }
 
 
 
-function subscribe(){
+function subscribeGame(){
 
   if(state.channel){
 
@@ -2277,7 +2962,7 @@ function subscribe(){
 
   const channel =
     db.channel(
-      `rasenschach-${state.gameId}`
+      `game-${state.gameId}`
     );
 
 
@@ -2301,19 +2986,114 @@ function subscribe(){
 
           filter:
 
-            table ===
-            "games"
+            table === "games"
 
               ? `id=eq.${state.gameId}`
 
               : `game_id=eq.${state.gameId}`
         },
 
-        scheduleRefresh
+        scheduleGameRefresh
 
       );
 
     }
+  );
+
+
+  channel.subscribe();
+
+
+  state.channel =
+    channel;
+
+}
+
+
+
+function scheduleLobbyRefresh(){
+
+  clearTimeout(
+    refreshTimer
+  );
+
+
+  refreshTimer =
+    setTimeout(
+      () =>
+        refreshLobby()
+          .catch(
+            errorMessage
+          ),
+      140
+    );
+
+}
+
+
+
+function subscribeLobby(){
+
+  if(state.channel){
+
+    db.removeChannel(
+      state.channel
+    );
+
+  }
+
+
+  const channel =
+    db.channel(
+      `lobby-${state.lobbyId}`
+    );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+      event:"*",
+      schema:"public",
+      table:"lobbies",
+      filter:`id=eq.${state.lobbyId}`
+    },
+
+    scheduleLobbyRefresh
+
+  );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+      event:"*",
+      schema:"public",
+      table:"lobby_players",
+      filter:`lobby_id=eq.${state.lobbyId}`
+    },
+
+    scheduleLobbyRefresh
+
+  );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+      event:"*",
+      schema:"public",
+      table:"games",
+      filter:`lobby_id=eq.${state.lobbyId}`
+    },
+
+    scheduleLobbyRefresh
+
   );
 
 
@@ -2338,32 +3118,20 @@ function renderGame(){
     "headerActions"
   ).innerHTML = `
 
-    <span>
-
-      Raum
-      <strong>
-        ${esc(state.game.code)}
-      </strong>
-
-    </span>
-
-    <button
-      class="ghost"
-      onclick="copyInvite()"
-    >
-      Link teilen
-    </button>
-
     ${
-      isMainAccount()
+      state.game.lobby_id
 
         ? `
 
           <button
             class="ghost"
-            onclick="goHome()"
+            onclick="
+              openLobby(
+                '${state.game.lobby_id}'
+              )
+            "
           >
-            Meine Lobbys
+            ← Zur Lobby
           </button>
 
         `
@@ -2384,7 +3152,7 @@ function renderGame(){
     case "lobby":
 
       content =
-        renderLobby();
+        renderGameLobby();
 
       break;
 
@@ -2420,29 +3188,64 @@ function renderGame(){
 
       break;
 
+
+    default:
+
+      content = `
+
+        <div class="card">
+
+          <h2>
+            Dieser alte Spielstand
+            verwendet noch einen
+            früheren App-Status.
+          </h2>
+
+        </div>
+
+      `;
+
   }
 
 
   document.getElementById(
     "app"
-  ).innerHTML =
+  ).innerHTML = `
 
-    phaseBar()
+    <div class="card">
 
-    +
+      <span class="badge">
+        Bundesliga
+      </span>
 
-    content;
+      <span class="badge">
+        Spieltag
+        ${state.game.matchday || "–"}
+      </span>
+
+      <h1 style="margin-top:10px">
+        Spieltag
+        ${state.game.matchday || ""}
+      </h1>
+
+    </div>
+
+    ${phaseBar()}
+
+    ${content}
+
+  `;
 
 }
 
 
 
 /* =========================================================
-   LOBBY
+   SPIELTAG VORBEREITUNG
 ========================================================= */
 
 
-function renderLobby(){
+function renderGameLobby(){
 
   const owner =
     state.game.created_by ===
@@ -2455,69 +3258,27 @@ function renderLobby(){
 
       <div class="card">
 
-        <h2>
-          Spieler
-        </h2>
+        <h2>Spieler</h2>
 
         ${
-          [1,2].map(
-            seat => {
+          state.players.map(
+            player => `
 
-              const player =
-                state.players.find(
-                  item =>
-                    item.seat ===
-                    seat
-                );
+              <div class="thesis">
 
+                <strong>
+                  ${esc(player.name)}
+                </strong>
 
-              return `
-
-                <div class="thesis">
-
-                  <strong>
-
-                    ${
-                      player
-
-                        ? esc(player.name)
-
-                        : "Warte auf Mitspieler …"
-                    }
-
-                  </strong>
-
-                  <div class="muted">
-
-                    Spieler ${seat}
-
-                    ${
-                      seat === 1
-
-                        ? " · Gastgeber"
-
-                        : ""
-                    }
-
-                  </div>
-
+                <div class="muted">
+                  Spieler ${player.seat}
                 </div>
 
-              `;
+              </div>
 
-            }
+            `
           ).join("")
         }
-
-
-        <hr>
-
-
-        <button
-          onclick="copyInvite()"
-        >
-          Einladungslink
-        </button>
 
       </div>
 
@@ -2525,10 +3286,8 @@ function renderLobby(){
       <div class="card">
 
         <h2>
-
           Thesen ·
           ${state.theses.length}/12
-
         </h2>
 
 
@@ -2539,22 +3298,23 @@ function renderLobby(){
 
               <p class="muted">
 
-                Du trägst alle
+                Trage für diesen
+                Bundesliga-Spieltag
                 zwölf Thesen ein.
 
               </p>
+
 
               <div class="row">
 
                 <input
                   id="newThesis"
+                  maxlength="180"
                   placeholder="Neue These …"
 
                   ${
                     state.theses.length >= 12
-
                       ? "disabled"
-
                       : ""
                   }
                 >
@@ -2564,9 +3324,7 @@ function renderLobby(){
 
                   ${
                     state.theses.length >= 12
-
                       ? "disabled"
-
                       : ""
                   }
                 >
@@ -2580,10 +3338,8 @@ function renderLobby(){
             : `
 
               <p class="muted">
-
                 Spieler 1 bereitet
                 die Thesen vor.
-
               </p>
 
             `
@@ -2611,9 +3367,7 @@ function renderLobby(){
                     </strong>
 
                     <span style="flex:1">
-
                       ${esc(thesis.text)}
-
                     </span>
 
                     ${
@@ -2623,7 +3377,6 @@ function renderLobby(){
 
                           <button
                             class="danger"
-
                             onclick="
                               deleteThesis(
                                 '${thesis.id}'
@@ -2658,22 +3411,15 @@ function renderLobby(){
 
               <button
                 class="primary"
-
                 onclick="startDraft()"
 
                 ${
-                  state.players.length !== 2
-                  ||
                   state.theses.length !== 12
-
                     ? "disabled"
-
                     : ""
                 }
               >
-
-                🎲 Thesendraft starten
-
+                🎲 Draft auslosen
               </button>
 
             `
@@ -2714,8 +3460,12 @@ async function addThesis(){
     await db
       .from("theses")
       .insert({
-        game_id:state.gameId,
+
+        game_id:
+          state.gameId,
+
         text
+
       });
 
 
@@ -2742,7 +3492,10 @@ async function deleteThesis(id){
     await db
       .from("theses")
       .delete()
-      .eq("id",id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if(error){
@@ -2761,8 +3514,10 @@ async function startDraft(){
     await db.rpc(
       "start_draft",
       {
+
         p_game_id:
           state.gameId
+
       }
     );
 
@@ -2776,7 +3531,7 @@ async function startDraft(){
 
 
 /* =========================================================
-   THESENDRAFT + DIREKTES SETZEN
+   THESENDRAFT
 ========================================================= */
 
 
@@ -2789,8 +3544,7 @@ function renderThesisDraft(){
   const currentPlayer =
     state.players.find(
       player =>
-        player.seat ===
-        seat
+        player.seat === seat
     );
 
 
@@ -2818,34 +3572,30 @@ function renderThesisDraft(){
 
 
   const freeFields =
-    Object.keys(
-      fieldNames
-    ).filter(
-      field =>
-        !usedFields.includes(
-          field
-        )
-    );
+    Object.keys(fieldNames)
+      .filter(
+        field =>
+          !usedFields.includes(
+            field
+          )
+      );
 
 
   return `
 
     <div class="card drawCard">
 
-      <div class="drawIcon">
-        🎲
-      </div>
+      <span class="badge">
+        🎲 Auslosung
+      </span>
 
-      <div class="muted">
-        AUSLOSUNG
-      </div>
+      <div
+        class="drawWinner"
+        style="margin-top:10px"
+      >
 
-      <div class="drawWinner">
-
-        ${esc(
-          starter?.name || ""
-        )}
-        beginnt!
+        ${esc(starter?.name || "")}
+        beginnt
 
       </div>
 
@@ -2855,8 +3605,7 @@ function renderThesisDraft(){
     <div class="turn">
 
       ${
-        seat ===
-        state.me.seat
+        seat === state.me.seat
 
           ? "Du bist am Zug"
 
@@ -2877,17 +3626,12 @@ function renderThesisDraft(){
           Verfügbare Thesen
         </h2>
 
+
         <p class="muted">
 
-          Pick
-          ${
-            draftedTheses().length +
-            1
-          }
-          von 10.
-
-          Jede These wird sofort
-          auf ein Feld gesetzt.
+          These auswählen und
+          sofort auf ein freies
+          Feld setzen.
 
         </p>
 
@@ -2908,11 +3652,7 @@ function renderThesisDraft(){
                   <div class="thesis">
 
                     <strong>
-
-                      ${esc(
-                        thesis.text
-                      )}
-
+                      ${esc(thesis.text)}
                     </strong>
 
 
@@ -2922,16 +3662,6 @@ function renderThesisDraft(){
 
                         ? `
 
-                          <div
-                            class="muted"
-                            style="
-                              margin-top:10px
-                            "
-                          >
-                            Direkt setzen auf:
-                          </div>
-
-
                           <div class="fieldButtons">
 
                             ${
@@ -2939,12 +3669,7 @@ function renderThesisDraft(){
                                 field => `
 
                                   <button
-                                    class="fieldButton ${
-                                      field === "P3" ||
-                                      field === "N3"
-                                        ? "strong"
-                                        : ""
-                                    }"
+                                    class="fieldButton"
 
                                     onclick="
                                       pickThesis(
@@ -2954,11 +3679,7 @@ function renderThesisDraft(){
                                     "
                                   >
 
-                                    ${
-                                      fieldNames[
-                                        field
-                                      ]
-                                    }
+                                    ${fieldNames[field]}
 
                                   </button>
 
@@ -2986,24 +3707,38 @@ function renderThesisDraft(){
 
       <div>
 
-
         <div class="card">
 
           <h2>
-            Dein aktuelles Brett
+            Bretter
           </h2>
 
           <p class="muted">
 
-            Dein Gegner sieht
-            deine Feldzuordnung
-            noch nicht.
+            Die Feldwahl ist ab jetzt
+            sofort für beide Spieler
+            sichtbar.
 
           </p>
 
-          ${renderBoard(
-            state.user.id
-          )}
+
+          ${
+            state.players.map(
+              player => `
+
+                <h3>
+                  ${esc(player.name)}
+                </h3>
+
+                ${renderBoard(
+                  player.user_id
+                )}
+
+                <hr>
+
+              `
+            ).join("")
+          }
 
         </div>
 
@@ -3011,8 +3746,9 @@ function renderThesisDraft(){
         <div class="card">
 
           <h2>
-            Draft
+            Draftverlauf
           </h2>
+
 
           ${
             state.players.map(
@@ -3036,65 +3772,70 @@ function renderThesisDraft(){
 
                 return `
 
-                  <div>
+                  <h3>
+                    ${esc(player.name)}
+                  </h3>
 
-                    <h3>
-                      ${esc(player.name)}
-                    </h3>
 
-                    ${
-                      picks.length
+                  ${
+                    picks.length
 
-                        ? picks.map(
-                            thesis => `
+                      ? picks.map(
+                          thesis => {
+
+                            const placement =
+                              state.placements.find(
+                                item =>
+                                  item.thesis_id ===
+                                  thesis.id
+                              );
+
+
+                            return `
 
                               <div class="thesis">
 
                                 <span class="badge">
 
-                                  Pick
-                                  ${thesis.draft_order}
+                                  ${
+                                    placement
+                                      ? fieldNames[
+                                          placement.field
+                                        ]
+                                      : "?"
+                                  }
 
                                 </span>
 
-                                <div
-                                  style="
-                                    margin-top:7px
-                                  "
-                                >
-
-                                  ${esc(
-                                    thesis.text
-                                  )}
-
-                                </div>
+                                ${esc(thesis.text)}
 
                               </div>
 
-                            `
-                          ).join("")
+                            `;
 
-                        : `
+                          }
+                        ).join("")
 
-                          <span class="muted">
-                            Noch kein Pick
-                          </span>
+                      : `
 
-                        `
-                    }
+                        <span class="muted">
+                          Noch kein Pick
+                        </span>
 
-                  </div>
+                      `
+                  }
+
+                  <hr>
 
                 `;
 
               }
-            ).join("<hr>")
+            ).join("")
           }
 
         </div>
 
       </div>
-
 
     </div>
 
@@ -3152,9 +3893,7 @@ async function pickThesis(
 ========================================================= */
 
 
-function renderBoard(
-  userId
-){
+function renderBoard(userId){
 
   const placements =
     state.placements.filter(
@@ -3169,65 +3908,55 @@ function renderBoard(
     <div class="fields">
 
       ${
-        Object.keys(
-          fieldNames
-        ).map(
-          field => {
+        Object.keys(fieldNames)
+          .map(
+            field => {
 
-            const placement =
-              placements.find(
-                item =>
-                  item.field ===
-                  field
-              );
+              const placement =
+                placements.find(
+                  item =>
+                    item.field === field
+                );
 
 
-            const thesis =
-              placement
+              const thesis =
+                placement
 
-                ? state.theses.find(
-                    item =>
-                      item.id ===
-                      placement.thesis_id
-                  )
+                  ? state.theses.find(
+                      item =>
+                        item.id ===
+                        placement.thesis_id
+                    )
 
-                : null;
+                  : null;
 
 
-            return `
+              return `
 
-              <div class="field">
+                <div class="field">
 
-                <div class="fieldLabel">
+                  <div class="fieldLabel">
+                    ${fieldNames[field]}
+                  </div>
 
-                  ${
-                    fieldNames[
-                      field
-                    ]
-                  }
+                  <div>
 
-                </div>
+                    ${
+                      thesis
 
-                <div>
+                        ? esc(thesis.text)
 
-                  ${
-                    thesis
+                        : "frei"
+                    }
 
-                      ? esc(
-                          thesis.text
-                        )
-
-                      : "frei"
-                  }
+                  </div>
 
                 </div>
 
-              </div>
+              `;
 
-            `;
-
-          }
-        ).join("")
+            }
+          ).join("")
       }
 
     </div>
@@ -3252,12 +3981,11 @@ function renderFigureDraft(){
   const activePlayer =
     state.players.find(
       player =>
-        player.seat ===
-        seat
+        player.seat === seat
     );
 
 
-  const myFigures =
+  const mine =
     state.figures.filter(
       figure =>
         figure.user_id ===
@@ -3265,17 +3993,15 @@ function renderFigureDraft(){
     );
 
 
-  const unusedFigures =
-    Object.keys(
-      figureNames
-    ).filter(
-      figure =>
-        !myFigures.some(
-          item =>
-            item.figure ===
-            figure
-        )
-    );
+  const freeFigures =
+    Object.keys(figureNames)
+      .filter(
+        figure =>
+          !mine.some(
+            item =>
+              item.figure === figure
+          )
+      );
 
 
   return `
@@ -3283,7 +4009,7 @@ function renderFigureDraft(){
     <div class="card">
 
       <h2>
-        Thesenbretter aufgedeckt
+        Thesenbretter
       </h2>
 
       <div class="grid2">
@@ -3316,8 +4042,7 @@ function renderFigureDraft(){
     <div class="turn">
 
       ${
-        seat ===
-        state.me.seat
+        seat === state.me.seat
 
           ? "Du bist beim Figurendraft am Zug"
 
@@ -3334,12 +4059,12 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          Fußballer wählen
+          Fußballer auswählen
         </h2>
 
+
         ${
-          seat ===
-          state.me.seat
+          seat === state.me.seat
 
             ? `
 
@@ -3350,18 +4075,14 @@ function renderFigureDraft(){
                 >
 
                   ${
-                    unusedFigures.map(
+                    freeFigures.map(
                       figure => `
 
                         <option
                           value="${figure}"
                         >
 
-                          ${
-                            figureNames[
-                              figure
-                            ]
-                          }
+                          ${figureNames[figure]}
 
                         </option>
 
@@ -3374,7 +4095,7 @@ function renderFigureDraft(){
 
                 <input
                   id="footballerInput"
-                  placeholder="Spielername"
+                  placeholder="Fußballer"
                 >
 
 
@@ -3388,7 +4109,7 @@ function renderFigureDraft(){
                   class="primary"
                   onclick="pickFigure()"
                 >
-                  Spieler draften
+                  Draften
                 </button>
 
               </div>
@@ -3413,6 +4134,7 @@ function renderFigureDraft(){
           Figuren
         </h2>
 
+
         ${
           state.players.map(
             player => {
@@ -3431,54 +4153,48 @@ function renderFigureDraft(){
                   ${esc(player.name)}
                 </h3>
 
+
                 ${
-                  Object.keys(
-                    figureNames
-                  ).map(
-                    figure => {
+                  Object.keys(figureNames)
+                    .map(
+                      figure => {
 
-                      const pick =
-                        figures.find(
-                          item =>
-                            item.figure ===
-                            figure
-                        );
+                        const pick =
+                          figures.find(
+                            item =>
+                              item.figure ===
+                              figure
+                          );
 
 
-                      return `
+                        return `
 
-                        <div class="thesis">
+                          <div class="thesis">
 
-                          <strong>
+                            <strong>
+                              ${figureNames[figure]}
+                            </strong>
 
-                            ${
-                              figureNames[
-                                figure
-                              ]
-                            }
+                            <div class="muted">
 
-                          </strong>
+                              ${
+                                pick
 
-                          <div class="muted">
+                                  ? esc(
+                                      pick.footballer
+                                    )
 
-                            ${
-                              pick
+                                  : "frei"
+                              }
 
-                                ? esc(
-                                    pick.footballer
-                                  )
-
-                                : "frei"
-                            }
+                            </div>
 
                           </div>
 
-                        </div>
+                        `;
 
-                      `;
-
-                    }
-                  ).join("")
+                      }
+                    ).join("")
                 }
 
                 <hr>
@@ -3502,35 +4218,27 @@ function renderFigureDraft(){
 async function pickFigure(){
 
   const figure =
-    document
-      .getElementById(
-        "figureSelect"
-      )
-      .value;
+    document.getElementById(
+      "figureSelect"
+    ).value;
 
 
   const footballer =
-    document
-      .getElementById(
-        "footballerInput"
-      )
-      .value
-      .trim();
+    document.getElementById(
+      "footballerInput"
+    ).value.trim();
 
 
   const club =
-    document
-      .getElementById(
-        "clubInput"
-      )
-      .value
-      .trim();
+    document.getElementById(
+      "clubInput"
+    ).value.trim();
 
 
   if(!footballer){
 
     toast(
-      "Spieler eingeben"
+      "Fußballer eingeben"
     );
 
     return;
@@ -3584,7 +4292,9 @@ function thesisPoints(
     ||
     thesis?.resolved === undefined
   ){
+
     return 0;
+
   }
 
 
@@ -3698,9 +4408,11 @@ function playerScore(userId){
 
   return {
 
-    thesis:thesisTotal,
+    thesis:
+      thesisTotal,
 
-    figures:figureTotal,
+    figures:
+      figureTotal,
 
     total:
       thesisTotal +
@@ -3841,9 +4553,7 @@ function renderScoring(finished){
                 </h2>
 
 
-                <h3>
-                  Thesen
-                </h3>
+                <h3>Thesen</h3>
 
 
                 ${
@@ -3871,11 +4581,9 @@ function renderScoring(finished){
 
                           <strong>
 
-                            ${
-                              fieldNames[
-                                placement.field
-                              ]
-                            }
+                            ${fieldNames[
+                              placement.field
+                            ]}
 
                             ·
 
@@ -3883,19 +4591,13 @@ function renderScoring(finished){
                               points >= 0
                                 ? "+"
                                 : ""
-                            }
-
-                            ${points}
+                            }${points}
 
                           </strong>
 
 
                           <p>
-
-                            ${esc(
-                              thesis.text
-                            )}
-
+                            ${esc(thesis.text)}
                           </p>
 
 
@@ -3935,7 +4637,6 @@ function renderScoring(finished){
 
                                   <button
                                     class="ghost"
-
                                     onclick="
                                       resolveThesis(
                                         '${thesis.id}',
@@ -3963,9 +4664,7 @@ function renderScoring(finished){
                 <hr>
 
 
-                <h3>
-                  Figuren
-                </h3>
+                <h3>Figuren</h3>
 
 
                 ${
@@ -3976,11 +4675,9 @@ function renderScoring(finished){
 
                         <strong>
 
-                          ${
-                            figureNames[
-                              figure.figure
-                            ]
-                          }
+                          ${figureNames[
+                            figure.figure
+                          ]}
 
                           ·
 
@@ -3996,18 +4693,17 @@ function renderScoring(finished){
 
                             ? `
 
-                              <div>
+                              <p>
 
                                 ${
                                   figure.points >= 0
                                     ? "+"
                                     : ""
-                                }
+                                }${figure.points}
 
-                                ${figure.points}
                                 Punkte
 
-                              </div>
+                              </p>
 
                             `
 
@@ -4015,14 +4711,11 @@ function renderScoring(finished){
 
                               <div
                                 class="row"
-                                style="
-                                  margin-top:10px
-                                "
+                                style="margin-top:10px"
                               >
 
                                 <button
                                   class="ghost"
-
                                   onclick="
                                     setFigurePoints(
                                       '${figure.id}',
@@ -4037,13 +4730,14 @@ function renderScoring(finished){
                                   −
                                 </button>
 
+
                                 <strong>
                                   ${figure.points}
                                 </strong>
 
+
                                 <button
                                   class="ghost"
-
                                   onclick="
                                     setFigurePoints(
                                       '${figure.id}',
@@ -4098,7 +4792,24 @@ function renderScoring(finished){
 
         `
 
-        : ""
+        : `
+
+          <div class="card">
+
+            <button
+              class="primary"
+              onclick="
+                openLobby(
+                  '${state.game.lobby_id}'
+                )
+              "
+            >
+              Zur Saisonübersicht
+            </button>
+
+          </div>
+
+        `
     }
 
   `;
@@ -4171,8 +4882,10 @@ async function finishGame(){
     await db.rpc(
       "finish_game",
       {
+
         p_game_id:
           state.gameId
+
       }
     );
 
