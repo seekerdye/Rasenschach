@@ -514,7 +514,7 @@ const phases = [
   ["finished","Ergebnis"]
 ];
 
-const statusNames = {
+const matchdayDates = {    1:"28.–30.08.2026",   2:"04.–06.09.2026",   3:"11.–13.09.2026",   4:"18.–20.09.2026",    5:"09.–11.10.2026",   6:"16.–18.10.2026",   7:"23.–25.10.2026",   8:"30.10.–01.11.2026",    9:"06.–08.11.2026",   10:"20.–22.11.2026",   11:"27.–29.11.2026",    12:"04.–06.12.2026",   13:"11.–13.12.2026",   14:"18.–20.12.2026",    15:"08.–10.01.2027",    // Englische Woche   16:"12.–14.01.2027",    17:"15.–17.01.2027",   18:"22.–24.01.2027",   19:"29.–31.01.2027",    20:"05.–07.02.2027",   21:"12.–14.02.2027",   22:"19.–21.02.2027",   23:"26.–28.02.2027",    // Englische Woche   24:"02.–04.03.2027",    25:"05.–07.03.2027",   26:"12.–14.03.2027",   27:"19.–21.03.2027",    28:"02.–04.04.2027",   29:"09.–11.04.2027",   30:"16.–18.04.2027",   31:"23.–25.04.2027",    // Kein Bundesliga-Spieltag   // am Wochenende um den 1. Mai    32:"07.–09.05.2027",   33:"14.–16.05.2027",    // Alle Spiele zeitgleich   34:"22.05.2027"  };
   lobby:"Vorbereitung",
   thesis_draft:"Thesendraft",
   figure_draft:"Figurendraft",
@@ -2071,7 +2071,7 @@ async function refreshLobby(){
 
 }
 
-function renderLobbySeason(){
+document.getElementById(   "headerActions" ).innerHTML = `    ${     isMainAccount()        ? `          <button           class="ghost"           onclick="goHome()"         >           ← Lobby Übersicht         </button>        `        : ""   }  `;
 
   const owner =
     state.lobby.created_by ===
