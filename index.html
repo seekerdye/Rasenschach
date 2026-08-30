@@ -1884,10 +1884,23 @@ async function boot(){
       roomCode
     ){
 
-      renderGuestJoinPage(
-        roomCode,
-        accessToken
-      );
+      if(accessToken){
+
+        await openGuestInvite(
+          roomCode,
+          accessToken
+        );
+
+      }
+
+      else{
+
+        renderGuestJoinPage(
+          roomCode,
+          ""
+        );
+
+      }
 
       return;
 
@@ -2146,6 +2159,86 @@ function renderStartPage(
 
 
 
+async function openGuestInvite(
+  room,
+  accessToken
+){
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+      <div class="loading">
+        Persönlicher Lobby-Zugang wird geöffnet …
+      </div>
+    </div>
+
+  `;
+
+
+  await ensureGuestSession(
+    true
+  );
+
+
+  const {
+    data,
+    error
+  } =
+    await db.rpc(
+      "open_lobby_invite",
+      {
+        p_code:
+          room,
+
+        p_access_token:
+          accessToken
+      }
+    );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  const result =
+    data?.[0];
+
+
+  if(!result){
+    throw new Error(
+      "Der Einladungslink ist ungültig."
+    );
+  }
+
+
+  if(result.needs_name){
+
+    renderGuestJoinPage(
+      room,
+      accessToken
+    );
+
+    return;
+
+  }
+
+
+  openLobby(
+    result.lobby_id
+  );
+
+}
+
+
+
 function renderGuestJoinPage(
   room,
   accessToken
@@ -2173,9 +2266,10 @@ function renderGuestJoinPage(
 
 
       <p class="muted">
-        Du trittst als Gast bei.
-        Ein Hauptspieler-Login ist über
-        diesen Einladungslink nicht möglich.
+        Wähle deinen Namen nur bei diesem
+        ersten Beitritt. Danach führt dich
+        derselbe persönliche Link auf jedem
+        Gerät direkt zur Spieltagsübersicht.
       </p>
 
     </div>
