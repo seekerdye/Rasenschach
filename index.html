@@ -1,85 +1,6611 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta
+<!doctype html>
+<html lang="de">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
   name="viewport"
   content="width=device-width,initial-scale=1,viewport-fit=cover"
-><title>Rasenschach Bundesliga</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>:root{--bg:#10281f;--panel:#17372b;--dark:#0a1712;--cream:#f3eedf;--muted:#b7c6bd;--line:#315747;--accent:#d8ff69;--danger:#ff816f;}*{box-sizing:border-box;}body{margin:0;min-height:100vh;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top,#24503f 0,#10281f 45%,#09140f 100%);color:var(--cream);}button,input,select,textarea{font:inherit;}button{cursor:pointer}.shell{width:min(1150px,calc(100% - 24px));margin:auto;padding:20px 0 60px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.brand{font-size:clamp(25px,5vw,42px);font-weight:900;letter-spacing:-.04em}.brand span{color:var(--accent)}.headerActions{display:flex;gap:7px;align-items:center;justify-content:flex-end;flex-wrap:wrap;color:var(--muted);font-size:13px}.card{background:rgba(23,55,43,.95);border:1px solid var(--line);border-radius:20px;padding:18px;margin:12px 0;box-shadow:0 18px 60px rgba(0,0,0,.18)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.matchdayGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}@media(max-width:900px){.grid3{grid-template-columns:1fr 1fr}.matchdayGrid{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}.matchdayGrid{grid-template-columns:repeat(2,1fr)}header{align-items:flex-start}}@media(max-width:430px){.matchdayGrid{grid-template-columns:1fr}}h1,h2,h3,p{margin-top:0}h1{letter-spacing:-.03em}h2{font-size:20px}.muted{color:var(--muted)}.success{color:var(--accent)}.error{color:var(--danger)}input,select,textarea{width:100%;background:var(--dark);color:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}textarea{resize:vertical;min-height:76px}input:focus,select:focus,textarea:focus{border-color:var(--accent)}button{border:0;border-radius:12px;padding:11px 14px;background:var(--cream);color:#102018;font-weight:800}button.primary{background:var(--accent)}button.ghost{background:transparent;color:var(--cream);border:1px solid var(--line)}button.danger{background:transparent;color:var(--danger);border:1px solid rgba(255,129,111,.4)}button:disabled{opacity:.4;cursor:not-allowed}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.stack{display:grid;gap:10px}.thesis{background:#0d2119;border:1px solid var(--line);border-radius:14px;padding:13px}.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:100px;background:#0c2119;border:1px solid var(--line);color:var(--muted);font-size:12px;margin:2px}.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.lobbyCard{display:flex;flex-direction:column;min-height:235px}.lobbyCard .actions{margin-top:auto}.lobbyName{font-size:22px;font-weight:900;margin-top:12px}.lobbyCode{color:var(--muted);font-size:13px;margin-top:4px}.matchdayCard{background:#0d2119;border:1px solid var(--line);border-radius:15px;padding:13px;min-height:180px;display:flex;flex-direction:column}.matchdayNumber{font-size:20px;font-weight:900}.matchdayDate{margin-top:6px;font-size:13px;font-weight:800;color:var(--cream)}.matchdayStatus{margin-top:7px;color:var(--muted);font-size:12px}.matchdayCard .actions{margin-top:auto}.templateDay{background:#0d2119;border:1px solid var(--line);border-radius:13px;padding:11px;cursor:pointer}.templateDay:hover{border-color:var(--accent)}.templateDay.active{border-color:var(--accent);background:#183b2d}.templateDay.complete .templateCount{color:var(--accent)}.templateNumber{font-weight:900;font-size:17px}.templateDate{margin-top:5px;font-size:12px;font-weight:700;color:var(--cream)}.templateCount{color:var(--muted);font-size:12px;margin-top:4px}.editorRow{display:grid;grid-template-columns:42px 1fr;gap:9px;align-items:start}.editorNumber{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#0c2119;border:1px solid var(--line);font-weight:900}.turn{background:var(--accent);color:#102018;border-radius:14px;padding:13px;font-weight:900;text-align:center;margin-bottom:12px}.phasebar{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;scrollbar-width:none}.phasebar::-webkit-scrollbar{display:none}.phasebar span{white-space:nowrap;padding:7px 10px;border-radius:99px;background:#0b1d16;color:#7d9488;font-size:12px}.phasebar span.active{background:var(--accent);color:#102018;font-weight:800}.fields{display:grid;gap:8px}.field{display:grid;grid-template-columns:70px 1fr;gap:10px;align-items:center;background:#0c2119;border:1px solid var(--line);border-radius:14px;padding:10px}.fieldLabel{font-size:22px;font-weight:900;text-align:center}.fieldButtons{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.fieldButton{background:transparent;color:var(--cream);border:1px solid var(--line)}.fieldButton:hover{border-color:var(--accent);color:var(--accent)}.score{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;text-align:center}.points{font-size:clamp(34px,8vw,64px);font-weight:900}.vs{color:var(--muted);font-size:24px;font-weight:900}.bigResult{text-align:center;font-size:clamp(32px,8vw,70px);font-weight:900}hr{border:0;border-top:1px solid var(--line);margin:18px 0}.footer{margin-top:40px;text-align:center;color:var(--muted);font-size:12px}.loading{padding:60px 20px;text-align:center;color:var(--muted)}#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);max-width:calc(100% - 30px);padding:10px 16px;background:var(--cream);color:#102018;border-radius:100px;font-weight:800;opacity:0;pointer-events:none;transition:.2s;z-index:1000}#toast.show{opacity:1}</style></head><body><div class="shell"><header><div class="brand">RASEN<span>SCHACH</span></div><div id="headerActions" class="headerActions"></div></header><main id="app"><div class="loading">Rasenschach wird geladen …</div></main><div class="footer">Rasenschach Bundesliga · Fan-Projekt</div></div><div id="toast"></div><script>
-const SUPABASE_URL="https://myqerixfnmjgvgwculiw.supabase.co";
-const SUPABASE_KEY="sb_publishable_dr_f5ic0-aiiY3wSkX_Rng_1Ye3Vy73";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-let state={user:null,myLobbies:[],myLobbyPlayers:[],lobbyId:null,lobby:null,lobbyPlayers:[],matchdayGames:[],gameId:null,game:null,players:[],theses:[],placements:[],figures:[],me:null,globalTheses:[],selectedTemplateMatchday:1,channel:null};
-const matchdayDates={1:"28.–30.08.2026",2:"04.–06.09.2026",3:"11.–13.09.2026",4:"18.–20.09.2026",5:"09.–11.10.2026",6:"16.–18.10.2026",7:"23.–25.10.2026",8:"30.10.–01.11.2026",9:"06.–08.11.2026",10:"20.–22.11.2026",11:"27.–29.11.2026",12:"04.–06.12.2026",13:"11.–13.12.2026",14:"18.–20.12.2026",15:"08.–10.01.2027",16:"12.–14.01.2027",17:"15.–17.01.2027",18:"22.–24.01.2027",19:"29.–31.01.2027",20:"05.–07.02.2027",21:"12.–14.02.2027",22:"19.–21.02.2027",23:"26.–28.02.2027",24:"02.–04.03.2027",25:"05.–07.03.2027",26:"12.–14.03.2027",27:"19.–21.03.2027",28:"02.–04.04.2027",29:"09.–11.04.2027",30:"16.–18.04.2027",31:"23.–25.04.2027",32:"07.–09.05.2027",33:"14.–16.05.2027",34:"22.05.2027"};
-const matchdayStartDates={1:"2026-08-28",2:"2026-09-04",3:"2026-09-11",4:"2026-09-18",5:"2026-10-09",6:"2026-10-16",7:"2026-10-23",8:"2026-10-30",9:"2026-11-06",10:"2026-11-20",11:"2026-11-27",12:"2026-12-04",13:"2026-12-11",14:"2026-12-18",15:"2027-01-08",16:"2027-01-12",17:"2027-01-15",18:"2027-01-22",19:"2027-01-29",20:"2027-02-05",21:"2027-02-12",22:"2027-02-19",23:"2027-02-26",24:"2027-03-02",25:"2027-03-05",26:"2027-03-12",27:"2027-03-19",28:"2027-04-02",29:"2027-04-09",30:"2027-04-16",31:"2027-04-23",32:"2027-05-07",33:"2027-05-14",34:"2027-05-22"};
-const fieldNames={P1:"+1",N1:"−1",P3:"±3",N3:"∓3",Q:"?"};
-const figureSequence=[1,2,2,1,1,2,2,1,1,2];
-const figureNames={KING:"♔ König",QUEEN:"♕ Dame",ROOK:"♖ Turm",BISHOP:"♗ Läufer",KNIGHT:"♘ Springer"};
-const statusNames={lobby:"Vorbereitung",thesis_draft:"Thesendraft",figure_draft:"Figurendraft",scoring:"Auswertung",finished:"Beendet"};
-const phases=[["lobby","Vorbereitung"],["thesis_draft","Thesendraft"],["figure_draft","Figurendraft"],["scoring","Auswertung"],["finished","Ergebnis"]];
-function esc(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
-function jsArg(value){return JSON.stringify(String(value??"")).replaceAll("</","<\\/")}
-function toast(message){const element=document.getElementById("toast");element.textContent=message;element.classList.add("show");setTimeout(()=>element.classList.remove("show"),2300)}
-function errorMessage(error){console.error(error);toast(error?.message||"Etwas ist schiefgelaufen")}
-function appBase(){return location.origin+location.pathname}
-function goHome(){location.href=appBase()}
-function openLobby(id){location.href=appBase()+"?lobby="+encodeURIComponent(id)}
-function openGame(id){location.href=appBase()+"?game="+encodeURIComponent(id)}
-function openThesisOverview(){location.href=appBase()+"?theses=1"}
-function inviteUrl(code){return appBase()+"?room="+encodeURIComponent(code)}
-function isMainAccount(){return Boolean(state.user?.email)}
-function accountName(){return state.user?.user_metadata?.display_name||state.user?.email?.split("@")[0]||""}
-function currentLobbyPlayerName(){return state.lobbyPlayers.find(player=>player.user_id===state.user?.id)?.name||accountName()||"Spieler"}
-function currentGamePlayerName(){return state.me?.name||accountName()||"Spieler"}
-function playerNameBadge(name){return`<span class="badge">👤 ${esc(name)}</span>`}
-function berlinNowKey(){const parts=new Intl.DateTimeFormat("de-DE",{timeZone:"Europe/Berlin",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date);const get=type=>parts.find(part=>part.type===type)?.value||"";return`${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}`}
-function matchdayIsLocked(matchday){const startDate=matchdayStartDates[matchday];return!startDate||berlinNowKey()>=`${startDate}T20:30`}
-function matchdayThesisCount(matchday){return state.globalTheses.filter(thesis=>thesis.matchday===matchday&&thesis.text?.trim()).length}
-async function copyLobbyInvite(code){try{await navigator.clipboard.writeText(inviteUrl(code));toast("Einladungslink kopiert")}catch{toast("Link konnte nicht kopiert werden")}}
-function draftedTheses(){return state.theses.filter(thesis=>thesis.drafted_by)}
-function currentThesisSeat(){const count=draftedTheses().length;const starter=state.game?.thesis_start_seat||1;const sequence=starter===1?[1,2,2,1,1,2,2,1,1,2]:[2,1,1,2,2,1,1,2,2,1];return sequence[count]??null}
-function currentFigureSeat(){return figureSequence[state.figures.length]??null}
-function phaseBar(){return`<div class="phasebar">${phases.map(([id,label])=>`<span class="${state.game?.status===id?"active":""}">${label}</span>`).join("")}</div>`}
-async function removeAnonymousSession(){if(state.user&&!state.user.email){await db.auth.signOut({scope:"local"});state.user=null}}
-async function loginMainPlayer(){try{const email=document.getElementById("authEmail").value.trim().toLowerCase();const password=document.getElementById("authPassword").value;if(!email||!password){toast("E-Mail und Passwort eingeben");return}await removeAnonymousSession();const{data,error}=await db.auth.signInWithPassword({email,password});if(error)throw error;state.user=data.user;goHome()}catch(error){errorMessage(error)}}
-async function registerMainPlayer(){try{const name=document.getElementById("authName").value.trim();const email=document.getElementById("authEmail").value.trim().toLowerCase();const password=document.getElementById("authPassword").value;if(!name||!email||!password){toast("Name, E-Mail und Passwort eingeben");return}if(password.length<6){toast("Passwort muss mindestens 6 Zeichen haben");return}await removeAnonymousSession();const{data,error}=await db.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:appBase()}});if(error)throw error;if(data.session){state.user=data.session.user;goHome()}else toast("Konto erstellt – bitte E-Mail bestätigen")}catch(error){errorMessage(error)}}
-async function logoutMainPlayer(){try{const{error}=await db.auth.signOut({scope:"local"});if(error)throw error;goHome()}catch(error){errorMessage(error)}}
-async function ensureGuestSession(){const{data:{session}}=await db.auth.getSession();if(session){state.user=session.user;return}const{data,error}=await db.auth.signInAnonymously();if(error)throw error;state.user=data.session.user}
-async function boot(){try{const{data:{session},error}=await db.auth.getSession();if(error)throw error;state.user=session?.user||null;const params=new URLSearchParams(location.search);const thesisOverview=params.get("theses");const lobbyId=params.get("lobby");const gameId=params.get("game");const roomCode=params.get("room")?.trim().toUpperCase();if(thesisOverview){if(!isMainAccount()){renderStartPage("");return}await loadThesisOverview();return}if(gameId){if(!state.user){renderStartPage("");return}state.gameId=gameId;await refreshGame();subscribeGame();return}if(lobbyId){if(!state.user){renderStartPage("");return}state.lobbyId=lobbyId;await refreshLobby();subscribeLobby();return}if(roomCode){renderStartPage(roomCode);return}if(isMainAccount()){await loadDashboard();return}renderStartPage("")}catch(error){console.error(error);document.getElementById("app").innerHTML=`<div class="card"><h2>Fehler beim Laden</h2><p class="error">${esc(error.message)}</p><button onclick="goHome()">Zur Startseite</button></div>`}}
-function renderAuthCard(){return`<div class="card"><h2>Hauptspieler</h2><p class="muted">Melde dich an, damit deine Lobbys auf allen Geräten verfügbar sind.</p><div class="stack"><input id="authName" maxlength="40" placeholder="Anzeigename"><input id="authEmail" type="email" autocomplete="email" placeholder="E-Mail"><input id="authPassword" type="password" autocomplete="current-password" placeholder="Passwort"><button class="primary" onclick="loginMainPlayer()">Einloggen</button><button class="ghost" onclick="registerMainPlayer()">Konto erstellen</button></div></div>`}
-function renderStartPage(room=""){document.getElementById("headerActions").innerHTML="";document.getElementById("app").innerHTML=`<div class="card"><h1>Rasenschach Bundesliga</h1><p class="muted">Eine Saison. 34 Spieltage. Mehrere Zweier-Lobbys.</p></div><div class="grid2">${isMainAccount()?`<div class="card"><h2>${esc(accountName())}</h2><p class="muted">${esc(state.user.email)}</p><button class="primary" onclick="goHome()">Meine Lobbys</button></div>`:renderAuthCard()}<div class="card"><h2>Lobby beitreten</h2><p class="muted">Spieler 2 benötigt keinen eigenen Account.</p><div class="stack"><input id="joinName" maxlength="30" placeholder="Dein Name"><input id="joinCode" maxlength="6" placeholder="Lobby-Code" value="${esc(room)}"><button onclick="joinLobby()">Beitreten</button></div></div></div>`}
-async function loadThesisOverview(){const{data,error}=await db.from("global_theses").select("*").eq("owner_id",state.user.id).order("matchday").order("slot");if(error)throw error;state.globalTheses=data||[];renderThesisOverview()}
-function templateCount(matchday){return state.globalTheses.filter(thesis=>thesis.matchday===matchday&&thesis.text?.trim()).length}
-function templateText(matchday,slot){return state.globalTheses.find(thesis=>thesis.matchday===matchday&&thesis.slot===slot)?.text||""}
-function selectTemplateMatchday(matchday){state.selectedTemplateMatchday=matchday;renderThesisOverview()}
-function renderThesisOverview(){const selected=state.selectedTemplateMatchday;document.getElementById("headerActions").innerHTML=`${playerNameBadge(accountName())}<button class="ghost" onclick="goHome()">← Lobby-Übersicht</button>`;document.getElementById("app").innerHTML=`<div class="card"><span class="badge">Zentrale Verwaltung</span><h1 style="margin-top:12px">Thesen Übersicht</h1><p class="muted">Hier verwaltest du die Thesen für alle deine Lobbys. Jeder Bundesliga-Spieltag besitzt genau einen globalen Satz aus zwölf Thesen.</p></div><div class="card"><h2>Spieltag auswählen</h2><div class="matchdayGrid">${Array.from({length:34},(_,index)=>{const matchday=index+1,count=templateCount(matchday);return`<div class="templateDay ${selected===matchday?"active":""} ${count===12?"complete":""}" onclick="selectTemplateMatchday(${matchday})"><div class="templateNumber">Spieltag ${matchday}</div><div class="templateDate">📅 ${matchdayDates[matchday]}</div><div class="templateCount">${count}/12 Thesen</div></div>`}).join("")}</div></div><div class="card"><span class="badge">Bundesliga</span><h2 style="margin-top:10px">Spieltag ${selected}</h2><p>📅 <strong>${matchdayDates[selected]}</strong></p><p class="muted">Änderungen werden beim Speichern automatisch in alle bereits erstellten, aber noch nicht gestarteten Spiele dieses Spieltags übernommen. Bereits gestartete Spiele bleiben unverändert.</p><div class="stack">${Array.from({length:12},(_,index)=>{const slot=index+1;return`<div class="editorRow"><div class="editorNumber">${slot}</div><textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Thesen speichern & synchronisieren</button></div></div>`}
-async function saveGlobalTheses(){try{const texts=Array.from({length:12},(_,index)=>document.getElementById(`globalThesis${index+1}`).value.trim());const{error}=await db.rpc("save_global_theses",{p_matchday:state.selectedTemplateMatchday,p_theses:texts});if(error)throw error;toast("Thesen gespeichert und synchronisiert");await loadThesisOverview()}catch(error){errorMessage(error)}}
-async function loadDashboard(){const membershipResult=await db.from("lobby_players").select("*").eq("user_id",state.user.id);if(membershipResult.error)throw membershipResult.error;const memberships=membershipResult.data||[];if(!memberships.length){state.myLobbies=[];state.myLobbyPlayers=[];renderDashboard();return}const lobbyIds=[...new Set(memberships.map(item=>item.lobby_id))];const[lobbyResult,playerResult]=await Promise.all([db.from("lobbies").select("*").in("id",lobbyIds).order("created_at",{ascending:false}),db.from("lobby_players").select("*").in("lobby_id",lobbyIds).order("seat")]);if(lobbyResult.error)throw lobbyResult.error;if(playerResult.error)throw playerResult.error;state.myLobbies=lobbyResult.data||[];state.myLobbyPlayers=playerResult.data||[];renderDashboard()}
-function renderDashboard(){document.getElementById("headerActions").innerHTML=`${playerNameBadge(accountName())}<span>${esc(state.user.email)}</span><button class="ghost" onclick="logoutMainPlayer()">Abmelden</button>`;document.getElementById("app").innerHTML=`<div class="card"><h1>Meine Lobbys</h1><p class="muted">Hallo ${esc(accountName())}. Von hier verwaltest du deine Lobbys und die globalen Bundesliga-Thesen.</p><button class="primary" onclick="openThesisOverview()">⚽ Thesen Übersicht</button></div><div class="card"><h2>Neue Lobby</h2><div class="grid2"><input id="createPlayerName" maxlength="30" value="${esc(accountName())}" placeholder="Dein Spielername"><input id="createLobbyName" maxlength="60" placeholder="Lobbyname, z. B. Duell gegen Max"></div><button class="primary" style="margin-top:10px" onclick="createLobby()">Lobby erstellen</button></div><div class="card"><h2>Lobbys · ${state.myLobbies.length}</h2>${state.myLobbies.length?`<div class="grid3">${state.myLobbies.map(renderLobbyCard).join("")}</div>`:`<div class="thesis"><strong>Noch keine Lobby</strong><p class="muted" style="margin-top:6px;margin-bottom:0">Erstelle oben deine erste Lobby.</p></div>`}</div>`}
-function renderLobbyCard(lobby){const players=state.myLobbyPlayers.filter(player=>player.lobby_id===lobby.id);const opponent=players.find(player=>player.user_id!==state.user.id);const owner=lobby.created_by===state.user.id;return`<div class="thesis lobbyCard"><span class="badge">Bundesliga · 34 Spieltage</span><div class="lobbyName">${esc(lobby.name)}</div><div class="lobbyCode">Code: ${esc(lobby.code)}</div><p style="margin-top:12px">${opponent?`gegen <strong>${esc(opponent.name)}</strong>`:`<span class="muted">Wartet auf Spieler 2</span>`}</p><div class="actions"><button class="primary" onclick='openLobby(${jsArg(lobby.id)})'>Öffnen</button>${owner?`<button class="ghost" onclick='copyLobbyInvite(${jsArg(lobby.code)})'>Einladen</button><button class="ghost" onclick='renameLobby(${jsArg(lobby.id)},${jsArg(lobby.name)})'>Umbenennen</button><button class="danger" onclick='deleteLobby(${jsArg(lobby.id)},${jsArg(lobby.name)})'>Löschen</button>`:""}</div></div>`}
-async function createLobby(){try{const playerName=document.getElementById("createPlayerName").value.trim();const lobbyName=document.getElementById("createLobbyName").value.trim();if(!playerName){toast("Spielername eingeben");return}const{data,error}=await db.rpc("create_lobby",{p_player_name:playerName,p_lobby_name:lobbyName});if(error)throw error;openLobby(data[0].lobby_id)}catch(error){errorMessage(error)}}
-async function joinLobby(){try{const name=document.getElementById("joinName").value.trim();const code=document.getElementById("joinCode").value.trim().toUpperCase();if(!name||!code){toast("Name und Lobby-Code eingeben");return}await ensureGuestSession();const{data,error}=await db.rpc("join_lobby",{p_code:code,p_name:name});if(error)throw error;openLobby(data[0].lobby_id)}catch(error){errorMessage(error)}}
-async function renameLobby(id,currentName){const newName=prompt("Neuer Lobbyname:",currentName);if(newName===null)return;if(!newName.trim()){toast("Lobbyname darf nicht leer sein");return}try{const{error}=await db.rpc("rename_lobby",{p_lobby_id:id,p_name:newName.trim()});if(error)throw error;toast("Lobby umbenannt");state.lobbyId===id?await refreshLobby():await loadDashboard()}catch(error){errorMessage(error)}}
-async function deleteLobby(id,name){if(!confirm(`Lobby "${name}" wirklich löschen?\n\nAlle 34 möglichen Spieltage, Thesen, Drafts und Ergebnisse dieser Lobby werden ebenfalls gelöscht.`))return;try{const{error}=await db.rpc("delete_lobby",{p_lobby_id:id});if(error)throw error;toast("Lobby gelöscht");goHome()}catch(error){errorMessage(error)}}
-async function refreshLobby(){const[lobbyResult,playersResult,gamesResult]=await Promise.all([db.from("lobbies").select("*").eq("id",state.lobbyId).single(),db.from("lobby_players").select("*").eq("lobby_id",state.lobbyId).order("seat"),db.from("games").select("*").eq("lobby_id",state.lobbyId).order("matchday")]);if(lobbyResult.error)throw lobbyResult.error;if(playersResult.error)throw playersResult.error;if(gamesResult.error)throw gamesResult.error;state.lobby=lobbyResult.data;state.lobbyPlayers=playersResult.data||[];state.matchdayGames=gamesResult.data||[];if(state.lobby.created_by===state.user.id){const{data,error}=await db.from("global_theses").select("matchday,slot,text").eq("owner_id",state.user.id);if(error)throw error;state.globalTheses=data||[]}else state.globalTheses=[];renderLobbySeason()}
-function renderLobbySeason(){const owner=state.lobby.created_by===state.user.id;const opponent=state.lobbyPlayers.find(player=>player.user_id!==state.user.id);const finishedCount=state.matchdayGames.filter(game=>game.status==="finished").length;document.getElementById("headerActions").innerHTML=`${playerNameBadge(currentLobbyPlayerName())}${isMainAccount()?`<button class="ghost" onclick="goHome()">← Lobby-Übersicht</button>`:""}`;document.getElementById("app").innerHTML=`<div class="card"><span class="badge">Bundesliga 2026/27</span><span class="badge">${finishedCount}/34 beendet</span><h1 style="margin-top:12px">${esc(state.lobby.name)}</h1><p class="muted">Lobby-Code: <strong>${esc(state.lobby.code)}</strong> · ${opponent?`Gegner: ${esc(opponent.name)}`:"Wartet auf Spieler 2"}</p>${owner?`<div class="actions"><button onclick='copyLobbyInvite(${jsArg(state.lobby.code)})'>Einladen</button><button class="ghost" onclick='renameLobby(${jsArg(state.lobby.id)},${jsArg(state.lobby.name)})'>Lobby umbenennen</button><button class="danger" onclick='deleteLobby(${jsArg(state.lobby.id)},${jsArg(state.lobby.name)})'>Lobby löschen</button></div>`:""}</div><div class="card"><h2>Bundesliga-Spieltage</h2><p class="muted">Jeder Spieltag ist ein eigenständiges Rasenschach-Spiel. Die Thesen werden zentral von Spieler 1 verwaltet.</p><div class="matchdayGrid">${Array.from({length:34},(_,index)=>renderMatchday(index+1,owner,Boolean(opponent))).join("")}</div></div>`}
-function renderMatchday(matchday,owner,hasOpponent){const game=state.matchdayGames.find(item=>item.matchday===matchday);const date=matchdayDates[matchday]||"";const thesisCount=owner?matchdayThesisCount(matchday):null;const thesesReady=thesisCount===12;const locked=matchdayIsLocked(matchday);if(game)return`<div class="matchdayCard"><div class="matchdayNumber">Spieltag ${matchday}</div><div class="matchdayDate">📅 ${date}</div><div class="matchdayStatus">${game.status==="lobby"&&locked?"🔒 Draftstart geschlossen":statusNames[game.status]||game.status}</div><div class="actions"><button class="primary" onclick='openGame(${jsArg(game.id)})'>Öffnen</button></div></div>`;return`<div class="matchdayCard"><div class="matchdayNumber">Spieltag ${matchday}</div><div class="matchdayDate">📅 ${date}</div><div class="matchdayStatus">${locked?"🔒 Erstellung geschlossen":!hasOpponent?"Spieler 2 fehlt":!thesesReady?`${thesisCount}/12 Thesen hinterlegt`:"Bereit zur Erstellung"}</div><div class="actions">${owner?`<button class="primary" ${!hasOpponent||!thesesReady||locked?"disabled":""} onclick="createMatchdayGame(${matchday})">Spiel erstellen</button>`:`<span class="muted">Wartet auf Spieler 1</span>`}</div></div>`}
-async function createMatchdayGame(matchday){try{if(matchdayIsLocked(matchday))throw new Error("Dieser Spieltag ist bereits gesperrt.");if(matchdayThesisCount(matchday)!==12)throw new Error("Für diesen Spieltag müssen exakt 12 globale Thesen hinterlegt sein.");const{data,error}=await db.rpc("create_matchday_game",{p_lobby_id:state.lobbyId,p_matchday:matchday});if(error)throw error;openGame(data[0].game_id)}catch(error){errorMessage(error)}}
-async function refreshGame(){const[gameResult,playerResult,thesisResult,placementResult,figureResult]=await Promise.all([db.from("games").select("*").eq("id",state.gameId).single(),db.from("players").select("*").eq("game_id",state.gameId).order("seat"),db.from("theses").select("*").eq("game_id",state.gameId).order("template_slot",{nullsFirst:false}).order("created_at"),db.from("placements").select("*").eq("game_id",state.gameId),db.from("figure_picks").select("*").eq("game_id",state.gameId).order("draft_order")]);if(gameResult.error)throw gameResult.error;if(playerResult.error)throw playerResult.error;if(thesisResult.error)throw thesisResult.error;if(placementResult.error)throw placementResult.error;if(figureResult.error)throw figureResult.error;state.game=gameResult.data;state.players=playerResult.data||[];state.theses=thesisResult.data||[];state.placements=placementResult.data||[];state.figures=figureResult.data||[];state.me=state.players.find(player=>player.user_id===state.user.id);if(!state.me)throw new Error("Du bist kein Spieler dieses Spieltags.");renderGame()}
+>
+
+<title>Rasenschach Bundesliga</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+:root{
+  --bg:#10281f;
+  --panel:#17372b;
+  --dark:#0a1712;
+  --cream:#f3eedf;
+  --muted:#b7c6bd;
+  --line:#315747;
+  --accent:#d8ff69;
+  --danger:#ff816f;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #24503f 0,
+      #10281f 45%,
+      #09140f 100%
+    );
+
+  color:var(--cream);
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.shell{
+  width:min(
+    1150px,
+    calc(100% - 24px)
+  );
+
+  margin:auto;
+
+  padding:20px 0 60px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:18px;
+}
+
+.brand{
+  font-size:
+    clamp(
+      25px,
+      5vw,
+      42px
+    );
+
+  font-weight:900;
+
+  letter-spacing:-.04em;
+}
+
+.brand span{
+  color:var(--accent);
+}
+
+.headerActions{
+  display:flex;
+
+  gap:7px;
+
+  align-items:center;
+  justify-content:flex-end;
+
+  flex-wrap:wrap;
+
+  color:var(--muted);
+
+  font-size:13px;
+}
+
+.card{
+  background:
+    rgba(
+      23,
+      55,
+      43,
+      .95
+    );
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:20px;
+
+  padding:18px;
+
+  margin:12px 0;
+
+  box-shadow:
+    0 18px 60px
+    rgba(0,0,0,.18);
+}
+
+.grid2{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:12px;
+}
+
+.grid3{
+  display:grid;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
+  gap:12px;
+}
+
+.matchdayGrid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:9px;
+}
+
+@media(max-width:900px){
+
+  .grid3{
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .matchdayGrid{
+    grid-template-columns:
+      repeat(3,1fr);
+  }
+
+}
+
+@media(max-width:700px){
+
+  .grid2,
+  .grid3{
+    grid-template-columns:1fr;
+  }
+
+  .matchdayGrid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  header{
+    align-items:flex-start;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .matchdayGrid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+h1,
+h2,
+h3,
+p{
+  margin-top:0;
+}
+
+h1{
+  letter-spacing:-.03em;
+}
+
+h2{
+  font-size:20px;
+}
+
+.muted{
+  color:var(--muted);
+}
+
+.success{
+  color:var(--accent);
+}
+
+.error{
+  color:var(--danger);
+}
+
+input,
+select,
+textarea{
+  width:100%;
+
+  background:var(--dark);
+
+  color:var(--cream);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:12px;
+
+  padding:12px;
+
+  outline:none;
+}
+
+textarea{
+  resize:vertical;
+
+  min-height:76px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--accent);
+}
+
+button{
+  border:0;
+
+  border-radius:12px;
+
+  padding:11px 14px;
+
+  background:var(--cream);
+
+  color:#102018;
+
+  font-weight:800;
+}
+
+button.primary{
+  background:var(--accent);
+}
+
+button.ghost{
+  background:transparent;
+
+  color:var(--cream);
+
+  border:1px solid var(--line);
+}
+
+button.danger{
+  background:transparent;
+
+  color:var(--danger);
+
+  border:
+    1px solid
+    rgba(
+      255,
+      129,
+      111,
+      .4
+    );
+}
+
+button:disabled{
+  opacity:.4;
+
+  cursor:not-allowed;
+}
+
+.row{
+  display:flex;
+
+  gap:8px;
+
+  align-items:center;
+
+  flex-wrap:wrap;
+}
+
+.stack{
+  display:grid;
+
+  gap:10px;
+}
+
+.thesis{
+  background:#0d2119;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:14px;
+
+  padding:13px;
+}
+
+.badge{
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  padding:5px 9px;
+
+  border-radius:100px;
+
+  background:#0c2119;
+
+  border:1px solid var(--line);
+
+  color:var(--muted);
+
+  font-size:12px;
+
+  margin:2px;
+}
+
+.actions{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:7px;
+
+  margin-top:14px;
+}
+
+.lobbyCard{
+  display:flex;
+
+  flex-direction:column;
+
+  min-height:235px;
+}
+
+.lobbyCard .actions{
+  margin-top:auto;
+}
+
+.lobbyName{
+  font-size:22px;
+
+  font-weight:900;
+
+  margin-top:12px;
+}
+
+.lobbyCode{
+  color:var(--muted);
+
+  font-size:13px;
+
+  margin-top:4px;
+}
+
+.matchdayCard{
+  background:#0d2119;
+
+  border:1px solid var(--line);
+
+  border-radius:15px;
+
+  padding:13px;
+
+  min-height:180px;
+
+  display:flex;
+
+  flex-direction:column;
+}
+
+.matchdayNumber{
+  font-size:20px;
+
+  font-weight:900;
+}
+
+.matchdayDate{
+  margin-top:6px;
+
+  font-size:13px;
+
+  font-weight:800;
+
+  color:var(--cream);
+}
+
+.matchdayStatus{
+  margin-top:7px;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.matchdayCard .actions{
+  margin-top:auto;
+}
+
+.templateDay{
+  background:#0d2119;
+
+  border:1px solid var(--line);
+
+  border-radius:13px;
+
+  padding:11px;
+
+  cursor:pointer;
+}
+
+.templateDay:hover{
+  border-color:var(--accent);
+}
+
+.templateDay.active{
+  border-color:var(--accent);
+
+  background:#183b2d;
+}
+
+.templateDay.complete .templateCount{
+  color:var(--accent);
+}
+
+.templateNumber{
+  font-weight:900;
+
+  font-size:17px;
+}
+
+.templateDate{
+  margin-top:5px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  color:var(--cream);
+}
+
+.templateCount{
+  color:var(--muted);
+
+  font-size:12px;
+
+  margin-top:4px;
+}
+
+.editorRow{
+  display:grid;
+
+  grid-template-columns:
+    42px 1fr;
+
+  gap:9px;
+
+  align-items:start;
+}
+
+.editorNumber{
+  width:42px;
+  height:42px;
+
+  border-radius:12px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  background:#0c2119;
+
+  border:1px solid var(--line);
+
+  font-weight:900;
+}
+
+.turn{
+  background:var(--accent);
+
+  color:#102018;
+
+  border-radius:14px;
+
+  padding:13px;
+
+  font-weight:900;
+
+  text-align:center;
+
+  margin-bottom:12px;
+}
+
+.phasebar{
+  display:flex;
+
+  gap:6px;
+
+  overflow-x:auto;
+
+  margin-bottom:14px;
+
+  scrollbar-width:none;
+}
+
+.phasebar::-webkit-scrollbar{
+  display:none;
+}
+
+.phasebar span{
+  white-space:nowrap;
+
+  padding:7px 10px;
+
+  border-radius:99px;
+
+  background:#0b1d16;
+
+  color:#7d9488;
+
+  font-size:12px;
+}
+
+.phasebar span.active{
+  background:var(--accent);
+
+  color:#102018;
+
+  font-weight:800;
+}
+
+.fields{
+  display:grid;
+
+  gap:8px;
+}
+
+.field{
+  display:grid;
+
+  grid-template-columns:
+    70px 1fr;
+
+  gap:10px;
+
+  align-items:center;
+
+  background:#0c2119;
+
+  border:1px solid var(--line);
+
+  border-radius:14px;
+
+  padding:10px;
+}
+
+.fieldLabel{
+  font-size:22px;
+
+  font-weight:900;
+
+  text-align:center;
+}
+
+.fieldButtons{
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:7px;
+
+  margin-top:10px;
+}
+
+.fieldButton{
+  background:transparent;
+
+  color:var(--cream);
+
+  border:1px solid var(--line);
+}
+
+.fieldButton:hover{
+  border-color:var(--accent);
+
+  color:var(--accent);
+}
+
+.score{
+  display:grid;
+
+  grid-template-columns:
+    1fr auto 1fr;
+
+  align-items:center;
+
+  gap:14px;
+
+  text-align:center;
+}
+
+.points{
+  font-size:
+    clamp(
+      34px,
+      8vw,
+      64px
+    );
+
+  font-weight:900;
+}
+
+.vs{
+  color:var(--muted);
+
+  font-size:24px;
+
+  font-weight:900;
+}
+
+.bigResult{
+  text-align:center;
+
+  font-size:
+    clamp(
+      32px,
+      8vw,
+      70px
+    );
+
+  font-weight:900;
+}
+
+hr{
+  border:0;
+
+  border-top:
+    1px solid
+    var(--line);
+
+  margin:18px 0;
+}
+
+.footer{
+  margin-top:40px;
+
+  text-align:center;
+
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.loading{
+  padding:60px 20px;
+
+  text-align:center;
+
+  color:var(--muted);
+}
+
+#toast{
+  position:fixed;
+
+  left:50%;
+  bottom:20px;
+
+  transform:
+    translateX(-50%);
+
+  max-width:
+    calc(100% - 30px);
+
+  padding:10px 16px;
+
+  background:var(--cream);
+
+  color:#102018;
+
+  border-radius:100px;
+
+  font-weight:800;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.2s;
+
+  z-index:1000;
+}
+
+#toast.show{
+  opacity:1;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="shell">
+
+
+<header>
+
+  <div class="brand">
+    RASEN<span>SCHACH</span>
+  </div>
+
+
+  <div
+    id="headerActions"
+    class="headerActions"
+  ></div>
+
+</header>
+
+
+<main id="app">
+
+  <div class="loading">
+    Rasenschach wird geladen …
+  </div>
+
+</main>
+
+
+<div class="footer">
+  Rasenschach Bundesliga · Fan-Projekt
+</div>
+
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+
+/* =========================================================
+   SUPABASE
+========================================================= */
+
+
+const SUPABASE_URL =
+  "https://myqerixfnmjgvgwculiw.supabase.co";
+
+
+const SUPABASE_KEY =
+  "sb_publishable_dr_f5ic0-aiiY3wSkX_Rng_1Ye3Vy73";
+
+
+const db =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY,
+    {
+      auth:{
+        persistSession:true,
+        autoRefreshToken:true,
+        detectSessionInUrl:true
+      }
+    }
+  );
+
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+
+let state = {
+
+  user:null,
+
+  myLobbies:[],
+  myLobbyPlayers:[],
+
+  lobbyId:null,
+  lobby:null,
+  lobbyPlayers:[],
+  matchdayGames:[],
+
+  gameId:null,
+  game:null,
+  players:[],
+  theses:[],
+  placements:[],
+  figures:[],
+  me:null,
+
+  globalTheses:[],
+  selectedTemplateMatchday:1,
+
+  channel:null
+
+};
+
+
+
+/* =========================================================
+   BUNDESLIGA 2026/27
+========================================================= */
+
+
+const matchdayDates = {
+
+  1:"28.–30.08.2026",
+  2:"04.–06.09.2026",
+  3:"11.–13.09.2026",
+  4:"18.–20.09.2026",
+
+  5:"09.–11.10.2026",
+  6:"16.–18.10.2026",
+  7:"23.–25.10.2026",
+  8:"30.10.–01.11.2026",
+
+  9:"06.–08.11.2026",
+  10:"20.–22.11.2026",
+  11:"27.–29.11.2026",
+
+  12:"04.–06.12.2026",
+  13:"11.–13.12.2026",
+  14:"18.–20.12.2026",
+
+  15:"08.–10.01.2027",
+
+  16:"12.–14.01.2027",
+
+  17:"15.–17.01.2027",
+  18:"22.–24.01.2027",
+  19:"29.–31.01.2027",
+
+  20:"05.–07.02.2027",
+  21:"12.–14.02.2027",
+  22:"19.–21.02.2027",
+  23:"26.–28.02.2027",
+
+  24:"02.–04.03.2027",
+
+  25:"05.–07.03.2027",
+  26:"12.–14.03.2027",
+  27:"19.–21.03.2027",
+
+  28:"02.–04.04.2027",
+  29:"09.–11.04.2027",
+  30:"16.–18.04.2027",
+  31:"23.–25.04.2027",
+
+  32:"07.–09.05.2027",
+  33:"14.–16.05.2027",
+
+  34:"22.05.2027"
+
+};
+
+const matchdayStartDates = {
+  1:"2026-08-28",2:"2026-09-04",3:"2026-09-11",4:"2026-09-18",
+  5:"2026-10-09",6:"2026-10-16",7:"2026-10-23",8:"2026-10-30",
+  9:"2026-11-06",10:"2026-11-20",11:"2026-11-27",12:"2026-12-04",
+  13:"2026-12-11",14:"2026-12-18",15:"2027-01-08",16:"2027-01-12",
+  17:"2027-01-15",18:"2027-01-22",19:"2027-01-29",20:"2027-02-05",
+  21:"2027-02-12",22:"2027-02-19",23:"2027-02-26",24:"2027-03-02",
+  25:"2027-03-05",26:"2027-03-12",27:"2027-03-19",28:"2027-04-02",
+  29:"2027-04-09",30:"2027-04-16",31:"2027-04-23",32:"2027-05-07",
+  33:"2027-05-14",34:"2027-05-22"
+};
+
+
+
+/* =========================================================
+   SPIELREGELN
+========================================================= */
+
+
+const fieldNames = {
+
+  P1:"+1",
+  N1:"−1",
+  P3:"±3",
+  N3:"∓3",
+  Q:"?"
+
+};
+
+
+const figureSequence = [
+
+  1,2,2,1,1,
+  2,2,1,1,2
+
+];
+
+
+const figureNames = {
+
+  KING:"♔ König",
+  QUEEN:"♕ Dame",
+  ROOK:"♖ Turm",
+  BISHOP:"♗ Läufer",
+  KNIGHT:"♘ Springer"
+
+};
+
+
+const statusNames = {
+
+  lobby:"Vorbereitung",
+  thesis_draft:"Thesendraft",
+  figure_draft:"Figurendraft",
+  scoring:"Auswertung",
+  finished:"Beendet"
+
+};
+
+
+const phases = [
+
+  ["lobby","Vorbereitung"],
+  ["thesis_draft","Thesendraft"],
+  ["figure_draft","Figurendraft"],
+  ["scoring","Auswertung"],
+  ["finished","Ergebnis"]
+
+];
+
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+
+function esc(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+
+  .replaceAll(
+    '"',
+    "&quot;"
+  );
+
+}
+
+
+
+function jsArg(
+  value
+){
+
+  return JSON.stringify(
+    String(
+      value ?? ""
+    )
+  )
+
+  .replaceAll(
+    "</",
+    "<\\/"
+  );
+
+}
+
+
+
+function toast(
+  message
+){
+
+  const element =
+    document.getElementById(
+      "toast"
+    );
+
+
+  element.textContent =
+    message;
+
+
+  element.classList.add(
+    "show"
+  );
+
+
+  setTimeout(
+    () => {
+
+      element
+        .classList
+        .remove(
+          "show"
+        );
+
+    },
+    2300
+  );
+
+}
+
+
+
+function errorMessage(
+  error
+){
+
+  console.error(
+    error
+  );
+
+
+  toast(
+    error?.message ||
+    "Etwas ist schiefgelaufen"
+  );
+
+}
+
+
+
+function appBase(){
+
+  return (
+    location.origin +
+    location.pathname
+  );
+
+}
+
+
+
+function goHome(){
+
+  location.href =
+    appBase();
+
+}
+
+
+
+function openLobby(
+  id
+){
+
+  location.href =
+    appBase() +
+    "?lobby=" +
+    encodeURIComponent(
+      id
+    );
+
+}
+
+
+
+function openGame(
+  id
+){
+
+  location.href =
+    appBase() +
+    "?game=" +
+    encodeURIComponent(
+      id
+    );
+
+}
+
+
+
+function openThesisOverview(){
+
+  location.href =
+    appBase() +
+    "?theses=1";
+
+}
+
+
+
+function inviteUrl(
+  code
+){
+
+  return (
+    appBase() +
+    "?room=" +
+    encodeURIComponent(
+      code
+    )
+  );
+
+}
+
+
+
+function isMainAccount(){
+
+  return Boolean(
+    state.user?.email
+  );
+
+}
+
+
+
+function accountName(){
+
+  return (
+
+    state.user
+      ?.user_metadata
+      ?.display_name
+
+    ||
+
+    state.user
+      ?.email
+      ?.split("@")[0]
+
+    ||
+
+    ""
+
+  );
+
+}
+
+function currentLobbyPlayerName(){
+  return (
+    state.lobbyPlayers.find(
+      player => player.user_id === state.user?.id
+    )?.name
+    || accountName()
+    || "Spieler"
+  );
+}
+
+function currentGamePlayerName(){
+  return state.me?.name || accountName() || "Spieler";
+}
+
+function playerNameBadge(name){
+  return `<span class="badge">👤 ${esc(name)}</span>`;
+}
+
+function berlinNowKey(){
+  const parts = new Intl.DateTimeFormat("de-DE",{
+    timeZone:"Europe/Berlin",year:"numeric",month:"2-digit",day:"2-digit",
+    hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+  }).formatToParts(new Date());
+  const get = type => parts.find(part => part.type === type)?.value || "";
+  return `${get("year")}-${get("month")}-${get("day")}T${get("hour")}:${get("minute")}`;
+}
+
+function matchdayIsLocked(matchday){
+  const startDate = matchdayStartDates[matchday];
+  return !startDate || berlinNowKey() >= `${startDate}T20:30`;
+}
+
+function matchdayThesisCount(matchday){
+  return state.globalTheses.filter(
+    thesis => thesis.matchday === matchday && thesis.text?.trim()
+  ).length;
+}
+
+function displayFieldName(field){
+  if(
+    field === "Q"
+    &&
+    state.game?.question_value
+  ){
+    return `? ${state.game.question_value}`;
+  }
+
+  return fieldNames[field] || field;
+}
+
+
+
+async function copyLobbyInvite(
+  code
+){
+
+  try{
+
+    await navigator.clipboard
+      .writeText(
+        inviteUrl(
+          code
+        )
+      );
+
+
+    toast(
+      "Einladungslink kopiert"
+    );
+
+  }
+
+  catch{
+
+    toast(
+      "Link konnte nicht kopiert werden"
+    );
+
+  }
+
+}
+
+
+
+function draftedTheses(){
+
+  return state.theses.filter(
+    thesis =>
+      thesis.drafted_by
+  );
+
+}
+
+
+
+function currentThesisSeat(){
+
+  const count =
+    draftedTheses().length;
+
+
+  const starter =
+    state.game
+      ?.thesis_start_seat
+    ||
+    1;
+
+
+  const sequence =
+
+    starter === 1
+
+      ? [
+          1,2,2,1,1,
+          2,2,1,1,2
+        ]
+
+      : [
+          2,1,1,2,2,
+          1,1,2,2,1
+        ];
+
+
+  return (
+    sequence[count]
+    ??
+    null
+  );
+
+}
+
+
+
+function currentFigureSeat(){
+
+  return (
+    figureSequence[
+      state.figures.length
+    ]
+    ??
+    null
+  );
+
+}
+
+
+
+function phaseBar(){
+
+  return `
+
+    <div class="phasebar">
+
+      ${phases.map(
+        ([id,label]) => `
+
+          <span
+            class="${
+              state.game?.status === id
+                ? "active"
+                : ""
+            }"
+          >
+            ${label}
+          </span>
+
+        `
+      ).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+
+async function removeAnonymousSession(){
+
+  if(
+    state.user &&
+    !state.user.email
+  ){
+
+    await db.auth.signOut({
+      scope:"local"
+    });
+
+
+    state.user =
+      null;
+
+  }
+
+}
+
+
+
+async function loginMainPlayer(){
+
+  try{
+
+    const email =
+      document
+        .getElementById(
+          "authEmail"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const password =
+      document
+        .getElementById(
+          "authPassword"
+        )
+        .value;
+
+
+    if(
+      !email ||
+      !password
+    ){
+
+      toast(
+        "E-Mail und Passwort eingeben"
+      );
+
+      return;
+
+    }
+
+
+    await removeAnonymousSession();
+
+
+    const {
+      data,
+      error
+    } =
+      await db.auth
+        .signInWithPassword({
+
+          email,
+          password
+
+        });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    state.user =
+      data.user;
+
+
+    goHome();
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function registerMainPlayer(){
+
+  try{
+
+    const name =
+      document
+        .getElementById(
+          "authName"
+        )
+        .value
+        .trim();
+
+
+    const email =
+      document
+        .getElementById(
+          "authEmail"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const password =
+      document
+        .getElementById(
+          "authPassword"
+        )
+        .value;
+
+
+    if(
+      !name ||
+      !email ||
+      !password
+    ){
+
+      toast(
+        "Name, E-Mail und Passwort eingeben"
+      );
+
+      return;
+
+    }
+
+
+    if(
+      password.length < 6
+    ){
+
+      toast(
+        "Passwort muss mindestens 6 Zeichen haben"
+      );
+
+      return;
+
+    }
+
+
+    await removeAnonymousSession();
+
+
+    const {
+      data,
+      error
+    } =
+      await db.auth.signUp({
+
+        email,
+        password,
+
+        options:{
+
+          data:{
+            display_name:name
+          },
+
+          emailRedirectTo:
+            appBase()
+
+        }
+
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    if(data.session){
+
+      state.user =
+        data.session.user;
+
+
+      goHome();
+
+    }
+
+    else{
+
+      toast(
+        "Konto erstellt – bitte E-Mail bestätigen"
+      );
+
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function logoutMainPlayer(){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.auth.signOut({
+        scope:"local"
+      });
+
+
+    if(error){
+      throw error;
+    }
+
+
+    goHome();
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function ensureGuestSession(
+  forceAnonymous=false
+){
+
+  const {
+    data:{
+      session
+    }
+  } =
+    await db.auth.getSession();
+
+
+  if(
+    session
+    &&
+    !(
+      forceAnonymous
+      &&
+      session.user.email
+    )
+  ){
+
+    state.user =
+      session.user;
+
+    return;
+
+  }
+
+
+  if(
+    session?.user?.email
+  ){
+
+    const {
+      error:signOutError
+    } =
+      await db.auth.signOut({
+        scope:"local"
+      });
+
+
+    if(signOutError){
+      throw signOutError;
+    }
+
+  }
+
+
+  const {
+    data,
+    error
+  } =
+    await db.auth
+      .signInAnonymously();
+
+
+  if(error){
+    throw error;
+  }
+
+
+  state.user =
+    data.session.user;
+
+}
+
+
+
+/* =========================================================
+   BOOT
+========================================================= */
+
+
+async function boot(){
+
+  try{
+
+    const {
+      data:{
+        session
+      },
+      error
+    } =
+      await db.auth
+        .getSession();
+
+
+    if(error){
+      throw error;
+    }
+
+
+    state.user =
+      session?.user
+      ||
+      null;
+
+
+    const params =
+      new URLSearchParams(
+        location.search
+      );
+
+
+    const thesisOverview =
+      params.get(
+        "theses"
+      );
+
+
+    const lobbyId =
+      params.get(
+        "lobby"
+      );
+
+
+    const gameId =
+      params.get(
+        "game"
+      );
+
+
+    const roomCode =
+      params
+        .get(
+          "room"
+        )
+        ?.trim()
+        .toUpperCase();
+
+
+
+    if(
+      thesisOverview
+    ){
+
+      if(
+        !isMainAccount()
+      ){
+
+        renderStartPage(
+          ""
+        );
+
+        return;
+
+      }
+
+
+      await loadThesisOverview();
+
+      return;
+
+    }
+
+
+
+    if(
+      gameId
+    ){
+
+      if(
+        !state.user
+      ){
+
+        renderStartPage(
+          ""
+        );
+
+        return;
+
+      }
+
+
+      state.gameId =
+        gameId;
+
+
+      await refreshGame();
+
+
+      subscribeGame();
+
+
+      return;
+
+    }
+
+
+
+    if(
+      lobbyId
+    ){
+
+      if(
+        !state.user
+      ){
+
+        renderStartPage(
+          ""
+        );
+
+        return;
+
+      }
+
+
+      state.lobbyId =
+        lobbyId;
+
+
+      await refreshLobby();
+
+
+      subscribeLobby();
+
+
+      return;
+
+    }
+
+
+
+    if(
+      roomCode
+    ){
+
+      renderGuestJoinPage(
+        roomCode
+      );
+
+      return;
+
+    }
+
+
+
+    if(
+      isMainAccount()
+    ){
+
+      await loadDashboard();
+
+      return;
+
+    }
+
+
+
+    renderStartPage(
+      ""
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      error
+    );
+
+
+    document.getElementById(
+      "app"
+    ).innerHTML = `
+
+      <div class="card">
+
+        <h2>
+          Fehler beim Laden
+        </h2>
+
+        <p class="error">
+          ${esc(
+            error.message
+          )}
+        </p>
+
+        <button
+          onclick="goHome()"
+        >
+          Zur Startseite
+        </button>
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   STARTSEITE
+========================================================= */
+
+
+function renderAuthCard(){
+
+  return `
+
+    <div class="card">
+
+      <h2>
+        Hauptspieler
+      </h2>
+
+
+      <p class="muted">
+
+        Melde dich an,
+        damit deine Lobbys auf
+        allen Geräten verfügbar sind.
+
+      </p>
+
+
+      <div class="stack">
+
+        <input
+          id="authName"
+          maxlength="40"
+          placeholder="Anzeigename"
+        >
+
+
+        <input
+          id="authEmail"
+          type="email"
+          autocomplete="email"
+          placeholder="E-Mail"
+        >
+
+
+        <input
+          id="authPassword"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Passwort"
+        >
+
+
+        <button
+          class="primary"
+          onclick="loginMainPlayer()"
+        >
+          Einloggen
+        </button>
+
+
+        <button
+          class="ghost"
+          onclick="registerMainPlayer()"
+        >
+          Konto erstellen
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderStartPage(
+  room=""
+){
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <h1>
+        Rasenschach Bundesliga
+      </h1>
+
+
+      <p class="muted">
+
+        Eine Saison.
+        34 Spieltage.
+        Mehrere Zweier-Lobbys.
+
+      </p>
+
+    </div>
+
+
+    <div class="grid2">
+
+      ${
+        isMainAccount()
+
+          ? `
+
+            <div class="card">
+
+              <h2>
+                ${esc(
+                  accountName()
+                )}
+              </h2>
+
+              <p class="muted">
+                ${esc(
+                  state.user.email
+                )}
+              </p>
+
+              <button
+                class="primary"
+                onclick="goHome()"
+              >
+                Meine Lobbys
+              </button>
+
+            </div>
+
+          `
+
+          : renderAuthCard()
+      }
+
+
+      <div class="card">
+
+        <h2>
+          Lobby beitreten
+        </h2>
+
+
+        <p class="muted">
+
+          Spieler 2 benötigt
+          keinen eigenen Account.
+
+        </p>
+
+
+        <div class="stack">
+
+          <input
+            id="joinName"
+            maxlength="30"
+            placeholder="Dein Name"
+          >
+
+
+          <input
+            id="joinCode"
+            maxlength="6"
+            placeholder="Lobby-Code"
+            value="${esc(
+              room
+            )}"
+          >
+
+
+          <button
+            onclick="joinLobby()"
+          >
+            Beitreten
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderGuestJoinPage(
+  room
+){
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = "";
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <span class="badge">
+        Einladung für Spieler 2
+      </span>
+
+
+      <h1 style="margin-top:12px">
+        Lobby beitreten
+      </h1>
+
+
+      <p class="muted">
+        Du trittst als Gast bei.
+        Ein Hauptspieler-Login ist über
+        diesen Einladungslink nicht möglich.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="stack">
+
+        <input
+          id="joinName"
+          maxlength="30"
+          placeholder="Dein Spielername"
+          autofocus
+        >
+
+
+        <input
+          id="joinCode"
+          maxlength="6"
+          value="${esc(room)}"
+          readonly
+        >
+
+
+        <button
+          class="primary"
+          onclick="joinLobby()"
+        >
+          Als Spieler 2 beitreten
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   ZENTRALE THESENÜBERSICHT
+========================================================= */
+
+
+async function loadThesisOverview(){
+
+  const {
+    data,
+    error
+  } =
+    await db
+
+      .from(
+        "global_theses"
+      )
+
+      .select(
+        "*"
+      )
+
+      .eq(
+        "owner_id",
+        state.user.id
+      )
+
+      .order(
+        "matchday"
+      )
+
+      .order(
+        "slot"
+      );
+
+
+  if(error){
+    throw error;
+  }
+
+
+  state.globalTheses =
+    data
+    ||
+    [];
+
+
+  renderThesisOverview();
+
+}
+
+
+
+function templateCount(
+  matchday
+){
+
+  return state.globalTheses.filter(
+    thesis =>
+
+      thesis.matchday ===
+      matchday
+
+      &&
+
+      thesis.text
+        ?.trim()
+
+  ).length;
+
+}
+
+
+
+function templateText(
+  matchday,
+  slot
+){
+
+  return (
+
+    state.globalTheses.find(
+      thesis =>
+
+        thesis.matchday ===
+        matchday
+
+        &&
+
+        thesis.slot ===
+        slot
+    )
+
+    ?.text
+
+    ||
+
+    ""
+
+  );
+
+}
+
+
+
+function selectTemplateMatchday(
+  matchday
+){
+
+  state.selectedTemplateMatchday =
+    matchday;
+
+
+  renderThesisOverview();
+
+}
+
+
+
+function renderThesisOverview(){
+
+  const selected =
+    state.selectedTemplateMatchday;
+
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = `
+
+    ${playerNameBadge(accountName())}
+
+    <button
+      class="ghost"
+      onclick="goHome()"
+    >
+      ← Lobby-Übersicht
+    </button>
+
+  `;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <span class="badge">
+        Zentrale Verwaltung
+      </span>
+
+
+      <h1 style="margin-top:12px">
+        Thesen Übersicht
+      </h1>
+
+
+      <p class="muted">
+
+        Hier verwaltest du die Thesen
+        für alle deine Lobbys.
+
+        Jeder Bundesliga-Spieltag
+        besitzt genau einen globalen
+        Satz aus zwölf Thesen.
+
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Spieltag auswählen
+      </h2>
+
+
+      <div class="matchdayGrid">
+
+        ${Array.from(
+          {
+            length:34
+          },
+          (
+            _,
+            index
+          ) => {
+
+            const matchday =
+              index + 1;
+
+
+            const count =
+              templateCount(
+                matchday
+              );
+
+
+            return `
+
+              <div
+                class="
+                  templateDay
+                  ${
+                    selected ===
+                    matchday
+
+                      ? "active"
+
+                      : ""
+                  }
+                  ${
+                    count === 12
+
+                      ? "complete"
+
+                      : ""
+                  }
+                "
+
+                onclick="
+                  selectTemplateMatchday(
+                    ${matchday}
+                  )
+                "
+              >
+
+                <div class="templateNumber">
+                  Spieltag ${matchday}
+                </div>
+
+
+                <div class="templateDate">
+                  📅 ${matchdayDates[matchday]}
+                </div>
+
+
+                <div class="templateCount">
+                  ${count}/12 Thesen
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        ).join("")}
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <span class="badge">
+        Bundesliga
+      </span>
+
+
+      <h2 style="margin-top:10px">
+        Spieltag ${selected}
+      </h2>
+
+
+      <p>
+        📅
+        <strong>
+          ${matchdayDates[selected]}
+        </strong>
+      </p>
+
+
+      <p class="muted">
+
+        Änderungen werden beim Speichern
+        automatisch in alle bereits
+        erstellten, aber noch nicht
+        gestarteten Spiele dieses
+        Spieltags übernommen.
+
+        Bereits gestartete Spiele
+        bleiben unverändert.
+
+      </p>
+
+
+      <div class="stack">
+
+        ${Array.from(
+          {
+            length:12
+          },
+          (
+            _,
+            index
+          ) => {
+
+            const slot =
+              index + 1;
+
+
+            return `
+
+              <div class="editorRow">
+
+                <div class="editorNumber">
+                  ${slot}
+                </div>
+
+
+                <textarea
+                  id="globalThesis${slot}"
+                  maxlength="180"
+                  placeholder="These ${slot}"
+                >${esc(
+                  templateText(
+                    selected,
+                    slot
+                  )
+                )}</textarea>
+
+              </div>
+
+            `;
+
+          }
+        ).join("")}
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="primary"
+          onclick="saveGlobalTheses()"
+        >
+          Thesen speichern & synchronisieren
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function saveGlobalTheses(){
+
+  try{
+
+    const texts =
+      Array.from(
+        {
+          length:12
+        },
+        (
+          _,
+          index
+        ) =>
+
+          document
+            .getElementById(
+              `globalThesis${index + 1}`
+            )
+            .value
+            .trim()
+
+      );
+
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "save_global_theses",
+        {
+
+          p_matchday:
+            state.selectedTemplateMatchday,
+
+          p_theses:
+            texts
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    toast(
+      "Thesen gespeichert und synchronisiert"
+    );
+
+
+    await loadThesisOverview();
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   DASHBOARD / LOBBY-ÜBERSICHT
+========================================================= */
+
+
+async function loadDashboard(){
+
+  const membershipResult =
+    await db
+
+      .from(
+        "lobby_players"
+      )
+
+      .select(
+        "*"
+      )
+
+      .eq(
+        "user_id",
+        state.user.id
+      );
+
+
+  if(
+    membershipResult.error
+  ){
+
+    throw membershipResult.error;
+
+  }
+
+
+  const memberships =
+    membershipResult.data
+    ||
+    [];
+
+
+  if(
+    !memberships.length
+  ){
+
+    state.myLobbies =
+      [];
+
+
+    state.myLobbyPlayers =
+      [];
+
+
+    renderDashboard();
+
+
+    return;
+
+  }
+
+
+  const lobbyIds =
+    [
+      ...new Set(
+        memberships.map(
+          item =>
+            item.lobby_id
+        )
+      )
+    ];
+
+
+  const [
+    lobbyResult,
+    playerResult
+  ] =
+    await Promise.all([
+
+
+      db
+        .from(
+          "lobbies"
+        )
+
+        .select(
+          "*"
+        )
+
+        .in(
+          "id",
+          lobbyIds
+        )
+
+        .order(
+          "created_at",
+          {
+            ascending:false
+          }
+        ),
+
+
+      db
+        .from(
+          "lobby_players"
+        )
+
+        .select(
+          "*"
+        )
+
+        .in(
+          "lobby_id",
+          lobbyIds
+        )
+
+        .order(
+          "seat"
+        )
+
+
+    ]);
+
+
+  if(
+    lobbyResult.error
+  ){
+
+    throw lobbyResult.error;
+
+  }
+
+
+  if(
+    playerResult.error
+  ){
+
+    throw playerResult.error;
+
+  }
+
+
+  state.myLobbies =
+    lobbyResult.data
+    ||
+    [];
+
+
+  state.myLobbyPlayers =
+    playerResult.data
+    ||
+    [];
+
+
+  renderDashboard();
+
+}
+
+
+
+function renderDashboard(){
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = `
+
+    ${playerNameBadge(accountName())}
+
+    <span>
+      ${esc(
+        state.user.email
+      )}
+    </span>
+
+
+    <button
+      class="ghost"
+      onclick="logoutMainPlayer()"
+    >
+      Abmelden
+    </button>
+
+  `;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <h1>
+        Meine Lobbys
+      </h1>
+
+
+      <p class="muted">
+
+        Hallo
+        ${esc(
+          accountName()
+        )}.
+
+        Von hier verwaltest du
+        deine Lobbys und die
+        globalen Bundesliga-Thesen.
+
+      </p>
+
+
+      <button
+        class="primary"
+        onclick="openThesisOverview()"
+      >
+        ⚽ Thesen Übersicht
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Neue Lobby
+      </h2>
+
+
+      <div class="grid2">
+
+        <input
+          id="createPlayerName"
+          maxlength="30"
+          value="${esc(
+            accountName()
+          )}"
+          placeholder="Dein Spielername"
+        >
+
+
+        <input
+          id="createLobbyName"
+          maxlength="60"
+          placeholder="Lobbyname, z. B. Duell gegen Max"
+        >
+
+      </div>
+
+
+      <button
+        class="primary"
+        style="margin-top:10px"
+        onclick="createLobby()"
+      >
+        Lobby erstellen
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Lobbys ·
+        ${state.myLobbies.length}
+      </h2>
+
+
+      ${
+        state.myLobbies.length
+
+          ? `
+
+            <div class="grid3">
+
+              ${state.myLobbies.map(
+                lobby =>
+                  renderLobbyCard(
+                    lobby
+                  )
+              ).join("")}
+
+            </div>
+
+          `
+
+          : `
+
+            <div class="thesis">
+
+              <strong>
+                Noch keine Lobby
+              </strong>
+
+              <p
+                class="muted"
+                style="
+                  margin-top:6px;
+                  margin-bottom:0
+                "
+              >
+
+                Erstelle oben
+                deine erste Lobby.
+
+              </p>
+
+            </div>
+
+          `
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderLobbyCard(
+  lobby
+){
+
+  const players =
+    state.myLobbyPlayers.filter(
+      player =>
+        player.lobby_id ===
+        lobby.id
+    );
+
+
+  const opponent =
+    players.find(
+      player =>
+        player.user_id !==
+        state.user.id
+    );
+
+
+  const owner =
+    lobby.created_by ===
+    state.user.id;
+
+
+  return `
+
+    <div class="thesis lobbyCard">
+
+      <span class="badge">
+        Bundesliga · 34 Spieltage
+      </span>
+
+
+      <div class="lobbyName">
+        ${esc(
+          lobby.name
+        )}
+      </div>
+
+
+      <div class="lobbyCode">
+        Code:
+        ${esc(
+          lobby.code
+        )}
+      </div>
+
+
+      <p style="margin-top:12px">
+
+        ${
+          opponent
+
+            ? `gegen <strong>${
+                esc(
+                  opponent.name
+                )
+              }</strong>`
+
+            : `
+
+              <span class="muted">
+                Wartet auf Spieler 2
+              </span>
+
+            `
+        }
+
+      </p>
+
+
+      <div class="actions">
+
+        <button
+          class="primary"
+          onclick='openLobby(${jsArg(
+            lobby.id
+          )})'
+        >
+          Öffnen
+        </button>
+
+
+        ${
+          owner
+
+            ? `
+
+              <button
+                class="ghost"
+                onclick='copyLobbyInvite(${jsArg(
+                  lobby.code
+                )})'
+              >
+                Einladen
+              </button>
+
+
+              <button
+                class="ghost"
+                onclick='renameLobby(
+                  ${jsArg(
+                    lobby.id
+                  )},
+                  ${jsArg(
+                    lobby.name
+                  )}
+                )'
+              >
+                Umbenennen
+              </button>
+
+
+              <button
+                class="danger"
+                onclick='deleteLobby(
+                  ${jsArg(
+                    lobby.id
+                  )},
+                  ${jsArg(
+                    lobby.name
+                  )}
+                )'
+              >
+                Löschen
+              </button>
+
+            `
+
+            : ""
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   LOBBY CRUD
+========================================================= */
+
+
+async function createLobby(){
+
+  try{
+
+    const playerName =
+      document
+        .getElementById(
+          "createPlayerName"
+        )
+        .value
+        .trim();
+
+
+    const lobbyName =
+      document
+        .getElementById(
+          "createLobbyName"
+        )
+        .value
+        .trim();
+
+
+    if(
+      !playerName
+    ){
+
+      toast(
+        "Spielername eingeben"
+      );
+
+      return;
+
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        "create_lobby",
+        {
+
+          p_player_name:
+            playerName,
+
+          p_lobby_name:
+            lobbyName
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    openLobby(
+      data[0].lobby_id
+    );
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function joinLobby(){
+
+  try{
+
+    const name =
+      document
+        .getElementById(
+          "joinName"
+        )
+        .value
+        .trim();
+
+
+    const code =
+      document
+        .getElementById(
+          "joinCode"
+        )
+        .value
+        .trim()
+        .toUpperCase();
+
+
+    if(
+      !name ||
+      !code
+    ){
+
+      toast(
+        "Name und Lobby-Code eingeben"
+      );
+
+      return;
+
+    }
+
+
+    await ensureGuestSession(
+      true
+    );
+
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        "join_lobby",
+        {
+
+          p_code:
+            code,
+
+          p_name:
+            name
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    openLobby(
+      data[0].lobby_id
+    );
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function renameLobby(
+  id,
+  currentName
+){
+
+  const newName =
+    prompt(
+      "Neuer Lobbyname:",
+      currentName
+    );
+
+
+  if(
+    newName === null
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !newName.trim()
+  ){
+
+    toast(
+      "Lobbyname darf nicht leer sein"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "rename_lobby",
+        {
+
+          p_lobby_id:
+            id,
+
+          p_name:
+            newName.trim()
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    toast(
+      "Lobby umbenannt"
+    );
+
+
+    if(
+      state.lobbyId ===
+      id
+    ){
+
+      await refreshLobby();
+
+    }
+
+    else{
+
+      await loadDashboard();
+
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function deleteLobby(
+  id,
+  name
+){
+
+  const confirmed =
+    confirm(
+      `Lobby "${name}" wirklich löschen?\n\nAlle 34 möglichen Spieltage, Thesen, Drafts und Ergebnisse dieser Lobby werden ebenfalls gelöscht.`
+    );
+
+
+  if(
+    !confirmed
+  ){
+
+    return;
+
+  }
+
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "delete_lobby",
+        {
+          p_lobby_id:
+            id
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    toast(
+      "Lobby gelöscht"
+    );
+
+
+    goHome();
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   LOBBY / SAISONÜBERSICHT
+========================================================= */
+
+
+async function refreshLobby(){
+
+  const [
+    lobbyResult,
+    playersResult,
+    gamesResult
+  ] =
+    await Promise.all([
+
+
+      db
+        .from(
+          "lobbies"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "id",
+          state.lobbyId
+        )
+
+        .single(),
+
+
+      db
+        .from(
+          "lobby_players"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "lobby_id",
+          state.lobbyId
+        )
+
+        .order(
+          "seat"
+        ),
+
+
+      db
+        .from(
+          "games"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "lobby_id",
+          state.lobbyId
+        )
+
+        .order(
+          "matchday"
+        )
+
+
+    ]);
+
+
+  if(
+    lobbyResult.error
+  ){
+
+    throw lobbyResult.error;
+
+  }
+
+
+  if(
+    playersResult.error
+  ){
+
+    throw playersResult.error;
+
+  }
+
+
+  if(
+    gamesResult.error
+  ){
+
+    throw gamesResult.error;
+
+  }
+
+
+  state.lobby =
+    lobbyResult.data;
+
+
+  state.lobbyPlayers =
+    playersResult.data
+    ||
+    [];
+
+
+  state.matchdayGames =
+    gamesResult.data
+    ||
+    [];
+
+  if(state.lobby.created_by === state.user.id){
+    const {data,error} = await db
+      .from("global_theses")
+      .select("matchday,slot,text")
+      .eq("owner_id",state.user.id);
+
+    if(error){
+      throw error;
+    }
+
+    state.globalTheses = data || [];
+  }
+  else{
+    state.globalTheses = [];
+  }
+
+
+  renderLobbySeason();
+
+}
+
+
+
+function renderLobbySeason(){
+
+  const owner =
+    state.lobby.created_by ===
+    state.user.id;
+
+
+  const opponent =
+    state.lobbyPlayers.find(
+      player =>
+        player.user_id !==
+        state.user.id
+    );
+
+
+  const finishedCount =
+    state.matchdayGames.filter(
+      game =>
+        game.status ===
+        "finished"
+    ).length;
+
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = `
+
+    ${playerNameBadge(currentLobbyPlayerName())}
+
+    ${
+      isMainAccount()
+
+        ? `
+
+          <button
+            class="ghost"
+            onclick="goHome()"
+          >
+            ← Lobby-Übersicht
+          </button>
+
+        `
+
+        : ""
+    }
+
+  `;
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <span class="badge">
+        Bundesliga 2026/27
+      </span>
+
+
+      <span class="badge">
+        ${finishedCount}/34 beendet
+      </span>
+
+
+      <h1 style="margin-top:12px">
+        ${esc(
+          state.lobby.name
+        )}
+      </h1>
+
+
+      <p class="muted">
+
+        Lobby-Code:
+
+        <strong>
+          ${esc(
+            state.lobby.code
+          )}
+        </strong>
+
+        ·
+
+        ${
+          opponent
+
+            ? `Gegner: ${
+                esc(
+                  opponent.name
+                )
+              }`
+
+            : "Wartet auf Spieler 2"
+        }
+
+      </p>
+
+
+      ${
+        owner
+
+          ? `
+
+            <div class="actions">
+
+              <button
+                onclick='copyLobbyInvite(${jsArg(
+                  state.lobby.code
+                )})'
+              >
+                Einladen
+              </button>
+
+
+              <button
+                class="ghost"
+                onclick='renameLobby(
+                  ${jsArg(
+                    state.lobby.id
+                  )},
+                  ${jsArg(
+                    state.lobby.name
+                  )}
+                )'
+              >
+                Lobby umbenennen
+              </button>
+
+
+              <button
+                class="danger"
+                onclick='deleteLobby(
+                  ${jsArg(
+                    state.lobby.id
+                  )},
+                  ${jsArg(
+                    state.lobby.name
+                  )}
+                )'
+              >
+                Lobby löschen
+              </button>
+
+            </div>
+
+          `
+
+          : ""
+      }
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Bundesliga-Spieltage
+      </h2>
+
+
+      <p class="muted">
+
+        Jeder Spieltag ist ein
+        eigenständiges Rasenschach-Spiel.
+
+        Die Thesen werden zentral
+        von Spieler 1 verwaltet.
+
+      </p>
+
+
+      <div class="matchdayGrid">
+
+        ${Array.from(
+          {
+            length:34
+          },
+          (
+            _,
+            index
+          ) =>
+
+            renderMatchday(
+              index + 1,
+              owner,
+              Boolean(
+                opponent
+              )
+            )
+
+        ).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function renderMatchday(
+  matchday,
+  owner,
+  hasOpponent
+){
+
+  const game =
+    state.matchdayGames.find(
+      item =>
+        item.matchday ===
+        matchday
+    );
+
+
+  const date =
+    matchdayDates[
+      matchday
+    ]
+    ||
+    "";
+
+  const thesisCount = owner
+    ? matchdayThesisCount(matchday)
+    : null;
+  const thesesReady = thesisCount === 12;
+  const locked = matchdayIsLocked(matchday);
+
+
+  if(
+    game
+  ){
+
+    return `
+
+      <div class="matchdayCard">
+
+        <div class="matchdayNumber">
+          Spieltag ${matchday}
+        </div>
+
+
+        <div class="matchdayDate">
+          📅 ${date}
+        </div>
+
+
+        <div class="matchdayStatus">
+
+          ${game.status === "lobby" && locked
+            ? "🔒 Draftstart geschlossen"
+            : (statusNames[game.status] || game.status)}
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="primary"
+            onclick='openGame(${jsArg(
+              game.id
+            )})'
+          >
+            Öffnen
+          </button>
+
+        </div>
+
+      </div>
+
+    `;
+
+  }
+
+
+  return `
+
+    <div class="matchdayCard">
+
+      <div class="matchdayNumber">
+        Spieltag ${matchday}
+      </div>
+
+
+      <div class="matchdayDate">
+        📅 ${date}
+      </div>
+
+
+      <div class="matchdayStatus">
+        ${locked
+          ? "🔒 Erstellung geschlossen"
+          : (!hasOpponent
+              ? "Spieler 2 fehlt"
+              : (!thesesReady
+                  ? `${thesisCount}/12 Thesen hinterlegt`
+                  : "Bereit zur Erstellung"))}
+      </div>
+
+
+      <div class="actions">
+
+        ${
+          owner
+
+            ? `
+
+              <button
+                class="primary"
+
+                ${
+                  !hasOpponent || !thesesReady || locked
+                    ? "disabled"
+                    : ""
+                }
+
+                onclick="
+                  createMatchdayGame(
+                    ${matchday}
+                  )
+                "
+              >
+                Spiel erstellen
+              </button>
+
+            `
+
+            : `
+
+              <span class="muted">
+                Wartet auf Spieler 1
+              </span>
+
+            `
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function createMatchdayGame(
+  matchday
+){
+
+  try{
+
+    if(matchdayIsLocked(matchday)){
+      throw new Error("Dieser Spieltag ist bereits gesperrt.");
+    }
+
+    if(matchdayThesisCount(matchday) !== 12){
+      throw new Error("Für diesen Spieltag müssen exakt 12 globale Thesen hinterlegt sein.");
+    }
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        "create_matchday_game",
+        {
+
+          p_lobby_id:
+            state.lobbyId,
+
+          p_matchday:
+            matchday
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+
+    openGame(
+      data[0].game_id
+    );
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   SPIELDATEN LADEN
+========================================================= */
+
+
+async function refreshGame(){
+
+  const [
+    gameResult,
+    playerResult,
+    thesisResult,
+    placementResult,
+    figureResult
+  ] =
+    await Promise.all([
+
+
+      db
+        .from(
+          "games"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "id",
+          state.gameId
+        )
+
+        .single(),
+
+
+      db
+        .from(
+          "players"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "game_id",
+          state.gameId
+        )
+
+        .order(
+          "seat"
+        ),
+
+
+      db
+        .from(
+          "theses"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "game_id",
+          state.gameId
+        )
+
+        .order(
+          "template_slot",
+          {
+            nullsFirst:false
+          }
+        )
+
+        .order(
+          "created_at"
+        ),
+
+
+      db
+        .from(
+          "placements"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "game_id",
+          state.gameId
+        ),
+
+
+      db
+        .from(
+          "figure_picks"
+        )
+
+        .select(
+          "*"
+        )
+
+        .eq(
+          "game_id",
+          state.gameId
+        )
+
+        .order(
+          "draft_order"
+        )
+
+
+    ]);
+
+
+  if(
+    gameResult.error
+  ){
+
+    throw gameResult.error;
+
+  }
+
+
+  if(
+    playerResult.error
+  ){
+
+    throw playerResult.error;
+
+  }
+
+
+  if(
+    thesisResult.error
+  ){
+
+    throw thesisResult.error;
+
+  }
+
+
+  if(
+    placementResult.error
+  ){
+
+    throw placementResult.error;
+
+  }
+
+
+  if(
+    figureResult.error
+  ){
+
+    throw figureResult.error;
+
+  }
+
+
+  state.game =
+    gameResult.data;
+
+
+  state.players =
+    playerResult.data
+    ||
+    [];
+
+
+  state.theses =
+    thesisResult.data
+    ||
+    [];
+
+
+  state.placements =
+    placementResult.data
+    ||
+    [];
+
+
+  state.figures =
+    figureResult.data
+    ||
+    [];
+
+
+  state.me =
+    state.players.find(
+      player =>
+        player.user_id ===
+        state.user.id
+    );
+
+
+  if(
+    !state.me
+  ){
+
+    throw new Error(
+      "Du bist kein Spieler dieses Spieltags."
+    );
+
+  }
+
+
+  renderGame();
+
+}
+
+
+
+/* =========================================================
+   REALTIME
+========================================================= */
+
+
 let refreshTimer;
-function scheduleGameRefresh(){clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>refreshGame().catch(errorMessage),130)}
-function subscribeGame(){if(state.channel)db.removeChannel(state.channel);const channel=db.channel(`game-${state.gameId}`);["games","players","theses","placements","figure_picks"].forEach(table=>channel.on("postgres_changes",{event:"*",schema:"public",table,filter:table==="games"?`id=eq.${state.gameId}`:`game_id=eq.${state.gameId}`},scheduleGameRefresh));channel.subscribe();state.channel=channel}
-function scheduleLobbyRefresh(){clearTimeout(refreshTimer);refreshTimer=setTimeout(()=>refreshLobby().catch(errorMessage),130)}
-function subscribeLobby(){if(state.channel)db.removeChannel(state.channel);const channel=db.channel(`lobby-${state.lobbyId}`);channel.on("postgres_changes",{event:"*",schema:"public",table:"lobbies",filter:`id=eq.${state.lobbyId}`},scheduleLobbyRefresh);channel.on("postgres_changes",{event:"*",schema:"public",table:"lobby_players",filter:`lobby_id=eq.${state.lobbyId}`},scheduleLobbyRefresh);channel.on("postgres_changes",{event:"*",schema:"public",table:"games",filter:`lobby_id=eq.${state.lobbyId}`},scheduleLobbyRefresh);channel.subscribe();state.channel=channel}
-function renderGame(){document.getElementById("headerActions").innerHTML=`${playerNameBadge(currentGamePlayerName())}<button class="ghost" onclick='openLobby(${jsArg(state.game.lobby_id)})'>← Spieltagsübersicht</button>`;let content="";switch(state.game.status){case"lobby":content=renderGameLobby();break;case"thesis_draft":content=renderThesisDraft();break;case"figure_draft":content=renderFigureDraft();break;case"scoring":content=renderScoring(false);break;case"finished":content=renderScoring(true);break;default:content=`<div class="card"><h2>Unbekannter Spielstatus</h2><p class="muted">${esc(state.game.status)}</p></div>`}document.getElementById("app").innerHTML=`<div class="card"><span class="badge">Bundesliga 2026/27</span><span class="badge">Spieltag ${state.game.matchday}</span><h1 style="margin-top:12px">Spieltag ${state.game.matchday}</h1><p>📅 <strong>${matchdayDates[state.game.matchday]||""}</strong></p></div>${phaseBar()}${content}`}
-function renderGameLobby(){const owner=state.game.created_by===state.user.id;const locked=matchdayIsLocked(state.game.matchday);return`<div class="grid2"><div class="card"><h2>Spieler</h2>${state.players.map(player=>`<div class="thesis"><strong>${esc(player.name)}</strong><div class="muted">Spieler ${player.seat}</div></div>`).join("")}</div><div class="card"><h2>Globale Thesen · ${state.theses.length}/12</h2><p class="muted">Die Thesen dieses Spieltags werden zentral von Spieler 1 in der Lobby-Übersicht verwaltet.</p>${state.theses.length?`<div class="stack">${state.theses.map((thesis,index)=>`<div class="thesis"><strong>${index+1}.</strong> ${esc(thesis.text)}</div>`).join("")}</div>`:`<div class="thesis"><strong>Noch keine Thesen vorhanden</strong><p class="muted" style="margin-top:6px;margin-bottom:0">Spieler 1 muss zunächst die zwölf globalen Thesen eintragen.</p></div>`}${owner?`<div class="actions"><button class="primary" onclick="startDraft()" ${state.theses.length!==12||locked?"disabled":""}>${locked?"🔒 Draftstart geschlossen":"🎲 Draft starten"}</button>${locked?`<p class="error">Der Spieltag ist seit dem ersten Datum um 20:30 Uhr (Europe/Berlin) gesperrt.</p>`:""}</div>`:`<p class="muted" style="margin-top:16px">Spieler 1 startet den Draft.</p>`}</div></div>`}
-async function startDraft(){try{if(matchdayIsLocked(state.game.matchday))throw new Error("Dieser Spieltag ist bereits gesperrt. Der Draft kann nicht mehr gestartet werden.");const{error}=await db.rpc("start_draft",{p_game_id:state.gameId});if(error)throw error}catch(error){errorMessage(error)}}
-function renderThesisDraft(){const seat=currentThesisSeat();const currentPlayer=state.players.find(player=>player.seat===seat);const starter=state.players.find(player=>player.seat===state.game.thesis_start_seat);const myPlacements=state.placements.filter(placement=>placement.user_id===state.user.id);const usedFields=myPlacements.map(placement=>placement.field);const freeFields=Object.keys(fieldNames).filter(field=>!usedFields.includes(field));return`<div class="card"><span class="badge">🎲 Auslosung</span><h2 style="margin-top:10px">${esc(starter?.name||"")} beginnt</h2><p class="muted">Jede gewählte These wird sofort auf ein Feld gesetzt. Die Feldwahl ist direkt für beide Spieler sichtbar.</p></div><div class="turn">${seat===state.me.seat?"Du bist am Zug":`${esc(currentPlayer?.name||"")} ist am Zug`}</div><div class="grid2"><div class="card"><h2>Verfügbare Thesen</h2><p class="muted">Pick ${draftedTheses().length+1} von 10</p><div class="stack">${state.theses.filter(thesis=>!thesis.drafted_by).map(thesis=>`<div class="thesis"><strong>${esc(thesis.text)}</strong>${seat===state.me.seat?`<div class="muted" style="margin-top:10px">Setzen auf:</div><div class="fieldButtons">${freeFields.map(field=>`<button class="fieldButton" onclick="pickThesis('${thesis.id}','${field}')">${fieldNames[field]}</button>`).join("")}</div>`:""}</div>`).join("")}</div></div><div><div class="card"><h2>Bretter</h2><p class="muted">Die gesetzten Felder sind sofort für beide Spieler sichtbar.</p>${state.players.map(player=>`<h3>${esc(player.name)}</h3>${renderBoard(player.user_id)}<hr>`).join("")}</div><div class="card"><h2>Draftverlauf</h2>${state.players.map(player=>{const picks=draftedTheses().filter(thesis=>thesis.drafted_by===player.user_id).sort((a,b)=>a.draft_order-b.draft_order);return`<h3>${esc(player.name)}</h3>${picks.length?picks.map(thesis=>{const placement=state.placements.find(item=>item.thesis_id===thesis.id);return`<div class="thesis"><span class="badge">Pick ${thesis.draft_order}</span><span class="badge">${placement?fieldNames[placement.field]:"?"}</span><div style="margin-top:7px">${esc(thesis.text)}</div></div>`}).join(""):`<span class="muted">Noch kein Pick</span>`}<hr>`}).join("")}</div></div></div>`}
-async function pickThesis(id,field){try{const{error}=await db.rpc("pick_thesis",{p_game_id:state.gameId,p_thesis_id:id,p_field:field});if(error)throw error}catch(error){errorMessage(error)}}
-function renderBoard(userId){const placements=state.placements.filter(placement=>placement.user_id===userId);return`<div class="fields">${Object.keys(fieldNames).map(field=>{const placement=placements.find(item=>item.field===field);const thesis=placement?state.theses.find(item=>item.id===placement.thesis_id):null;return`<div class="field"><div class="fieldLabel">${fieldNames[field]}</div><div>${thesis?esc(thesis.text):"frei"}</div></div>`}).join("")}</div>`}
-function renderFigureDraft(){const seat=currentFigureSeat();const activePlayer=state.players.find(player=>player.seat===seat);const ownFigures=state.figures.filter(figure=>figure.user_id===state.user.id);const freeFigures=Object.keys(figureNames).filter(figure=>!ownFigures.some(item=>item.figure===figure));return`<div class="card"><h2>Thesenbretter</h2><div class="grid2">${state.players.map(player=>`<div><h3>${esc(player.name)}</h3>${renderBoard(player.user_id)}</div>`).join("")}</div></div><div class="turn">${seat===state.me.seat?"Du bist beim Figurendraft am Zug":`${esc(activePlayer?.name||"")} ist am Zug`}</div><div class="grid2"><div class="card"><h2>Fußballer auswählen</h2>${seat===state.me.seat?`<div class="stack"><select id="figureSelect">${freeFigures.map(figure=>`<option value="${figure}">${figureNames[figure]}</option>`).join("")}</select><input id="footballerInput" maxlength="80" placeholder="Fußballer"><input id="clubInput" maxlength="80" placeholder="Verein (optional)"><button class="primary" onclick="pickFigure()">Draften</button></div>`:`<p class="muted">Warte auf den Pick deines Gegners.</p>`}</div><div class="card"><h2>Figuren</h2>${state.players.map(player=>{const figures=state.figures.filter(figure=>figure.user_id===player.user_id);return`<h3>${esc(player.name)}</h3>${Object.keys(figureNames).map(figure=>{const pick=figures.find(item=>item.figure===figure);return`<div class="thesis"><strong>${figureNames[figure]}</strong><div class="muted">${pick?`${esc(pick.footballer)}${pick.club?` · ${esc(pick.club)}`:""}`:"frei"}</div></div>`}).join("")}<hr>`}).join("")}</div></div>`}
-async function pickFigure(){try{const figure=document.getElementById("figureSelect").value;const footballer=document.getElementById("footballerInput").value.trim();const club=document.getElementById("clubInput").value.trim();if(!footballer){toast("Fußballer eingeben");return}const{error}=await db.rpc("pick_figure",{p_game_id:state.gameId,p_figure:figure,p_footballer:footballer,p_club:club||null});if(error)throw error}catch(error){errorMessage(error)}}
-function thesisPoints(placement,thesis){if(thesis?.resolved===null||thesis?.resolved===undefined)return 0;switch(placement.field){case"P1":return thesis.resolved?1:0;case"N1":return thesis.resolved?0:1;case"P3":return thesis.resolved?3:-3;case"N3":return thesis.resolved?-3:3;case"Q":return thesis.resolved?state.game.random_value:-state.game.random_value}return 0}
-function playerScore(userId){let thesisTotal=0,figureTotal=0;state.placements.filter(placement=>placement.user_id===userId).forEach(placement=>{const thesis=state.theses.find(item=>item.id===placement.thesis_id);thesisTotal+=thesisPoints(placement,thesis)});state.figures.filter(figure=>figure.user_id===userId).forEach(figure=>figureTotal+=Number(figure.points||0));return{thesis:thesisTotal,figures:figureTotal,total:thesisTotal+figureTotal}}
-function renderScoring(finished){const player1=state.players[0],player2=state.players[1];if(!player1||!player2)return`<div class="card">Spielerdaten werden geladen …</div>`;const score1=playerScore(player1.user_id),score2=playerScore(player2.user_id);const winner=score1.total===score2.total?"UNENTSCHIEDEN":score1.total>score2.total?`${player1.name.toUpperCase()} GEWINNT`:`${player2.name.toUpperCase()} GEWINNT`;return`${finished?`<div class="card"><div class="bigResult">${esc(winner)}</div></div>`:""}<div class="card score"><div><strong>${esc(player1.name)}</strong><div class="points">${score1.total}</div></div><div class="vs">:</div><div><strong>${esc(player2.name)}</strong><div class="points">${score2.total}</div></div></div><div class="grid2">${state.players.map(player=>{const score=playerScore(player.user_id);const placements=state.placements.filter(p=>p.user_id===player.user_id);const figures=state.figures.filter(f=>f.user_id===player.user_id);return`<div class="card"><h2>${esc(player.name)}</h2><span class="badge">Thesen: ${score.thesis}</span><span class="badge">Figuren: ${score.figures}</span><hr><h3>Thesen</h3><div class="stack">${placements.map(placement=>{const thesis=state.theses.find(item=>item.id===placement.thesis_id);if(!thesis)return"";const points=thesisPoints(placement,thesis);return`<div class="thesis"><strong>${fieldNames[placement.field]} · ${points>=0?"+":""}${points}</strong><p style="margin-top:8px;margin-bottom:8px">${esc(thesis.text)}</p>${finished?`<span class="muted">${thesis.resolved?"✓ eingetreten":"✕ nicht eingetreten"}</span>`:`<div class="row"><button class="${thesis.resolved===true?"primary":"ghost"}" onclick="resolveThesis('${thesis.id}',true)">Eingetreten</button><button class="${thesis.resolved===false?"primary":"ghost"}" onclick="resolveThesis('${thesis.id}',false)">Nicht eingetreten</button></div>`}</div>`}).join("")}</div><hr><h3>Figuren</h3><div class="stack">${figures.map(figure=>`<div class="thesis"><strong>${figureNames[figure.figure]} · ${esc(figure.footballer)}</strong>${figure.club?`<div class="muted">${esc(figure.club)}</div>`:""}${finished?`<p style="margin-top:8px;margin-bottom:0">${Number(figure.points)>=0?"+":""}${figure.points} Punkte</p>`:`<div class="row" style="margin-top:10px"><button class="ghost" onclick="setFigurePoints('${figure.id}',${Number(figure.points)-1})">−</button><strong>${Number(figure.points)>=0?"+":""}${figure.points}</strong><button class="ghost" onclick="setFigurePoints('${figure.id}',${Number(figure.points)+1})">+</button></div>`}</div>`).join("")}</div></div>`}).join("")}</div>${!finished?`<div class="card"><h2>Spieltag abschließen</h2><p class="muted">Sobald alle gedrafteten Thesen ausgewertet wurden, kann das Ergebnis abgeschlossen werden.</p><button class="primary" onclick="finishGame()">Abpfiff</button></div>`:`<div class="card"><button class="primary" onclick='openLobby(${jsArg(state.game.lobby_id)})'>Zur Spieltagsübersicht</button></div>`}`}
-async function resolveThesis(id,value){try{const{error}=await db.rpc("resolve_thesis",{p_thesis_id:id,p_resolved:value});if(error)throw error}catch(error){errorMessage(error)}}
-async function setFigurePoints(id,points){try{const{error}=await db.rpc("set_figure_points",{p_pick_id:id,p_points:points});if(error)throw error}catch(error){errorMessage(error)}}
-async function finishGame(){try{const{error}=await db.rpc("finish_game",{p_game_id:state.gameId});if(error)throw error}catch(error){errorMessage(error)}}
+
+
+
+function scheduleGameRefresh(){
+
+  clearTimeout(
+    refreshTimer
+  );
+
+
+  refreshTimer =
+    setTimeout(
+      () => {
+
+        refreshGame()
+          .catch(
+            errorMessage
+          );
+
+      },
+      130
+    );
+
+}
+
+
+
+function subscribeGame(){
+
+  if(
+    state.channel
+  ){
+
+    db.removeChannel(
+      state.channel
+    );
+
+  }
+
+
+  const channel =
+    db.channel(
+      `game-${state.gameId}`
+    );
+
+
+  [
+    "games",
+    "players",
+    "theses",
+    "placements",
+    "figure_picks"
+  ]
+
+  .forEach(
+    table => {
+
+      channel.on(
+
+        "postgres_changes",
+
+        {
+
+          event:"*",
+
+          schema:"public",
+
+          table,
+
+          filter:
+
+            table ===
+            "games"
+
+              ? `id=eq.${state.gameId}`
+
+              : `game_id=eq.${state.gameId}`
+
+        },
+
+        scheduleGameRefresh
+
+      );
+
+    }
+  );
+
+
+  channel.subscribe();
+
+
+  state.channel =
+    channel;
+
+}
+
+
+
+function scheduleLobbyRefresh(){
+
+  clearTimeout(
+    refreshTimer
+  );
+
+
+  refreshTimer =
+    setTimeout(
+      () => {
+
+        refreshLobby()
+          .catch(
+            errorMessage
+          );
+
+      },
+      130
+    );
+
+}
+
+
+
+function subscribeLobby(){
+
+  if(
+    state.channel
+  ){
+
+    db.removeChannel(
+      state.channel
+    );
+
+  }
+
+
+  const channel =
+    db.channel(
+      `lobby-${state.lobbyId}`
+    );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+
+      event:"*",
+
+      schema:"public",
+
+      table:"lobbies",
+
+      filter:
+        `id=eq.${state.lobbyId}`
+
+    },
+
+    scheduleLobbyRefresh
+
+  );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+
+      event:"*",
+
+      schema:"public",
+
+      table:"lobby_players",
+
+      filter:
+        `lobby_id=eq.${state.lobbyId}`
+
+    },
+
+    scheduleLobbyRefresh
+
+  );
+
+
+  channel.on(
+
+    "postgres_changes",
+
+    {
+
+      event:"*",
+
+      schema:"public",
+
+      table:"games",
+
+      filter:
+        `lobby_id=eq.${state.lobbyId}`
+
+    },
+
+    scheduleLobbyRefresh
+
+  );
+
+
+  channel.subscribe();
+
+
+  state.channel =
+    channel;
+
+}
+
+
+
+/* =========================================================
+   SPIEL RENDERN
+========================================================= */
+
+
+function renderGame(){
+
+  document.getElementById(
+    "headerActions"
+  ).innerHTML = `
+
+    ${playerNameBadge(currentGamePlayerName())}
+
+    <button
+      class="ghost"
+      onclick='openLobby(${jsArg(
+        state.game.lobby_id
+      )})'
+    >
+      ← Spieltagsübersicht
+    </button>
+
+  `;
+
+
+  let content =
+    "";
+
+
+  switch(
+    state.game.status
+  ){
+
+    case "lobby":
+
+      content =
+        renderGameLobby();
+
+      break;
+
+
+    case "thesis_draft":
+
+      content =
+        renderThesisDraft();
+
+      break;
+
+
+    case "figure_draft":
+
+      content =
+        renderFigureDraft();
+
+      break;
+
+
+    case "scoring":
+
+      content =
+        renderScoring(
+          false
+        );
+
+      break;
+
+
+    case "finished":
+
+      content =
+        renderScoring(
+          true
+        );
+
+      break;
+
+
+    default:
+
+      content = `
+
+        <div class="card">
+
+          <h2>
+            Unbekannter Spielstatus
+          </h2>
+
+          <p class="muted">
+            ${esc(
+              state.game.status
+            )}
+          </p>
+
+        </div>
+
+      `;
+
+  }
+
+
+  document.getElementById(
+    "app"
+  ).innerHTML = `
+
+    <div class="card">
+
+      <span class="badge">
+        Bundesliga 2026/27
+      </span>
+
+
+      <span class="badge">
+        Spieltag
+        ${state.game.matchday}
+      </span>
+
+
+      <h1 style="margin-top:12px">
+        Spieltag
+        ${state.game.matchday}
+      </h1>
+
+
+      <p>
+        📅
+        <strong>
+
+          ${
+            matchdayDates[
+              state.game.matchday
+            ]
+            ||
+            ""
+          }
+
+        </strong>
+      </p>
+
+    </div>
+
+
+    ${phaseBar()}
+
+
+    ${content}
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   SPIELTAG VORBEREITUNG
+========================================================= */
+
+
+function renderGameLobby(){
+
+  const owner =
+    state.game.created_by ===
+    state.user.id;
+
+  const locked = matchdayIsLocked(state.game.matchday);
+
+  const starter =
+    state.players.find(
+      player =>
+        player.seat ===
+        state.game.thesis_start_seat
+    );
+
+  const starterReady =
+    Boolean(
+      state.game.thesis_start_seat
+    );
+
+  const questionReady =
+    Boolean(
+      state.game.question_value
+    );
+
+
+  return `
+
+    <div class="grid2">
+
+      <div class="card">
+
+        <h2>
+          Spieler
+        </h2>
+
+
+        ${state.players.map(
+          player => `
+
+            <div class="thesis">
+
+              <strong>
+                ${esc(
+                  player.name
+                )}
+              </strong>
+
+              <div class="muted">
+
+                Spieler
+                ${player.seat}
+
+              </div>
+
+            </div>
+
+          `
+        ).join("")}
+
+      </div>
+
+
+      <div class="card">
+
+        <h2>
+
+          Globale Thesen ·
+          ${state.theses.length}/12
+
+        </h2>
+
+
+        <p class="muted">
+
+          Die Thesen dieses Spieltags
+          werden zentral von Spieler 1
+          in der Lobby-Übersicht verwaltet.
+
+        </p>
+
+
+        ${
+          state.theses.length
+
+            ? `
+
+              <div class="stack">
+
+                ${state.theses.map(
+                  (
+                    thesis,
+                    index
+                  ) => `
+
+                    <div class="thesis">
+
+                      <strong>
+                        ${index + 1}.
+                      </strong>
+
+                      ${esc(
+                        thesis.text
+                      )}
+
+                    </div>
+
+                  `
+                ).join("")}
+
+              </div>
+
+            `
+
+            : `
+
+              <div class="thesis">
+
+                <strong>
+                  Noch keine Thesen vorhanden
+                </strong>
+
+                <p
+                  class="muted"
+                  style="
+                    margin-top:6px;
+                    margin-bottom:0
+                  "
+                >
+
+                  Spieler 1 muss für
+                  diesen Spieltag zunächst
+                  die zwölf globalen Thesen
+                  in der zentralen
+                  Thesen Übersicht eintragen.
+
+                </p>
+
+              </div>
+
+            `
+        }
+
+
+        <hr>
+
+        <h2>
+          Auslosung
+        </h2>
+
+
+        <div class="grid2">
+
+          <div class="thesis">
+
+            <strong>
+              Wer beginnt?
+            </strong>
+
+            <p style="margin-top:8px;margin-bottom:0">
+              ${
+                starterReady
+                  ? `🎲 ${esc(starter?.name || "")} beginnt`
+                  : `<span class="muted">Noch nicht ausgelost</span>`
+              }
+            </p>
+
+            ${owner ? `
+              <button
+                class="ghost"
+                style="margin-top:10px"
+                onclick="drawThesisStarter()"
+                ${starterReady || locked ? "disabled" : ""}
+              >
+                Startspieler auslosen
+              </button>
+            ` : ""}
+
+          </div>
+
+
+          <div class="thesis">
+
+            <strong>
+              Wert des ?-Feldes
+            </strong>
+
+            <p style="margin-top:8px;margin-bottom:0">
+              ${
+                questionReady
+                  ? `🎲 ${esc(state.game.question_value)}`
+                  : `<span class="muted">Noch nicht ausgelost</span>`
+              }
+            </p>
+
+            ${owner ? `
+              <button
+                class="ghost"
+                style="margin-top:10px"
+                onclick="drawQuestionValue()"
+                ${questionReady || locked ? "disabled" : ""}
+              >
+                ?-Wert auslosen
+              </button>
+            ` : ""}
+
+          </div>
+
+        </div>
+
+
+        ${owner ? `
+
+          <div class="actions">
+
+            <button
+              class="primary"
+              onclick="startDraft()"
+              ${
+                state.theses.length !== 12
+                || !starterReady
+                || !questionReady
+                || locked
+                  ? "disabled"
+                  : ""
+              }
+            >
+              ${locked ? "🔒 Draftstart geschlossen" : "Draft starten"}
+            </button>
+
+          </div>
+
+          ${locked ? `
+            <p class="error" style="margin-top:10px;margin-bottom:0">
+              Der Spieltag ist seit dem ersten Datum um 20:30 Uhr
+              (Europe/Berlin) gesperrt.
+            </p>
+          ` : ""}
+
+        ` : `
+
+          <p class="muted" style="margin-top:16px">
+            Spieler 1 führt die Auslosungen durch und startet anschließend den Draft.
+          </p>
+
+        `}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function drawThesisStarter(){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "draw_thesis_starter",
+        {
+          p_game_id:
+            state.gameId
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+    errorMessage(error);
+  }
+
+}
+
+
+
+async function drawQuestionValue(){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "draw_question_value",
+        {
+          p_game_id:
+            state.gameId
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+    errorMessage(error);
+  }
+
+}
+
+
+
+async function startDraft(){
+
+  try{
+
+    if(matchdayIsLocked(state.game.matchday)){
+      throw new Error("Dieser Spieltag ist bereits gesperrt. Der Draft kann nicht mehr gestartet werden.");
+    }
+
+    if(
+      !state.game.thesis_start_seat
+      ||
+      !state.game.question_value
+    ){
+      throw new Error("Bitte zuerst den Startspieler und den Wert des ?-Feldes auslosen.");
+    }
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "start_draft",
+        {
+
+          p_game_id:
+            state.gameId
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   THESENDRAFT
+========================================================= */
+
+
+function renderThesisDraft(){
+
+  const seat =
+    currentThesisSeat();
+
+
+  const currentPlayer =
+    state.players.find(
+      player =>
+        player.seat ===
+        seat
+    );
+
+
+  const starter =
+    state.players.find(
+      player =>
+        player.seat ===
+        state.game.thesis_start_seat
+    );
+
+
+  const myPlacements =
+    state.placements.filter(
+      placement =>
+        placement.user_id ===
+        state.user.id
+    );
+
+
+  const usedFields =
+    myPlacements.map(
+      placement =>
+        placement.field
+    );
+
+
+  const freeFields =
+    Object.keys(
+      fieldNames
+    )
+
+    .filter(
+      field =>
+        !usedFields.includes(
+          field
+        )
+    );
+
+
+  return `
+
+    <div class="card">
+
+      <span class="badge">
+        🎲 Auslosung
+      </span>
+
+
+      <h2 style="margin-top:10px">
+
+        ${esc(
+          starter?.name ||
+          ""
+        )}
+        beginnt
+
+      </h2>
+
+
+      <span class="badge">
+        ?-Feld:
+        ${esc(
+          state.game.question_value ||
+          "nicht ausgelost"
+        )}
+      </span>
+
+
+      <p class="muted">
+
+        Jede gewählte These wird
+        sofort auf ein Feld gesetzt.
+        Die Feldwahl ist direkt
+        für beide Spieler sichtbar.
+
+      </p>
+
+    </div>
+
+
+    <div class="turn">
+
+      ${
+        seat ===
+        state.me.seat
+
+          ? "Du bist am Zug"
+
+          : `${esc(
+              currentPlayer?.name ||
+              ""
+            )} ist am Zug`
+      }
+
+    </div>
+
+
+    <div class="grid2">
+
+
+      <div class="card">
+
+        <h2>
+          Verfügbare Thesen
+        </h2>
+
+
+        <p class="muted">
+
+          Pick
+          ${
+            draftedTheses().length +
+            1
+          }
+          von 10
+
+        </p>
+
+
+        <div class="stack">
+
+          ${state.theses
+
+            .filter(
+              thesis =>
+                !thesis.drafted_by
+            )
+
+            .map(
+              thesis => `
+
+                <div class="thesis">
+
+                  <strong>
+                    ${esc(
+                      thesis.text
+                    )}
+                  </strong>
+
+
+                  ${
+                    seat ===
+                    state.me.seat
+
+                      ? `
+
+                        <div
+                          class="muted"
+                          style="margin-top:10px"
+                        >
+                          Setzen auf:
+                        </div>
+
+
+                        <div class="fieldButtons">
+
+                          ${freeFields.map(
+                            field => `
+
+                              <button
+                                class="fieldButton"
+
+                                onclick="
+                                  pickThesis(
+                                    '${thesis.id}',
+                                    '${field}'
+                                  )
+                                "
+                              >
+                                ${displayFieldName(field)}
+                              </button>
+
+                            `
+                          ).join("")}
+
+                        </div>
+
+                      `
+
+                      : ""
+                  }
+
+                </div>
+
+              `
+            ).join("")}
+
+        </div>
+
+      </div>
+
+
+      <div>
+
+        <div class="card">
+
+          <h2>
+            Bretter
+          </h2>
+
+
+          <p class="muted">
+
+            Die gesetzten Felder
+            sind sofort für beide
+            Spieler sichtbar.
+
+          </p>
+
+
+          ${state.players.map(
+            player => `
+
+              <h3>
+                ${esc(
+                  player.name
+                )}
+              </h3>
+
+
+              ${renderBoard(
+                player.user_id
+              )}
+
+
+              <hr>
+
+            `
+          ).join("")}
+
+        </div>
+
+
+        <div class="card">
+
+          <h2>
+            Draftverlauf
+          </h2>
+
+
+          ${state.players.map(
+            player => {
+
+              const picks =
+                draftedTheses()
+
+                  .filter(
+                    thesis =>
+                      thesis.drafted_by ===
+                      player.user_id
+                  )
+
+                  .sort(
+                    (
+                      a,
+                      b
+                    ) =>
+                      a.draft_order -
+                      b.draft_order
+                  );
+
+
+              return `
+
+                <h3>
+                  ${esc(
+                    player.name
+                  )}
+                </h3>
+
+
+                ${
+                  picks.length
+
+                    ? picks.map(
+                        thesis => {
+
+                          const placement =
+                            state.placements.find(
+                              item =>
+                                item.thesis_id ===
+                                thesis.id
+                            );
+
+
+                          return `
+
+                            <div class="thesis">
+
+                              <span class="badge">
+
+                                Pick
+                                ${thesis.draft_order}
+
+                              </span>
+
+
+                              <span class="badge">
+
+                                ${
+                                  placement
+
+                                    ? displayFieldName(
+                                        placement.field
+                                      )
+
+                                    : "?"
+                                }
+
+                              </span>
+
+
+                              <div
+                                style="
+                                  margin-top:7px
+                                "
+                              >
+
+                                ${esc(
+                                  thesis.text
+                                )}
+
+                              </div>
+
+                            </div>
+
+                          `;
+
+                        }
+                      ).join("")
+
+                    : `
+
+                      <span class="muted">
+                        Noch kein Pick
+                      </span>
+
+                    `
+                }
+
+
+                <hr>
+
+              `;
+
+            }
+          ).join("")}
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function pickThesis(
+  id,
+  field
+){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "pick_thesis",
+        {
+
+          p_game_id:
+            state.gameId,
+
+          p_thesis_id:
+            id,
+
+          p_field:
+            field
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   BRETT
+========================================================= */
+
+
+function renderBoard(
+  userId
+){
+
+  const placements =
+    state.placements.filter(
+      placement =>
+        placement.user_id ===
+        userId
+    );
+
+
+  return `
+
+    <div class="fields">
+
+      ${Object.keys(
+        fieldNames
+      ).map(
+        field => {
+
+          const placement =
+            placements.find(
+              item =>
+                item.field ===
+                field
+            );
+
+
+          const thesis =
+            placement
+
+              ? state.theses.find(
+                  item =>
+                    item.id ===
+                    placement.thesis_id
+                )
+
+              : null;
+
+
+          return `
+
+            <div class="field">
+
+              <div class="fieldLabel">
+
+                ${displayFieldName(field)}
+
+              </div>
+
+
+              <div>
+
+                ${
+                  thesis
+
+                    ? esc(
+                        thesis.text
+                      )
+
+                    : "frei"
+                }
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("")}
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   FIGURENDRAFT
+========================================================= */
+
+
+function renderFigureDraft(){
+
+  const seat =
+    currentFigureSeat();
+
+
+  const activePlayer =
+    state.players.find(
+      player =>
+        player.seat ===
+        seat
+    );
+
+
+  const ownFigures =
+    state.figures.filter(
+      figure =>
+        figure.user_id ===
+        state.user.id
+    );
+
+
+  const freeFigures =
+    Object.keys(
+      figureNames
+    )
+
+    .filter(
+      figure =>
+        !ownFigures.some(
+          item =>
+            item.figure ===
+            figure
+        )
+    );
+
+
+  return `
+
+    <div class="card">
+
+      <h2>
+        Thesenbretter
+      </h2>
+
+
+      <div class="grid2">
+
+        ${state.players.map(
+          player => `
+
+            <div>
+
+              <h3>
+                ${esc(
+                  player.name
+                )}
+              </h3>
+
+
+              ${renderBoard(
+                player.user_id
+              )}
+
+            </div>
+
+          `
+        ).join("")}
+
+      </div>
+
+    </div>
+
+
+    <div class="turn">
+
+      ${
+        seat ===
+        state.me.seat
+
+          ? "Du bist beim Figurendraft am Zug"
+
+          : `${esc(
+              activePlayer?.name ||
+              ""
+            )} ist am Zug`
+      }
+
+    </div>
+
+
+    <div class="grid2">
+
+      <div class="card">
+
+        <h2>
+          Fußballer auswählen
+        </h2>
+
+
+        ${
+          seat ===
+          state.me.seat
+
+            ? `
+
+              <div class="stack">
+
+                <select
+                  id="figureSelect"
+                >
+
+                  ${freeFigures.map(
+                    figure => `
+
+                      <option
+                        value="${figure}"
+                      >
+                        ${figureNames[figure]}
+                      </option>
+
+                    `
+                  ).join("")}
+
+                </select>
+
+
+                <input
+                  id="footballerInput"
+                  maxlength="80"
+                  placeholder="Fußballer"
+                >
+
+
+                <input
+                  id="clubInput"
+                  maxlength="80"
+                  placeholder="Verein (optional)"
+                >
+
+
+                <button
+                  class="primary"
+                  onclick="pickFigure()"
+                >
+                  Draften
+                </button>
+
+              </div>
+
+            `
+
+            : `
+
+              <p class="muted">
+
+                Warte auf den Pick
+                deines Gegners.
+
+              </p>
+
+            `
+        }
+
+      </div>
+
+
+      <div class="card">
+
+        <h2>
+          Figuren
+        </h2>
+
+
+        ${state.players.map(
+          player => {
+
+            const figures =
+              state.figures.filter(
+                figure =>
+                  figure.user_id ===
+                  player.user_id
+              );
+
+
+            return `
+
+              <h3>
+                ${esc(
+                  player.name
+                )}
+              </h3>
+
+
+              ${Object.keys(
+                figureNames
+              ).map(
+                figure => {
+
+                  const pick =
+                    figures.find(
+                      item =>
+                        item.figure ===
+                        figure
+                    );
+
+
+                  return `
+
+                    <div class="thesis">
+
+                      <strong>
+                        ${figureNames[figure]}
+                      </strong>
+
+
+                      <div class="muted">
+
+                        ${
+                          pick
+
+                            ? `${esc(
+                                pick.footballer
+                              )}${
+                                pick.club
+
+                                  ? ` · ${esc(
+                                      pick.club
+                                    )}`
+
+                                  : ""
+                              }`
+
+                            : "frei"
+                        }
+
+                      </div>
+
+                    </div>
+
+                  `;
+
+                }
+              ).join("")}
+
+
+              <hr>
+
+            `;
+
+          }
+        ).join("")}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+async function pickFigure(){
+
+  try{
+
+    const figure =
+      document
+        .getElementById(
+          "figureSelect"
+        )
+        .value;
+
+
+    const footballer =
+      document
+        .getElementById(
+          "footballerInput"
+        )
+        .value
+        .trim();
+
+
+    const club =
+      document
+        .getElementById(
+          "clubInput"
+        )
+        .value
+        .trim();
+
+
+    if(
+      !footballer
+    ){
+
+      toast(
+        "Fußballer eingeben"
+      );
+
+      return;
+
+    }
+
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "pick_figure",
+        {
+
+          p_game_id:
+            state.gameId,
+
+          p_figure:
+            figure,
+
+          p_footballer:
+            footballer,
+
+          p_club:
+            club ||
+            null
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   PUNKTE
+========================================================= */
+
+
+function thesisPoints(
+  placement,
+  thesis
+){
+
+  if(
+    thesis?.resolved === null
+
+    ||
+
+    thesis?.resolved === undefined
+  ){
+
+    return 0;
+
+  }
+
+
+  switch(
+    placement.field
+  ){
+
+    case "P1":
+
+      return thesis.resolved
+        ? 1
+        : 0;
+
+
+    case "N1":
+
+      return thesis.resolved
+        ? 0
+        : 1;
+
+
+    case "P3":
+
+      return thesis.resolved
+        ? 3
+        : -3;
+
+
+    case "N3":
+
+      return thesis.resolved
+        ? -3
+        : 3;
+
+
+    case "Q":
+
+      switch(
+        state.game.question_value
+      ){
+
+        case "+2":
+          return thesis.resolved ? 2 : 0;
+
+        case "+/-3":
+          return thesis.resolved ? 3 : -3;
+
+        case "+1":
+          return thesis.resolved ? 1 : 0;
+
+        case "+3":
+          return thesis.resolved ? 3 : 0;
+
+        case "-3":
+          return thesis.resolved ? -3 : 0;
+
+        default:
+          return thesis.resolved
+            ? Number(state.game.random_value || 0)
+            : -Number(state.game.random_value || 0);
+
+      }
+
+  }
+
+
+  return 0;
+
+}
+
+
+
+function playerScore(
+  userId
+){
+
+  let thesisTotal =
+    0;
+
+
+  let figureTotal =
+    0;
+
+
+  state.placements
+
+    .filter(
+      placement =>
+        placement.user_id ===
+        userId
+    )
+
+    .forEach(
+      placement => {
+
+        const thesis =
+          state.theses.find(
+            item =>
+              item.id ===
+              placement.thesis_id
+          );
+
+
+        thesisTotal +=
+          thesisPoints(
+            placement,
+            thesis
+          );
+
+      }
+    );
+
+
+  state.figures
+
+    .filter(
+      figure =>
+        figure.user_id ===
+        userId
+    )
+
+    .forEach(
+      figure => {
+
+        figureTotal +=
+          Number(
+            figure.points ||
+            0
+          );
+
+      }
+    );
+
+
+  return {
+
+    thesis:
+      thesisTotal,
+
+    figures:
+      figureTotal,
+
+    total:
+      thesisTotal +
+      figureTotal
+
+  };
+
+}
+
+
+
+/* =========================================================
+   AUSWERTUNG
+========================================================= */
+
+
+function renderScoring(
+  finished
+){
+
+  const player1 =
+    state.players[0];
+
+
+  const player2 =
+    state.players[1];
+
+
+  if(
+    !player1 ||
+    !player2
+  ){
+
+    return `
+
+      <div class="card">
+        Spielerdaten werden geladen …
+      </div>
+
+    `;
+
+  }
+
+
+  const score1 =
+    playerScore(
+      player1.user_id
+    );
+
+
+  const score2 =
+    playerScore(
+      player2.user_id
+    );
+
+
+  const winner =
+
+    score1.total ===
+    score2.total
+
+      ? "UNENTSCHIEDEN"
+
+      : score1.total >
+        score2.total
+
+        ? `${
+            player1.name
+              .toUpperCase()
+          } GEWINNT`
+
+        : `${
+            player2.name
+              .toUpperCase()
+          } GEWINNT`;
+
+
+  return `
+
+    ${
+      finished
+
+        ? `
+
+          <div class="card">
+
+            <div class="bigResult">
+
+              ${esc(
+                winner
+              )}
+
+            </div>
+
+          </div>
+
+        `
+
+        : ""
+    }
+
+
+    <div class="card score">
+
+      <div>
+
+        <strong>
+          ${esc(
+            player1.name
+          )}
+        </strong>
+
+
+        <div class="points">
+          ${score1.total}
+        </div>
+
+      </div>
+
+
+      <div class="vs">
+        :
+      </div>
+
+
+      <div>
+
+        <strong>
+          ${esc(
+            player2.name
+          )}
+        </strong>
+
+
+        <div class="points">
+          ${score2.total}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="grid2">
+
+      ${state.players.map(
+        player => {
+
+          const score =
+            playerScore(
+              player.user_id
+            );
+
+
+          const placements =
+            state.placements.filter(
+              placement =>
+                placement.user_id ===
+                player.user_id
+            );
+
+
+          const figures =
+            state.figures.filter(
+              figure =>
+                figure.user_id ===
+                player.user_id
+            );
+
+
+          return `
+
+            <div class="card">
+
+              <h2>
+                ${esc(
+                  player.name
+                )}
+              </h2>
+
+
+              <span class="badge">
+
+                Thesen:
+                ${score.thesis}
+
+              </span>
+
+
+              <span class="badge">
+
+                Figuren:
+                ${score.figures}
+
+              </span>
+
+
+              <hr>
+
+
+              <h3>
+                Thesen
+              </h3>
+
+
+              <div class="stack">
+
+                ${placements.map(
+                  placement => {
+
+                    const thesis =
+                      state.theses.find(
+                        item =>
+                          item.id ===
+                          placement.thesis_id
+                      );
+
+
+                    if(
+                      !thesis
+                    ){
+
+                      return "";
+
+                    }
+
+
+                    const points =
+                      thesisPoints(
+                        placement,
+                        thesis
+                      );
+
+
+                    return `
+
+                      <div class="thesis">
+
+                        <strong>
+
+                          ${
+                            displayFieldName(
+                              placement.field
+                            )
+                          }
+
+                          ·
+
+                          ${
+                            points >= 0
+                              ? "+"
+                              : ""
+                          }
+
+                          ${points}
+
+                        </strong>
+
+
+                        <p
+                          style="
+                            margin-top:8px;
+                            margin-bottom:8px
+                          "
+                        >
+
+                          ${esc(
+                            thesis.text
+                          )}
+
+                        </p>
+
+
+                        ${
+                          finished
+
+                            ? `
+
+                              <span class="muted">
+
+                                ${
+                                  thesis.resolved
+
+                                    ? "✓ eingetreten"
+
+                                    : "✕ nicht eingetreten"
+                                }
+
+                              </span>
+
+                            `
+
+                            : `
+
+                              <div class="row">
+
+                                <button
+                                  class="${
+                                    thesis.resolved ===
+                                    true
+
+                                      ? "primary"
+
+                                      : "ghost"
+                                  }"
+
+                                  onclick="
+                                    resolveThesis(
+                                      '${thesis.id}',
+                                      true
+                                    )
+                                  "
+                                >
+                                  Eingetreten
+                                </button>
+
+
+                                <button
+                                  class="${
+                                    thesis.resolved ===
+                                    false
+
+                                      ? "primary"
+
+                                      : "ghost"
+                                  }"
+
+                                  onclick="
+                                    resolveThesis(
+                                      '${thesis.id}',
+                                      false
+                                    )
+                                  "
+                                >
+                                  Nicht eingetreten
+                                </button>
+
+                              </div>
+
+                            `
+                        }
+
+                      </div>
+
+                    `;
+
+                  }
+                ).join("")}
+
+              </div>
+
+
+              <hr>
+
+
+              <h3>
+                Figuren
+              </h3>
+
+
+              <div class="stack">
+
+                ${figures.map(
+                  figure => `
+
+                    <div class="thesis">
+
+                      <strong>
+
+                        ${
+                          figureNames[
+                            figure.figure
+                          ]
+                        }
+
+                        ·
+
+                        ${esc(
+                          figure.footballer
+                        )}
+
+                      </strong>
+
+
+                      ${
+                        figure.club
+
+                          ? `
+
+                            <div class="muted">
+                              ${esc(
+                                figure.club
+                              )}
+                            </div>
+
+                          `
+
+                          : ""
+                      }
+
+
+                      ${
+                        finished
+
+                          ? `
+
+                            <p
+                              style="
+                                margin-top:8px;
+                                margin-bottom:0
+                              "
+                            >
+
+                              ${
+                                Number(
+                                  figure.points
+                                ) >= 0
+                                  ? "+"
+                                  : ""
+                              }
+
+                              ${figure.points}
+                              Punkte
+
+                            </p>
+
+                          `
+
+                          : `
+
+                            <div
+                              class="row"
+                              style="margin-top:10px"
+                            >
+
+                              <button
+                                class="ghost"
+
+                                onclick="
+                                  setFigurePoints(
+                                    '${figure.id}',
+                                    ${
+                                      Number(
+                                        figure.points
+                                      ) - 1
+                                    }
+                                  )
+                                "
+                              >
+                                −
+                              </button>
+
+
+                              <strong>
+
+                                ${
+                                  Number(
+                                    figure.points
+                                  ) >= 0
+                                    ? "+"
+                                    : ""
+                                }
+
+                                ${figure.points}
+
+                              </strong>
+
+
+                              <button
+                                class="ghost"
+
+                                onclick="
+                                  setFigurePoints(
+                                    '${figure.id}',
+                                    ${
+                                      Number(
+                                        figure.points
+                                      ) + 1
+                                    }
+                                  )
+                                "
+                              >
+                                +
+                              </button>
+
+                            </div>
+
+                          `
+                      }
+
+                    </div>
+
+                  `
+                ).join("")}
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      ).join("")}
+
+    </div>
+
+
+    ${
+      !finished
+
+        ? `
+
+          <div class="card">
+
+            <h2>
+              Spieltag abschließen
+            </h2>
+
+
+            <p class="muted">
+
+              Sobald alle gedrafteten
+              Thesen ausgewertet wurden,
+              kann das Ergebnis
+              abgeschlossen werden.
+
+            </p>
+
+
+            <button
+              class="primary"
+              onclick="finishGame()"
+            >
+              Abpfiff
+            </button>
+
+          </div>
+
+        `
+
+        : `
+
+          <div class="card">
+
+            <button
+              class="primary"
+              onclick='openLobby(${jsArg(
+                state.game.lobby_id
+              )})'
+            >
+              Zur Spieltagsübersicht
+            </button>
+
+          </div>
+
+        `
+    }
+
+  `;
+
+}
+
+
+
+async function resolveThesis(
+  id,
+  value
+){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "resolve_thesis",
+        {
+
+          p_thesis_id:
+            id,
+
+          p_resolved:
+            value
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function setFigurePoints(
+  id,
+  points
+){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "set_figure_points",
+        {
+
+          p_pick_id:
+            id,
+
+          p_points:
+            points
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+async function finishGame(){
+
+  try{
+
+    const {
+      error
+    } =
+      await db.rpc(
+        "finish_game",
+        {
+
+          p_game_id:
+            state.gameId
+
+        }
+      );
+
+
+    if(error){
+      throw error;
+    }
+
+  }
+
+  catch(error){
+
+    errorMessage(
+      error
+    );
+
+  }
+
+}
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+
 boot();
-</script></body></html>
+
+
+</script>
+
+</body>
+
+</html>
