@@ -1224,6 +1224,7 @@ let state = {
   lobby:null,
   lobbyPlayers:[],
   matchdayGames:[],
+  lobbyView:"season",
 
   gameId:null,
   game:null,
@@ -1865,6 +1866,18 @@ function openLobby(
   location.href =
     appUrl({
       lobby:id
+    });
+
+}
+
+
+
+function openLobbyStats(){
+
+  location.href =
+    appUrl({
+      lobby:state.lobbyId,
+      season:1
     });
 
 }
@@ -2775,6 +2788,11 @@ async function boot(){
         "lobby"
       );
 
+    const lobbyView =
+      params.get("season") === "1"
+        ? "stats"
+        : "season";
+
 
     const gameId =
       params.get(
@@ -2883,6 +2901,9 @@ async function boot(){
 
       state.lobbyId =
         lobbyId;
+
+      state.lobbyView =
+        lobbyView;
 
 
       await refreshLobby();
@@ -4683,7 +4704,12 @@ async function refreshLobby(){
   }
 
 
-  renderLobbySeason();
+  if(state.lobbyView === "stats"){
+    await renderLobbyStats();
+  }
+  else{
+    renderLobbySeason();
+  }
 
 }
 
@@ -4845,6 +4871,13 @@ function renderLobbySeason(){
     </div>
 
 
+    <div class="actions" style="margin-bottom:16px">
+      <button class="primary" onclick="openLobbyStats()">
+        Saisonübersicht
+      </button>
+    </div>
+
+
     <div class="card">
 
       <h2>
@@ -4892,6 +4925,143 @@ function renderLobbySeason(){
 
 }
 
+
+
+function seasonThesisPoints(game, placement, thesis){
+
+  if(thesis?.resolved === null || thesis?.resolved === undefined){
+    return 0;
+  }
+
+  switch(placement.field){
+    case "P1": return thesis.resolved ? 1 : 0;
+    case "N1": return thesis.resolved ? -1 : 0;
+    case "P3": return thesis.resolved ? 3 : -3;
+    case "N3": return thesis.resolved ? -3 : 3;
+    case "Q":
+      switch(game.question_value){
+        case "+/-3": return thesis.resolved ? 3 : -3;
+        case "+1": return thesis.resolved ? 1 : 0;
+        case "+2": return thesis.resolved ? 2 : 0;
+        case "+3": return thesis.resolved ? 3 : 0;
+        case "-3": return thesis.resolved ? -3 : 0;
+        default: return 0;
+      }
+    default: return 0;
+  }
+
+}
+
+
+function seasonGameScore(game, userId, theses, placements, figures){
+
+  const thesisById = new Map(theses.map(thesis => [thesis.id, thesis]));
+
+  const thesesTotal = placements
+    .filter(placement => placement.user_id === userId)
+    .reduce((total, placement) => total + seasonThesisPoints(game, placement, thesisById.get(placement.thesis_id)), 0);
+
+  const figuresTotal = figures
+    .filter(figure => figure.user_id === userId)
+    .reduce((total, figure) => total + Number(figure.points || 0) + (figure.player_of_week ? 3 : (figure.team_of_week ? 2 : 0)), 0);
+
+  return thesesTotal + figuresTotal;
+
+}
+
+
+async function renderLobbyStats(){
+
+  document.getElementById("headerActions").innerHTML = `
+    ${playerNameBadge(currentLobbyPlayerName())}
+    <button class="ghost" onclick="openLobby(${jsArg(state.lobbyId)})">← Spieltagsübersicht</button>
+  `;
+
+  const finishedGames = state.matchdayGames.filter(game => game.status === "finished");
+  const gameIds = finishedGames.map(game => game.id);
+
+  let gamePlayers = [];
+  let theses = [];
+  let placements = [];
+  let figures = [];
+
+  if(gameIds.length){
+    const [playersResult, thesesResult, placementsResult, figuresResult] = await Promise.all([
+      db.from("players").select("game_id,user_id,name,seat").in("game_id", gameIds),
+      db.from("theses").select("id,game_id,resolved").in("game_id", gameIds),
+      db.from("placements").select("game_id,user_id,thesis_id,field").in("game_id", gameIds),
+      db.from("figure_picks").select("game_id,user_id,points,team_of_week,player_of_week").in("game_id", gameIds)
+    ]);
+
+    for(const result of [playersResult, thesesResult, placementsResult, figuresResult]){
+      if(result.error){
+        throw result.error;
+      }
+    }
+
+    gamePlayers = playersResult.data || [];
+    theses = thesesResult.data || [];
+    placements = placementsResult.data || [];
+    figures = figuresResult.data || [];
+  }
+
+  const totals = Object.fromEntries(state.lobbyPlayers.map(player => [player.user_id, 0]));
+  const results = finishedGames.map(game => {
+    const players = gamePlayers.filter(player => player.game_id === game.id).sort((a,b) => a.seat - b.seat);
+    const scores = players.map(player => ({
+      ...player,
+      score:seasonGameScore(
+        game,
+        player.user_id,
+        theses.filter(thesis => thesis.game_id === game.id),
+        placements.filter(placement => placement.game_id === game.id),
+        figures.filter(figure => figure.game_id === game.id)
+      )
+    }));
+
+    scores.forEach(player => { totals[player.user_id] = (totals[player.user_id] || 0) + player.score; });
+
+    const winner = scores.length === 2
+      ? (scores[0].score === scores[1].score
+          ? "Unentschieden"
+          : (scores[0].score > scores[1].score ? scores[0].name : scores[1].name))
+      : "Noch nicht verfügbar";
+
+    return {game,scores,winner};
+  });
+
+  document.getElementById("app").innerHTML = `
+    <div class="card">
+      <span class="badge">Saison 2026/27</span>
+      <h1 style="margin-top:12px">Saisonübersicht</h1>
+      <p class="muted">Gesamtstand und Ergebnisse aller abgeschlossenen Rasenschach-Spieltage.</p>
+    </div>
+
+    <div class="card score">
+      ${state.lobbyPlayers.map(player => `
+        <div>
+          <strong>${esc(player.name)}</strong>
+          <div class="points">${totals[player.user_id] || 0}</div>
+          <span class="muted">Punkte</span>
+        </div>
+      `).join('<div class="vs">:</div>')}
+    </div>
+
+    <div class="card">
+      <h2>Spieltagsergebnisse</h2>
+      ${results.length ? `<div class="stack">${results.map(result => `
+        <div class="field">
+          <div class="fieldLabel">Spieltag ${result.game.matchday}</div>
+          <div>
+            ${result.scores.map(score => `<strong>${esc(score.name)} ${formatPoints(score.score)}</strong>`).join(' <span class="muted">·</span> ')}
+            <div class="muted" style="margin-top:5px">${esc(result.winner)}${result.winner !== "Unentschieden" && result.winner !== "Noch nicht verfügbar" ? " gewinnt" : ""}</div>
+          </div>
+        </div>
+      `).join("")}</div>` : `<p class="muted">Noch kein Spieltag abgeschlossen.</p>`}
+    </div>
+  `;
+
+}
 
 
 function renderMatchday(
@@ -7131,6 +7301,16 @@ function thesisPoints(
 
 
 
+function formatPoints(points){
+
+  const value = Number(points || 0);
+
+  return `${value >= 0 ? "+" : ""}${value} ${Math.abs(value) === 1 ? "Punkt" : "Punkte"}`;
+
+}
+
+
+
 function figureBonusPoints(figure){
 
   return figure.player_of_week
@@ -7305,9 +7485,7 @@ function renderScoring(
 
             <div class="bigResult">
 
-              ${esc(
-                winner
-              )}
+              ${esc(winner)} · Spieltag ${state.game.matchday}
 
             </div>
 
@@ -7466,7 +7644,7 @@ function renderScoring(
                         </strong>
 
                         <span class="scoreThesisPoints ${points > 0 ? "positivePoints" : points < 0 ? "negativePoints" : "muted"}">
-                          ${points >= 0 ? "+" : ""}${points} Punkte
+                          ${formatPoints(points)}
                         </span>
 
 
@@ -7603,11 +7781,9 @@ function renderScoring(
                               "
                             >
 
-                              ${figureTotalPoints(figure) >= 0 ? "+" : ""}
-                              ${figureTotalPoints(figure)}
-                              Punkte
+                              ${formatPoints(figureTotalPoints(figure))}
 
-                              ${figureBonusPoints(figure) ? `<span class="muted">· inklusive ${figureBonusPoints(figure) >= 0 ? "+" : ""}${figureBonusPoints(figure)} Bonus</span>` : ""}
+                              ${figureBonusPoints(figure) ? `<span class="muted">· inklusive ${formatPoints(figureBonusPoints(figure))} Bonus</span>` : ""}
 
                             </p>
 
