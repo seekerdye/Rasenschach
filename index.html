@@ -5575,58 +5575,13 @@ function renderGameLobby(){
     </div>
 
 
-    <div class="grid2">
-
-      <div class="card">
-
-        <h2>
-          Spieler
-        </h2>
-
-
-        ${state.players.map(
-          player => `
-
-            <div class="thesis">
-
-              <strong>
-                ${esc(
-                  player.name
-                )}
-              </strong>
-
-              <div class="muted">
-
-                Spieler
-                ${player.seat}
-
-              </div>
-
-            </div>
-
-          `
-        ).join("")}
-
-      </div>
-
-
-      <div class="card">
+    <div class="card">
 
         <h2>
 
-          Globale Thesen ·
-          ${state.theses.length}/12
+          Thesen
 
         </h2>
-
-
-        <p class="muted">
-
-          Die Thesen dieses Spieltags
-          werden zentral von Spieler 1
-          in der Lobby-Übersicht verwaltet.
-
-        </p>
 
 
         ${
@@ -5637,18 +5592,12 @@ function renderGameLobby(){
               <div class="stack">
 
                 ${state.theses.map(
-                  (
-                    thesis,
-                    index
-                  ) => `
+                  thesis => `
 
                     <div class="thesis">
 
-                      <strong>
-                        ${index + 1}.
-                      </strong>
-
-                      ${thesisWithPairing(thesis)}
+                      ${draftThesisPairing(thesis)}
+                      <div style="margin-top:9px;font-weight:800">${esc(thesis.text)}</div>
 
                     </div>
 
@@ -5696,7 +5645,7 @@ function renderGameLobby(){
         </h2>
 
 
-        <div class="grid2">
+        <div class="grid3">
 
           <div class="thesis">
 
