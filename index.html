@@ -1093,6 +1093,7 @@ let state = {
   theses:[],
   placements:[],
   figures:[],
+  bundesligaPlayers:[],
   me:null,
 
   globalTheses:[],
@@ -2573,6 +2574,8 @@ async function boot(){
       session?.user
       ||
       null;
+
+    await loadBundesligaPlayers();
 
 
     const params =
@@ -5120,6 +5123,26 @@ async function refreshGame(){
 }
 
 
+async function loadBundesligaPlayers(){
+
+  const {data,error} = await db
+    .from("bundesliga_players")
+    .select("name,club,position")
+    .eq("active",true)
+    .order("club")
+    .order("name");
+
+  if(error){
+    console.warn("Kaderdatenbank noch nicht eingerichtet",error);
+    state.bundesligaPlayers=[];
+    return;
+  }
+
+  state.bundesligaPlayers=data || [];
+
+}
+
+
 
 /* =========================================================
    REALTIME
@@ -6497,18 +6520,33 @@ function renderFigureDraft(){
                 </select>
 
 
+                <select
+                  id="clubInput"
+                  onchange="filterBundesligaPlayers()"
+                >
+                  <option value="">Alle Bundesliga-Vereine</option>
+                  ${Object.values(clubData).map(club => `
+                    <option value="${esc(club.name)}">${esc(club.name)}</option>
+                  `).join("")}
+                </select>
+
+
                 <input
                   id="footballerInput"
+                  list="bundesligaPlayerList"
                   maxlength="80"
-                  placeholder="Fußballer"
+                  autocomplete="off"
+                  oninput="filterBundesligaPlayers()"
+                  placeholder="Fußballer suchen"
                 >
 
 
-                <input
-                  id="clubInput"
-                  maxlength="80"
-                  placeholder="Verein (optional)"
-                >
+                <datalist id="bundesligaPlayerList"></datalist>
+
+
+                <p class="muted" style="margin:0">
+                  Nur Spieler der aktuellen Bundesliga-Kader 2026/27.
+                </p>
 
 
                 <button
@@ -6677,6 +6715,28 @@ function renderFigureDraft(){
 
 
 
+function filterBundesligaPlayers(){
+
+  const club = document.getElementById("clubInput")?.value || "";
+  const query = (document.getElementById("footballerInput")?.value || "").trim().toLocaleLowerCase("de");
+  const list = document.getElementById("bundesligaPlayerList");
+
+  if(!list) return;
+
+  const matches = state.bundesligaPlayers
+    .filter(player =>
+      (!club || player.club === club) &&
+      (!query || player.name.toLocaleLowerCase("de").includes(query))
+    )
+    .slice(0,80);
+
+  list.innerHTML = matches.map(player =>
+    `<option value="${esc(player.name)}" label="${esc(player.club)}${player.position ? ` · ${esc(player.position)}` : ""}"></option>`
+  ).join("");
+
+}
+
+
 async function pickFigure(){
 
   try{
@@ -6698,13 +6758,26 @@ async function pickFigure(){
         .trim();
 
 
-    const club =
+    let club =
       document
         .getElementById(
           "clubInput"
         )
         .value
         .trim();
+
+    const databaseMatch = state.bundesligaPlayers.find(player =>
+      player.name.toLocaleLowerCase("de") === footballer.toLocaleLowerCase("de") &&
+      (!club || player.club === club)
+    );
+
+    if(databaseMatch){
+      club = databaseMatch.club;
+    }
+    else if(state.bundesligaPlayers.length){
+      toast("Bitte einen Spieler aus der aktuellen Bundesliga-Spielersuche wählen");
+      return;
+    }
 
 
     if(
