@@ -3788,7 +3788,7 @@ function renderDashboard(){
         class="primary"
         onclick="openThesisOverview()"
       >
-        ⚽ Thesen Übersicht
+        Thesen Übersicht
       </button>
 
     </div>
@@ -7654,6 +7654,23 @@ function refreshPairingPreview(slot){
   if(select && preview) preview.innerHTML=pairingPreview(select.value);
 }
 
+function pairingControl(matchday, slot, selected){
+  const fixtures=matchdayFixtures[matchday] || [];
+  const choices=fixtures.map(([home,away])=>{
+    const value=`${clubData[home].abbr} – ${clubData[away].abbr}`;
+    return `<button type="button" class="ghost" onclick='choosePairing(${slot},${jsArg(value)})'>${renderFixtureTeam(home)}${renderFixtureTeam(away,true)}</button>`;
+  }).join("");
+  return `<input type="hidden" id="globalPairing${slot}" value="${esc(selected)}"><details class="pairingChooser"><summary id="pairingPreview${slot}">${pairingPreview(selected)}</summary><div class="stack" style="margin-top:8px"><button type="button" class="ghost" onclick='choosePairing(${slot},"Spieltag")'>⚽ Spieltag · allgemeine These</button>${choices}</div></details>`;
+}
+
+function choosePairing(slot,value){
+  const input=document.getElementById(`globalPairing${slot}`);
+  if(input) input.value=value;
+  const preview=document.getElementById(`pairingPreview${slot}`);
+  if(preview) preview.innerHTML=pairingPreview(value);
+  preview?.closest("details")?.removeAttribute("open");
+}
+
 function templatePairing(matchday, slot){
   return state.globalTheses.find(t => t.matchday===matchday && t.slot===slot)?.pairing || "";
 }
@@ -7684,7 +7701,7 @@ renderThesisOverview = function(){
   const selected = state.selectedTemplateMatchday;
   document.getElementById("headerActions").innerHTML = `${playerNameBadge(accountName())}<button class="ghost" onclick="goHome()">← Lobby-Übersicht</button>`;
   if(state.thesisInputMode){
-    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>Thesen · Spieltag ${selected}</h1><p class="muted">Jede These erhält eine Paarung oder die allgemeine Zuordnung „Spieltag“.</p><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; const selectedPairing=templatePairing(selected,slot)||"Spieltag"; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1"><select id="globalPairing${slot}" onchange="refreshPairingPreview(${slot})">${pairingOptions(selected,selectedPairing)}</select><div id="pairingPreview${slot}" style="margin:7px 0">${pairingPreview(selectedPairing)}</div><textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
+    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>Thesen · Spieltag ${selected}</h1><p class="muted">Wähle für jede These eine Paarung mit Wappen und Kürzeln – oder „Spieltag“ für eine allgemeine These.</p><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; const selectedPairing=templatePairing(selected,slot)||"Spieltag"; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1">${pairingControl(selected,slot,selectedPairing)}<textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
     return;
   }
   document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Zentrale Verwaltung</span><h1>Thesen Übersicht</h1><p class="muted">Übersicht ohne Eingabefelder. Ein Spieltag öffnet die eigene Bearbeitungsansicht.</p></div><div class="card"><h2>Spieltage</h2><div class="matchdayGrid">${Array.from({length:34},(_,i)=>{const md=i+1,count=templateCount(md);return `<div class="templateDay ${md===selected?"active":""} ${count===12?"complete":""}" onclick="openThesisInput(${md})"><div class="templateNumber">Spieltag ${md}</div><div class="templateDate">📅 ${matchdayDates[md]}</div><div class="templateCount">${count}/12 Thesen</div></div>`}).join("")}</div></div><div class="card"><h2>Spieltag ${selected}</h2><div class="stack">${Array.from({length:12},(_,i)=>{const s=i+1,t=templateText(selected,s),p=templatePairing(selected,s);return `<div class="thesis"><strong>${s}.</strong> ${p?`<span class="badge">⚽ ${esc(p)}</span>`:'Spieltag'}<div style="margin-top:7px">${t?esc(t):'Noch keine These'}</div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="openThesisInput(${selected})">Thesen bearbeiten</button></div></div>`;
@@ -7700,6 +7717,15 @@ saveGlobalTheses = async function(){
     toast("Thesen und Paarungen gespeichert und synchronisiert");
     state.thesisInputMode=false; await loadThesisOverview();
   }catch(error){errorMessage(error)}
+};
+
+// In der Übersicht bleiben nur die Spieltag-Kacheln; die Detail-Liste ist redundant.
+const renderThesisOverviewWithDetails = renderThesisOverview;
+renderThesisOverview = function(){
+  renderThesisOverviewWithDetails();
+  if(!state.thesisInputMode){
+    document.querySelector("#app .card:last-child")?.remove();
+  }
 };
 
 startApp();
