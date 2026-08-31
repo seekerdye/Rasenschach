@@ -1099,7 +1099,7 @@ let state = {
   me:null,
 
   globalTheses:[],
-  selectedTemplateMatchday:1,
+  selectedTemplateMatchday:null,
 
   channel:null
 
@@ -1450,12 +1450,7 @@ function renderMatchdayFixtures(
     );
 
 
-  const shortDate =
-    (matchdayDates[matchday] || "")
-      .replace(
-        /\d{4}$/,
-        ""
-      );
+  const shortDate = matchdayDates[matchday] || "";
 
 
   return `
@@ -3303,6 +3298,11 @@ function selectTemplateMatchday(
 
 }
 
+function backToThesisOverview(){
+  state.selectedTemplateMatchday=null;
+  renderThesisOverview();
+}
+
 
 
 function renderThesisOverview(){
@@ -3316,6 +3316,8 @@ function renderThesisOverview(){
   ).innerHTML = `
 
     ${playerNameBadge(accountName())}
+
+    ${selected ? `<button class="ghost" onclick="backToThesisOverview()">← Spieltage</button>` : ""}
 
     <button
       class="ghost"
@@ -3440,6 +3442,7 @@ function renderThesisOverview(){
     </div>
 
 
+    ${selected ? `
     <div class="card">
 
       <span class="badge">
@@ -3531,6 +3534,7 @@ function renderThesisOverview(){
       </div>
 
     </div>
+    ` : ""}
 
   `;
 
@@ -3816,7 +3820,7 @@ function renderDashboard(){
         class="primary"
         onclick="openThesisOverview()"
       >
-        ⚽ Thesen Übersicht
+        Thesen Übersicht
       </button>
 
     </div>
@@ -5569,6 +5573,12 @@ function renderGame(){
         </strong>
       </p>
 
+      <div class="row">
+        <span class="badge">🎲 Beginn: ${esc(state.players.find(player => player.seat === state.game.thesis_start_seat)?.name || "nicht ausgelost")}</span>
+        <span class="badge">?-Feld: ${esc(state.game.question_value || "nicht ausgelost")}</span>
+        <span class="badge">Springer: ${esc(state.game.knight_category || "nicht ausgelost")}</span>
+      </div>
+
     </div>
 
 
@@ -6822,7 +6832,7 @@ function filterBundesligaPlayers(){
 
 function figureDescriptionHtml(figure){
   const knight=state.game?.knight_category || "Kategorie wird vor dem Draft ausgelost";
-  const texts={...figureDescriptions,KNIGHT: knightDescriptions[knight] ? `<span class="success">${esc(knight)}</span><br><br>${knightDescriptions[knight]}` : knight};
+  const texts={...figureDescriptions,KNIGHT: knightDescriptions[knight] ? `${esc(knight)}<br><br>${knightDescriptions[knight]}` : knight};
   return texts[figure] || "";
 }
 
