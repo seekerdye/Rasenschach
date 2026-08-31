@@ -5968,42 +5968,10 @@ function renderThesisDraft(){
 
   return `
 
-    <div class="card">
-
-      <span class="badge">
-        🎲 Auslosung
-      </span>
-
-
-      <h2 style="margin-top:10px">
-
-        ${esc(
-          starter?.name ||
-          ""
-        )}
-        beginnt
-
-      </h2>
-
-
-      <span class="badge">
-        ?-Feld:
-        ${esc(
-          state.game.question_value ||
-          "nicht ausgelost"
-        )}
-      </span>
-
-
-      <p class="muted">
-
-        Jede gewählte These wird
-        sofort auf ein Feld gesetzt.
-        Die Feldwahl ist direkt
-        für beide Spieler sichtbar.
-
-      </p>
-
+    <div class="grid3">
+      ${drawResult("Startspieler", starter?.name ? `${esc(starter.name)} beginnt` : "Nicht ausgelost")}
+      ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
+      ${drawResult("Springer-Kategorie", esc(state.game.knight_category || "Nicht ausgelost"))}
     </div>
 
 
@@ -6069,8 +6037,9 @@ function renderThesisDraft(){
 
                 <div class="thesis">
 
-                  <strong>
-                    ${thesisWithPairing(thesis)}
+                  ${draftThesisPairing(thesis)}
+                  <strong style="display:block;margin-top:9px">
+                    ${esc(thesis.text)}
                   </strong>
 
 
@@ -7679,6 +7648,19 @@ function pairingPreview(value){
   const fixture=(Object.values(matchdayFixtures).flat()).find(([home,away]) => `${clubData[home].abbr} – ${clubData[away].abbr}`===value);
   if(!fixture) return "";
   return `<span class="fixtureTeam"><img class="fixtureLogo" src="${clubLogoUrl(clubData[fixture[0]])}" alt="" onerror="this.remove()"><span>${esc(clubData[fixture[0]].abbr)}</span></span><span class="muted"> – </span><span class="fixtureTeam"><img class="fixtureLogo" src="${clubLogoUrl(clubData[fixture[1]])}" alt="" onerror="this.remove()"><span>${esc(clubData[fixture[1]].abbr)}</span></span>`;
+}
+
+function drawResult(label,value){
+  return `<div class="card" style="margin:0;text-align:center"><div class="muted" style="font-size:12px;font-weight:800">🎲 ${esc(label)}</div><div style="font-weight:900;margin-top:8px">${value}</div></div>`;
+}
+
+function draftThesisPairing(thesis){
+  const value=thesis.pairing || "Spieltag";
+  if(value === "Spieltag") return `<div class="muted" style="font-weight:800">Spieltag · allgemeine These</div>`;
+  const fixture=(Object.values(matchdayFixtures).flat()).find(([home,away])=>`${clubData[home].abbr} – ${clubData[away].abbr}`===value);
+  if(!fixture) return `<div class="muted" style="font-weight:800">${esc(value)}</div>`;
+  const [home,away]=fixture;
+  return `<div class="fixture" style="padding:0;background:transparent;border:0"><div class="fixtureTeam">${renderFixtureTeam(home)}</div><span class="fixtureVs">VS</span><div class="fixtureTeam">${renderFixtureTeam(away,true)}</div></div>`;
 }
 
 function refreshPairingPreview(slot){
