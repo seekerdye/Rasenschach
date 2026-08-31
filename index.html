@@ -994,6 +994,20 @@ button:disabled{
   gap:5px;
 }
 
+.pairingChooser summary{
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  cursor:pointer;
+}
+
+.deleteThesisButton{
+  background:var(--dark);
+}
+
 .seasonResult .field{
   grid-template-columns:90px minmax(0,1fr);
 
@@ -6083,7 +6097,7 @@ function renderGameLobby(){
                     <div class="thesis">
 
                       ${draftThesisPairing(thesis)}
-                      <div style="margin-top:9px">${esc(thesis.text)}</div>
+                      <div style="margin-top:9px;font-weight:800">${esc(thesis.text)}</div>
 
                     </div>
 
@@ -6820,7 +6834,7 @@ function renderBoard(
                 ${
                   thesis
 
-                    ? `${draftThesisPairing(thesis)}<div style="margin-top:7px">${esc(thesis.text)}</div>`
+                    ? `${draftThesisPairing(thesis)}<div style="margin-top:7px;font-weight:800">${esc(thesis.text)}</div>`
 
                     : "frei"
                 }
@@ -8263,7 +8277,7 @@ renderThesisOverview = function(){
   const selected = state.selectedTemplateMatchday;
   document.getElementById("headerActions").innerHTML = `${playerNameBadge(accountName())}<button class="ghost" onclick="goHome()">← Lobby-Übersicht</button>`;
   if(state.thesisInputMode){
-    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>Thesen · Spieltag ${selected}</h1><p class="muted">Wähle für jede These eine Paarung mit Wappen und Kürzeln – oder „Spieltag“ für eine allgemeine These.</p><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; const selectedPairing=templatePairing(selected,slot)||"Spieltag"; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1">${pairingControl(selected,slot,selectedPairing)}<textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea><button class="ghost" style="margin-top:8px" onclick="deleteGlobalThesis(${slot})">These löschen</button></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
+    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>THESEN – SPIELTAG ${selected}</h1><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; const selectedPairing=templatePairing(selected,slot)||"Spieltag"; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1">${pairingControl(selected,slot,selectedPairing)}<textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea><button class="ghost deleteThesisButton" style="margin-top:8px" onclick="deleteGlobalThesis(${slot})">These löschen</button></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
     return;
   }
   document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Zentrale Verwaltung</span><h1>Thesen Übersicht</h1><p class="muted">Übersicht ohne Eingabefelder. Ein Spieltag öffnet die eigene Bearbeitungsansicht.</p></div><div class="card"><h2>Spieltage</h2><div class="matchdayGrid">${Array.from({length:34},(_,i)=>{const md=i+1,count=templateCount(md);return `<div class="templateDay ${md===selected?"active":""} ${count===12?"complete":""}" onclick="openThesisInput(${md})"><div class="templateNumber">Spieltag ${md}</div><div class="templateDate">📅 ${matchdayDates[md]}</div><div class="templateCount">${count}/12 Thesen</div></div>`}).join("")}</div></div><div class="card"><h2>Spieltag ${selected}</h2><div class="stack">${Array.from({length:12},(_,i)=>{const s=i+1,t=templateText(selected,s),p=templatePairing(selected,s);return `<div class="thesis"><strong>${s}.</strong> ${p?`<span class="badge">⚽ ${esc(p)}</span>`:'Spieltag'}<div style="margin-top:7px">${t?esc(t):'Noch keine These'}</div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="openThesisInput(${selected})">Thesen bearbeiten</button></div></div>`;
