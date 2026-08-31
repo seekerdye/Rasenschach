@@ -1094,6 +1094,7 @@ let state = {
   placements:[],
   figures:[],
   bundesligaPlayers:[],
+  figureUsage:{},
   me:null,
 
   globalTheses:[],
@@ -5098,6 +5099,8 @@ async function refreshGame(){
     ||
     [];
 
+  await loadFigureUsage();
+
 
   state.me =
     state.players.find(
@@ -5139,6 +5142,29 @@ async function loadBundesligaPlayers(){
   }
 
   state.bundesligaPlayers=data || [];
+
+}
+
+
+async function loadFigureUsage(){
+
+  const {data,error} = await db.rpc(
+    "get_figure_usage",
+    {p_game_id:state.gameId}
+  );
+
+  if(error){
+    console.warn("Figurennutzung noch nicht eingerichtet",error);
+    state.figureUsage={};
+    return;
+  }
+
+  state.figureUsage=Object.fromEntries(
+    (data || []).map(item => [
+      item.footballer.toLocaleLowerCase("de"),
+      Number(item.uses)
+    ])
+  );
 
 }
 
@@ -6726,7 +6752,7 @@ function filterBundesligaPlayers(){
     .slice(0,80);
 
   list.innerHTML = matches.map(player =>
-    `<option value="${esc(player.name)}" label="${esc(player.club)}${player.position ? ` · ${esc(player.position)}` : ""}"></option>`
+    `<option value="${esc(player.name)}" label="${esc(player.club)} · ${Math.max(0,3-(state.figureUsage[player.name.toLocaleLowerCase("de")] || 0))}/3"></option>`
   ).join("");
 
 }
@@ -6768,6 +6794,11 @@ async function pickFigure(){
 
     if(databaseMatch){
       club = databaseMatch.club;
+
+      if((state.figureUsage[databaseMatch.name.toLocaleLowerCase("de")] || 0) >= 3){
+        toast("Dieser Spieler wurde von dir in dieser Saison bereits 3-mal gewählt");
+        return;
+      }
     }
     else if(state.bundesligaPlayers.length){
       toast("Bitte einen Spieler aus der aktuellen Bundesliga-Spielersuche wählen");
