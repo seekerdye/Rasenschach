@@ -1275,6 +1275,15 @@ const figureNames = {
 
 };
 
+const figureDescriptions = {
+  KING:"Je Tor +1<br>Doppelpack +1 zusätzlich, Dreierpack +2<br>Ligaweit die meisten Tore +1",
+  QUEEN:"Je Tor +1, je Assist +1<br>Tor und Assist im selben Spiel +1 zusätzlich<br>Ligaweit die meisten Scorerpunkte +1",
+  ROOK:"Nur Torhüter – ein Feldspieler bringt hier nichts!<br>Zu Null +1<br>Je gehaltenem Elfmeter +1<br>Ab 5 Paraden +1, ab 8 +2<br>Ligaweit die meisten verhinderten Tore +1",
+  BISHOP:"Ab 11 km +1, ab 12 km +2<br>Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1"
+};
+
+const knightCategories = ["Zweikämpfer (Zweikämpfe gesamt)","Türsteher (Defensivaktionen)","Dauerfeuer (Offensivaktionen)","Bollwerk (Zweikampfquote)","Laser (Passgenauigkeit)","Ballmagnet (Ballkontakte)","Gefahrensucher (xG)","Schallmauer (Höchstgeschwindigkeit)"];
+
 
 const statusNames = {
 
@@ -5777,6 +5786,12 @@ function renderGameLobby(){
 
           </div>
 
+          <div class="thesis">
+            <strong>Springer-Kategorie</strong>
+            <p style="margin-top:8px;margin-bottom:0">${state.game.knight_category ? `🎲 ${esc(state.game.knight_category)}` : `<span class="muted">Noch nicht ausgelost</span>`}</p>
+            ${owner ? `<button class="ghost" style="margin-top:10px" onclick="drawKnightCategory()" ${state.game.knight_category || locked ? "disabled" : ""}>Kategorie auslosen</button>` : ""}
+          </div>
+
         </div>
 
 
@@ -5791,6 +5806,7 @@ function renderGameLobby(){
                 state.theses.length !== 12
                 || !starterReady
                 || !questionReady
+                || !state.game.knight_category
                 || locked
                   ? "disabled"
                   : ""
@@ -5886,6 +5902,14 @@ async function drawQuestionValue(){
 
 
 
+async function drawKnightCategory(){
+  try{
+    const {error}=await db.rpc("draw_knight_category",{p_game_id:state.gameId});
+    if(error) throw error;
+  } catch(error){ errorMessage(error); }
+}
+
+
 async function startDraft(){
 
   try{
@@ -5898,8 +5922,9 @@ async function startDraft(){
       !state.game.thesis_start_seat
       ||
       !state.game.question_value
+      || !state.game.knight_category
     ){
-      throw new Error("Bitte zuerst den Startspieler und den Wert des ?-Feldes auslosen.");
+      throw new Error("Bitte zuerst Startspieler, ?-Wert und Springer-Kategorie auslosen.");
     }
 
     const {
@@ -6539,6 +6564,7 @@ function renderFigureDraft(){
 
                 <select
                   id="figureSelect"
+                  onchange="filterBundesligaPlayers(); renderFigureDescription()"
                 >
 
                   ${freeFigures.map(
@@ -6554,6 +6580,8 @@ function renderFigureDraft(){
                   ).join("")}
 
                 </select>
+
+                <div id="figureDescription" class="thesis muted">${figureDescriptionHtml(freeFigures[0])}</div>
 
 
                 <select
@@ -6749,6 +6777,7 @@ function renderFigureDraft(){
 function filterBundesligaPlayers(){
 
   const club = document.getElementById("clubInput")?.value || "";
+  const figure = document.getElementById("figureSelect")?.value || "";
   const query = (document.getElementById("footballerInput")?.value || "").trim().toLocaleLowerCase("de");
   const list = document.getElementById("bundesligaPlayerList");
 
@@ -6757,6 +6786,7 @@ function filterBundesligaPlayers(){
   const matches = state.bundesligaPlayers
     .filter(player =>
       (!club || player.club === club) &&
+      (!figure || figure !== "ROOK" || player.position === "Torhüter") &&
       (!query || player.name.toLocaleLowerCase("de").includes(query))
     )
     .slice(0,80);
@@ -6768,6 +6798,20 @@ function filterBundesligaPlayers(){
     return `<option value="${esc(player.name)}" label="${esc(player.club)} · ${locked ? "bereits gedraftet" : `${remaining}/3`}"></option>`;
   }).join("");
 
+}
+
+
+function figureDescriptionHtml(figure){
+  const knight=state.game?.knight_category || "Kategorie wird vor dem Draft ausgelost";
+  const texts={...figureDescriptions,KNIGHT:knight};
+  return `<strong>${esc(figureNames[figure] || "")}</strong><br>${texts[figure] || ""}`;
+}
+
+function renderFigureDescription(){
+  const figure=document.getElementById("figureSelect")?.value;
+  const target=document.getElementById("figureDescription");
+  if(!target) return;
+  target.innerHTML=figureDescriptionHtml(figure);
 }
 
 
