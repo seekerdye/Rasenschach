@@ -1093,6 +1093,9 @@ let state = {
   theses:[],
   placements:[],
   figures:[],
+  bundesligaPlayers:[],
+  figureUsage:{},
+  matchdayDrafted:{},
   me:null,
 
   globalTheses:[],
@@ -1272,6 +1275,8 @@ const figureNames = {
 
 };
 
+const figureOrder = ["ROOK","BISHOP","KNIGHT","QUEEN","KING"];
+
 const knightCategories = [
   "Zweikämpfer (Zweikämpfe gesamt)","Türsteher (Defensivaktionen)",
   "Dauerfeuer (Offensivaktionen)","Bollwerk (Zweikampfquote)",
@@ -1283,7 +1288,7 @@ const figureDescriptions = {
   KING:"Je Tor +1 · Doppelpack +1 zusätzlich · Dreierpack +2 · Ligaweit die meisten Tore +1",
   QUEEN:"Je Tor +1 · je Assist +1 · Tor und Assist im selben Spiel +1 zusätzlich · Ligaweit die meisten Scorerpunkte +1",
   ROOK:"Nur Torhüter · Zu Null +1 · je gehaltener Elfmeter +1 · ab 5 Paraden +1, ab 8 Paraden +2 · Ligaweit die meisten verhinderten Tore +1",
-  BISHOP:"Ab 11 km +1, ab 12 km +2 · Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1"
+  BISHOP:"Ab 11 km +1, ab 12 km +2 · Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1 · Ligaweit die meisten Sprints +1"
 };
 
 const knightDescriptions = {
@@ -5125,6 +5130,8 @@ async function refreshGame(){
     ||
     [];
 
+  await Promise.all([loadBundesligaPlayers(),loadFigureUsage()]);
+
 
   state.me =
     state.players.find(
@@ -6435,10 +6442,7 @@ function renderFigureDraft(){
     );
 
 
-  const freeFigures =
-    Object.keys(
-      figureNames
-    )
+  const freeFigures = figureOrder
 
     .filter(
       figure =>
@@ -6497,7 +6501,7 @@ function renderFigureDraft(){
 
                 <select
                   id="figureSelect"
-                  onchange="renderFigureDescription()"
+                  onchange="filterBundesligaPlayers();renderFigureDescription()"
                 >
 
                   ${freeFigures.map(
@@ -6506,7 +6510,7 @@ function renderFigureDraft(){
                       <option
                         value="${figure}"
                       >
-                        ${figureNames[figure]}
+                        ${displayFigureName(figure)}
                       </option>
 
                     `
@@ -6521,16 +6525,22 @@ function renderFigureDraft(){
 
                 <input
                   id="footballerInput"
+                  list="bundesligaPlayerList"
                   maxlength="80"
-                  placeholder="Fußballer"
+                  autocomplete="off"
+                  oninput="filterBundesligaPlayers()"
+                  placeholder="Fußballer suchen"
                 >
 
+                <datalist id="bundesligaPlayerList"></datalist>
 
-                <input
+                <select
                   id="clubInput"
-                  maxlength="80"
-                  placeholder="Verein (optional)"
+                  onchange="filterBundesligaPlayers()"
                 >
+                  <option value="">Alle Bundesliga-Vereine</option>
+                  ${Object.values(clubData).map(club=>`<option value="${esc(club.name)}">${esc(club.name)}</option>`).join("")}
+                </select>
 
 
                 <button
@@ -6592,9 +6602,7 @@ function renderFigureDraft(){
 
                   <div class="stack">
 
-                    ${Object.keys(
-                      figureNames
-                    ).map(
+                    ${figureOrder.map(
                       figure => {
 
                         const pick =
@@ -6610,7 +6618,7 @@ function renderFigureDraft(){
                           <div class="thesis">
 
                             <strong>
-                              ${figureNames[figure]}
+                              ${displayFigureName(figure)}
                             </strong>
 
 
@@ -7778,6 +7786,34 @@ renderThesisOverview = function(){
   if(!state.thesisInputMode){
     document.querySelector("#app .card:last-child")?.remove();
   }
+};
+
+async function loadBundesligaPlayers(){
+  const {data,error}=await db.from("bundesliga_players").select("name,club,position").eq("active",true).order("club").order("name");
+  state.bundesligaPlayers=error?[]:(data||[]);
+}
+async function loadFigureUsage(){
+  const [usage,drafted]=await Promise.all([db.rpc("get_figure_usage",{p_game_id:state.gameId}),db.rpc("get_matchday_figure_availability",{p_game_id:state.gameId})]);
+  state.figureUsage=Object.fromEntries((usage.data||[]).map(x=>[x.footballer.toLocaleLowerCase("de"),Number(x.uses)]));
+  state.matchdayDrafted=Object.fromEntries((drafted.data||[]).map(x=>[x.footballer.toLocaleLowerCase("de"),true]));
+}
+function displayFigureName(figure){
+  const labels={ROOK:"Weiße weste",BISHOP:"Motor",QUEEN:"Spielmacher",KING:"Torjäger"};
+  const knight=figure==="KNIGHT"&&state.game?.knight_category?state.game.knight_category.split(" ")[0]:"";
+  const suffix=labels[figure]||knight;
+  return `${figureNames[figure]} ${suffix?`<span class="muted" style="font-size:.78em;font-weight:700">· ${esc(suffix)}</span>`:""}`;
+}
+function filterBundesligaPlayers(){
+  const club=document.getElementById("clubInput")?.value||"", figure=document.getElementById("figureSelect")?.value||"", query=(document.getElementById("footballerInput")?.value||"").toLocaleLowerCase("de"), list=document.getElementById("bundesligaPlayerList");
+  if(!list)return;
+  list.innerHTML=state.bundesligaPlayers.filter(p=>(!club||p.club===club)&&(figure!=="ROOK"||p.position==="Torhüter")&&(!query||p.name.toLocaleLowerCase("de").includes(query))).slice(0,100).map(p=>{const key=p.name.toLocaleLowerCase("de"), used=state.figureUsage[key]||0, blocked=state.matchdayDrafted[key], remaining=Math.max(0,3-used);return `<option value="${esc(p.name)}" label="${esc(p.club)} · ${blocked?"bereits gedraftet":`${remaining}/3`}"></option>`}).join("");
+}
+pickFigure=async function(){
+  try{const figure=document.getElementById("figureSelect").value, footballer=document.getElementById("footballerInput").value.trim(), club=document.getElementById("clubInput").value;const player=state.bundesligaPlayers.find(p=>p.name.toLocaleLowerCase("de")===footballer.toLocaleLowerCase("de")&&(!club||p.club===club));
+    if(!player)throw new Error("Bitte einen aktuellen Bundesliga-Spieler aus der Auswahl wählen.");
+    const key=player.name.toLocaleLowerCase("de"); if(state.matchdayDrafted[key])throw new Error("Dieser Spieler wurde an diesem Spieltag bereits gedraftet."); if((state.figureUsage[key]||0)>=3)throw new Error("Dieser Spieler wurde in dieser Saison bereits dreimal gewählt."); if(figure==="ROOK"&&player.position!=="Torhüter")throw new Error("Für den Turm sind nur Torhüter auswählbar.");
+    const {error}=await db.rpc("pick_figure",{p_game_id:state.gameId,p_figure:figure,p_footballer:player.name,p_club:player.club});if(error)throw error;
+  }catch(error){errorMessage(error)}
 };
 
 startApp();
