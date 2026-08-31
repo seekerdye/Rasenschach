@@ -360,6 +360,18 @@ header{
 
 @media(max-width:700px){
 
+  .phasebar{
+    position:sticky;
+
+    top:0;
+
+    z-index:20;
+
+    padding:8px 0;
+
+    background:var(--bg);
+  }
+
   .grid2,
   .grid3{
     grid-template-columns:1fr;
@@ -960,6 +972,13 @@ button:disabled{
   font-weight:900;
 
   text-align:center;
+
+  white-space:nowrap;
+}
+
+.scoreThesisField,
+.fieldButton{
+  white-space:nowrap;
 }
 
 .thesisGrid{
@@ -5112,6 +5131,9 @@ async function renderLobbyStats(){
     return {game,scores,winner};
   });
 
+  const seasonRecords=Object.fromEntries(state.lobbyPlayers.map(player=>[player.user_id,{wins:0,draws:0}]));
+  results.forEach(result=>{if(result.scores.length===2){if(result.winner==="Unentschieden"){result.scores.forEach(score=>seasonRecords[score.user_id].draws++);}else{const winner=result.scores.find(score=>score.name===result.winner);if(winner)seasonRecords[winner.user_id].wins++;}}});
+
   document.getElementById("app").innerHTML = `
     <div class="card">
       <span class="badge">Saison 2026/27</span>
@@ -5127,6 +5149,11 @@ async function renderLobbyStats(){
           <span class="muted">Punkte</span>
         </div>
       `).join('<div class="vs">:</div>')}
+    </div>
+
+    <div class="card">
+      <h2>SAISONSTATISTIKEN</h2>
+      <div class="grid2">${state.lobbyPlayers.map(player=>`<div><strong>${esc(player.name)}</strong><div class="muted" style="margin-top:6px">${seasonRecords[player.user_id].wins} Siege · ${seasonRecords[player.user_id].draws} Unentschieden</div></div>`).join("")}</div>
     </div>
 
     <div class="card">
@@ -6449,6 +6476,11 @@ function renderThesisDraft(){
 
   return `
 
+    <div class="card" style="text-align:center">
+      <strong>FORTSCHRITT</strong>
+      <div class="muted" style="margin-top:6px">Thesendraft: ${draftedTheses().length}/10 Thesen vergeben</div>
+    </div>
+
     <div class="grid3">
       ${drawResult("Startspieler", starter?.name ? `${esc(starter.name)} beginnt` : "Nicht ausgelost")}
       ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
@@ -6489,6 +6521,7 @@ function renderThesisDraft(){
 
         <h2>
           VERFÜGBARE THESEN
+          <button class="ghost" style="float:right" onclick="openGamePhase('info')">?</button>
         </h2>
 
 
@@ -6736,6 +6769,8 @@ async function pickThesis(
 
   try{
 
+    if(!confirm("Diese These wirklich auf das gewählte Feld setzen?")) return;
+
     const {
       error
     } =
@@ -6902,6 +6937,11 @@ function renderFigureDraft(){
 
   return `
 
+    <div class="card" style="text-align:center">
+      <strong>FORTSCHRITT</strong>
+      <div class="muted" style="margin-top:6px">Spielerdraft: ${state.figures.length}/10 Spieler vergeben</div>
+    </div>
+
     <div class="grid3">
       ${drawResult("Startspieler", state.players.find(p=>p.seat===state.game.thesis_start_seat)?.name ? `${esc(state.players.find(p=>p.seat===state.game.thesis_start_seat).name)} beginnt` : "Nicht ausgelost")}
       ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
@@ -6940,6 +6980,7 @@ function renderFigureDraft(){
 
         <h2>
           FUSSBALLER AUSWÄHLEN
+          <button class="ghost" style="float:right" onclick="openGamePhase('info')">?</button>
         </h2>
 
 
@@ -7085,9 +7126,9 @@ function renderFigureDraft(){
                               ${
                                 pick
 
-                                  ? `${esc(
+                                  ? `<strong style="color:var(--cream)">${esc(
                                       pick.footballer
-                                    )}${
+                                    )}</strong>${
                                       pick.club
 
                                         ? ` · ${esc(
@@ -7539,6 +7580,8 @@ function renderScoring(
               .toUpperCase()
           } GEWINNT`;
 
+  const bestFigure=[...state.figures].sort((a,b)=>figureTotalPoints(b)-figureTotalPoints(a))[0];
+
 
   return `
 
@@ -7558,6 +7601,8 @@ function renderScoring(
             <div class="actions" style="justify-content:center;margin-top:16px">
               <button class="primary" onclick="openLobbyStats()">Zur Saisonübersicht</button>
             </div>
+
+            <p class="muted" style="text-align:center;margin-bottom:0">${bestFigure ? `Spieltag-Highlight: ${esc(bestFigure.footballer)} · ${formatPoints(figureTotalPoints(bestFigure))}` : "Spieltag abgeschlossen"}</p>
 
           </div>
 
@@ -7949,6 +7994,14 @@ function renderScoring(
     </div>
 
 
+    <div class="card">
+      <h2>DIREKTER VERGLEICH</h2>
+      <div class="stack">
+        ${figureOrder.map(kind=>{const a=state.figures.find(item=>item.user_id===player1.user_id&&item.figure===kind),b=state.figures.find(item=>item.user_id===player2.user_id&&item.figure===kind);return `<div class="field"><div class="fieldLabel">${displayFigureName(kind)}</div><div><strong>${esc(a?.footballer||"–")}</strong> <span class="muted">${a?formatPoints(figureTotalPoints(a)):""}</span><br><strong>${esc(b?.footballer||"–")}</strong> <span class="muted">${b?formatPoints(figureTotalPoints(b)):""}</span></div></div>`;}).join("")}
+      </div>
+    </div>
+
+
     ${
       !finished
 
@@ -8134,6 +8187,12 @@ async function setFigureBonus(
 async function finishGame(){
 
   try{
+
+    const unresolved=state.theses.filter(thesis=>thesis.drafted_by && (thesis.resolved===null || thesis.resolved===undefined));
+    if(unresolved.length){
+      throw new Error(`${unresolved.length} Thesen sind noch nicht ausgewertet.`);
+    }
+    if(!confirm("Spieltag wirklich abschließen? Danach kann die Auswertung nicht mehr geändert werden.")) return;
 
     const {
       error
@@ -8335,12 +8394,13 @@ function displayFigureName(figure){
 function filterBundesligaPlayers(){
   const club=document.getElementById("clubInput")?.value||"", figure=document.getElementById("figureSelect")?.value||"", query=(document.getElementById("footballerInput")?.value||"").toLocaleLowerCase("de"), list=document.getElementById("bundesligaPlayerList");
   if(!list)return;
-  list.innerHTML=state.bundesligaPlayers.filter(p=>(!club||p.club===club)&&(figure!=="ROOK"||p.position==="Torhüter")&&(!query||p.name.toLocaleLowerCase("de").includes(query))).slice(0,100).map(p=>{const key=p.name.toLocaleLowerCase("de"), used=state.figureUsage[key]||0, blocked=state.matchdayDrafted[key], remaining=Math.max(0,3-used);return `<option value="${esc(p.name)}" label="${esc(p.club)} · ${blocked?"bereits gedraftet":`${remaining}/3`}"></option>`}).join("");
+  list.innerHTML=state.bundesligaPlayers.filter(p=>(!club||p.club===club)&&(figure!=="ROOK"||p.position==="Torhüter")&&(!query||p.name.toLocaleLowerCase("de").includes(query))).sort((a,b)=>Number(Boolean(state.matchdayDrafted[a.name.toLocaleLowerCase("de")]||(state.figureUsage[a.name.toLocaleLowerCase("de")]||0)>=3))-Number(Boolean(state.matchdayDrafted[b.name.toLocaleLowerCase("de")]||(state.figureUsage[b.name.toLocaleLowerCase("de")]||0)>=3))).slice(0,100).map(p=>{const key=p.name.toLocaleLowerCase("de"), used=state.figureUsage[key]||0, blocked=state.matchdayDrafted[key]||used>=3, remaining=Math.max(0,3-used);return `<option value="${esc(p.name)}" label="${esc(p.club)} · ${blocked?"NICHT VERFÜGBAR":`${remaining}/3 verfügbar`}"></option>`}).join("");
 }
 pickFigure=async function(){
   try{const figure=document.getElementById("figureSelect").value, footballer=document.getElementById("footballerInput").value.trim(), club=document.getElementById("clubInput").value;const player=state.bundesligaPlayers.find(p=>p.name.toLocaleLowerCase("de")===footballer.toLocaleLowerCase("de")&&(!club||p.club===club));
     if(!player)throw new Error("Bitte einen aktuellen Bundesliga-Spieler aus der Auswahl wählen.");
     const key=player.name.toLocaleLowerCase("de"); if(state.matchdayDrafted[key])throw new Error("Dieser Spieler wurde an diesem Spieltag bereits gedraftet."); if((state.figureUsage[key]||0)>=3)throw new Error("Dieser Spieler wurde in dieser Saison bereits dreimal gewählt."); if(figure==="ROOK"&&player.position!=="Torhüter")throw new Error("Für den Turm sind nur Torhüter auswählbar.");
+    if(!confirm(`${displayFigureName(figure)} mit ${player.name} wirklich draften?`)) return;
     const {error}=await db.rpc("pick_figure",{p_game_id:state.gameId,p_figure:figure,p_footballer:player.name,p_club:player.club});if(error)throw error;
   }catch(error){errorMessage(error)}
 };
