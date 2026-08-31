@@ -1027,6 +1027,14 @@ button:disabled{
   background:var(--dark);
 }
 
+.darkAction{
+  background:var(--dark) !important;
+}
+
+.lobbySeasonManagement{
+  display:none;
+}
+
 .seasonResult .field{
   grid-template-columns:90px minmax(0,1fr);
 
@@ -4283,7 +4291,7 @@ function renderLobbyCard(
             ? `
 
               <button
-                class="ghost"
+                class="ghost darkAction"
                 onclick='copyLobbyInvite(${jsArg(
                   lobby.code
                 )},${jsArg(
@@ -4295,7 +4303,7 @@ function renderLobbyCard(
 
 
               <button
-                class="ghost"
+                class="ghost darkAction"
                 onclick='renameLobby(
                   ${jsArg(
                     lobby.id
@@ -4915,7 +4923,7 @@ function renderLobbySeason(){
 
           ? `
 
-            <div class="actions">
+            <div class="actions lobbySeasonManagement">
 
               <button
                 onclick='copyLobbyInvite(${jsArg(
@@ -4929,7 +4937,7 @@ function renderLobbySeason(){
 
 
               <button
-                class="ghost"
+                class="ghost darkAction"
                 onclick='renameLobby(
                   ${jsArg(
                     state.lobby.id
@@ -6192,7 +6200,7 @@ function renderGameLobby(){
 
             ${owner && !starterReady ? `
               <button
-                class="ghost"
+                class="ghost darkAction"
                 style="margin-top:10px"
                 onclick="drawThesisStarter()"
                 ${starterReady || locked ? "disabled" : ""}
@@ -6220,7 +6228,7 @@ function renderGameLobby(){
 
             ${owner && !questionReady ? `
               <button
-                class="ghost"
+                class="ghost darkAction"
                 style="margin-top:10px"
                 onclick="drawQuestionValue()"
                 ${questionReady || locked ? "disabled" : ""}
@@ -6240,7 +6248,7 @@ function renderGameLobby(){
                 : `<span class="muted">Noch nicht ausgelost</span>`}
             </p>
             ${owner && !state.game.knight_category ? `
-              <button class="ghost" style="margin-top:10px" onclick="drawKnightCategory()" ${state.game.knight_category || locked ? "disabled" : ""}>
+              <button class="ghost darkAction" style="margin-top:10px" onclick="drawKnightCategory()" ${state.game.knight_category || locked ? "disabled" : ""}>
                 Kategorie auslosen
               </button>
             ` : ""}
