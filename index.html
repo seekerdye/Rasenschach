@@ -6544,6 +6544,16 @@ function renderFigureDraft(){
                 <datalist id="bundesligaPlayerList"></datalist>
 
 
+                <select
+                  id="footballerSelect"
+                  size="5"
+                  onchange="applyFootballerChoice()"
+                  aria-label="Passenden Fußballer auswählen"
+                >
+                  <option value="">Erst nach einem Fußballer suchen</option>
+                </select>
+
+
                 <p class="muted" style="margin:0">
                   Nur Spieler der aktuellen Bundesliga-Kader 2026/27.
                 </p>
@@ -6733,6 +6743,35 @@ function filterBundesligaPlayers(){
   list.innerHTML = matches.map(player =>
     `<option value="${esc(player.name)}" label="${esc(player.club)}${player.position ? ` · ${esc(player.position)}` : ""}"></option>`
   ).join("");
+
+  const select = document.getElementById("footballerSelect");
+
+  if(select){
+    select.innerHTML = matches.length
+      ? `<option value="">${matches.length} passende Spieler – bitte auswählen</option>` +
+        matches.map(player =>
+          `<option value="${esc(player.name)}" data-club="${esc(player.club)}">${esc(player.name)} · ${esc(player.club)}${player.position ? ` · ${esc(player.position)}` : ""}</option>`
+        ).join("")
+      : `<option value="">Keine passenden aktiven Bundesliga-Spieler</option>`;
+  }
+
+}
+
+
+function applyFootballerChoice(){
+
+  const select = document.getElementById("footballerSelect");
+  const input = document.getElementById("footballerInput");
+  const clubSelect = document.getElementById("clubInput");
+  const option = select?.selectedOptions?.[0];
+
+  if(!option?.value || !input) return;
+
+  input.value = option.value;
+
+  if(clubSelect && option.dataset.club){
+    clubSelect.value = option.dataset.club;
+  }
 
 }
 
