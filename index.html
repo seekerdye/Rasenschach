@@ -1262,6 +1262,7 @@ let state = {
   figures:[],
   bundesligaPlayers:[],
   figureUsage:{},
+  seasonFigureUsage:{},
   matchdayDrafted:{},
   me:null,
 
@@ -1444,7 +1445,13 @@ const figureNames = {
 
 };
 
-const figureOrder = ["ROOK","BISHOP","KNIGHT","QUEEN","KING"];
+const figureOrder = ["ROOK","BISHOP","QUEEN","KING","KNIGHT"];
+
+const thesisFieldOrder = ["N3","N1","P3","P1","Q"];
+
+function sortThesisPlacements(placements){
+  return [...placements].sort((a,b) => thesisFieldOrder.indexOf(a.field) - thesisFieldOrder.indexOf(b.field));
+}
 
 const knightCategories = [
   "Zweikämpfer (Zweikämpfe gesamt)","Türsteher (Defensivaktionen)",
@@ -6413,6 +6420,9 @@ function renderThesisDraft(){
         )
     );
 
+  const thesisDraftComplete =
+    draftedTheses().length >= 10;
+
 
   return `
 
@@ -6438,12 +6448,12 @@ function renderThesisDraft(){
         seat ===
         state.me.seat
 
-          ? "Du bist am Zug"
+          ? (thesisDraftComplete ? "Thesendraft abgeschlossen" : "Du bist am Zug")
 
-          : `${esc(
+          : (thesisDraftComplete ? "Thesendraft abgeschlossen" : `${esc(
               currentPlayer?.name ||
               ""
-            )} ist am Zug`
+            )} ist am Zug`)
       }
 
     </div>
@@ -6457,18 +6467,6 @@ function renderThesisDraft(){
         <h2>
           Verfügbare Thesen
         </h2>
-
-
-        <p class="muted">
-
-          Pick
-          ${
-            draftedTheses().length +
-            1
-          }
-          von 10
-
-        </p>
 
 
         <div class="thesisGrid">
@@ -6548,17 +6546,8 @@ function renderThesisDraft(){
         <div class="card">
 
           <h2>
-            Bretter
+            Thesen
           </h2>
-
-
-          <p class="muted">
-
-            Die gesetzten Felder
-            sind sofort für beide
-            Spieler sichtbar.
-
-          </p>
 
 
           <div class="grid2">
@@ -6783,9 +6772,7 @@ function renderBoard(
 
     <div class="fields">
 
-      ${Object.keys(
-        fieldNames
-      ).map(
+      ${thesisFieldOrder.map(
         field => {
 
           const placement =
@@ -7082,7 +7069,7 @@ function renderFigureDraft(){
 
                                         ? ` · ${esc(
                                             pick.club
-                                          )}${player.user_id === state.user.id ? ` · ${state.figureUsage[pick.footballer.toLocaleLowerCase("de")] || 1}/3` : ""}`
+                                          )} · ${state.seasonFigureUsage[`${player.user_id}|${pick.footballer.toLocaleLowerCase("de")}`] || 1}/3`
 
                                         : ""
                                     }`
@@ -7541,7 +7528,7 @@ function renderScoring(
 
             <div class="bigResult">
 
-              ${esc(winner)} am Spieltag ${state.game.matchday}
+              ${esc(winner)} den Spieltag ${state.game.matchday}
 
             </div>
 
@@ -7637,7 +7624,7 @@ function renderScoring(
 
               <span class="badge">
 
-                Thesen:
+                Thesendraft:
                 ${score.thesis}
 
               </span>
@@ -7655,13 +7642,13 @@ function renderScoring(
 
 
               <h3>
-                Thesen
+                Thesendraft
               </h3>
 
 
               <div class="stack">
 
-                ${placements.map(
+                ${sortThesisPlacements(placements).map(
                   placement => {
 
                     const thesis =
@@ -7813,7 +7800,7 @@ function renderScoring(
 
 
                       <div style="margin-top:6px">
-                        <strong>${esc(figure.footballer)}</strong>${figure.club ? ` <span class="muted">· ${esc(figure.club)}${player.user_id === state.user.id ? ` · ${state.figureUsage[figure.footballer.toLocaleLowerCase("de")] || 1}/3` : ""}</span>` : ""}
+                        <strong>${esc(figure.footballer)}</strong>${figure.club ? ` <span class="muted">· ${esc(figure.club)} · ${state.seasonFigureUsage[`${player.user_id}|${figure.footballer.toLocaleLowerCase("de")}`] || 1}/3</span>` : ""}
                       </div>
 
 
@@ -7836,7 +7823,7 @@ function renderScoring(
 
                               ${formatPoints(figureTotalPoints(figure))}
 
-                              ${figureBonusPoints(figure) ? `<span class="muted">· inklusive ${formatPoints(figureBonusPoints(figure))} Bonus</span>` : ""}
+                              ${figureBonusPoints(figure) ? `<div class="muted" style="margin-top:5px">${figure.player_of_week ? "zuzüglich +3 Punkte Bonus für Spieler des Spieltags" : "zuzüglich +2 Punkte Bonus für Elf des Spieltags"}</div>` : ""}
 
                             </p>
 
@@ -8303,9 +8290,10 @@ async function loadBundesligaPlayers(){
   state.bundesligaPlayers=error?[]:(data||[]);
 }
 async function loadFigureUsage(){
-  const [usage,drafted]=await Promise.all([db.rpc("get_figure_usage",{p_game_id:state.gameId}),db.rpc("get_matchday_figure_availability",{p_game_id:state.gameId})]);
+  const [usage,drafted,seasonUsage]=await Promise.all([db.rpc("get_figure_usage",{p_game_id:state.gameId}),db.rpc("get_matchday_figure_availability",{p_game_id:state.gameId}),db.rpc("get_lobby_figure_usage",{p_game_id:state.gameId})]);
   state.figureUsage=Object.fromEntries((usage.data||[]).map(x=>[x.footballer.toLocaleLowerCase("de"),Number(x.uses)]));
   state.matchdayDrafted=Object.fromEntries((drafted.data||[]).map(x=>[x.footballer.toLocaleLowerCase("de"),true]));
+  state.seasonFigureUsage=Object.fromEntries((seasonUsage.data||[]).map(x=>[`${x.user_id}|${x.footballer.toLocaleLowerCase("de")}`,Number(x.uses)]));
 }
 function displayFigureName(figure){
   return figureNames[figure] || figure;
