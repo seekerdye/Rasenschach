@@ -1285,21 +1285,21 @@ const knightCategories = [
 ];
 
 const figureDescriptions = {
-  KING:"Je Tor +1 · Doppelpack +1 zusätzlich · Dreierpack +2 · Ligaweit die meisten Tore +1",
-  QUEEN:"Je Tor +1 · je Assist +1 · Tor und Assist im selben Spiel +1 zusätzlich · Ligaweit die meisten Scorerpunkte +1",
-  ROOK:"Nur Torhüter · Zu Null +1 · je gehaltener Elfmeter +1 · ab 5 Paraden +1, ab 8 Paraden +2 · Ligaweit die meisten verhinderten Tore +1",
-  BISHOP:"Ab 11 km +1, ab 12 km +2 · Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1 · Ligaweit die meisten Sprints +1"
+  KING:"Je Tor +1<br>Doppelpack +1 zusätzlich, Dreierpack +2<br>Ligaweit die meisten Tore +1",
+  QUEEN:"Je Tor +1, je Assist +1<br>Tor und Assist im selben Spiel +1 zusätzlich<br>Ligaweit die meisten Scorerpunkte +1",
+  ROOK:"Nur Torhüter – ein Feldspieler bringt hier nichts!<br>Zu Null +1<br>Je gehaltenem Elfmeter +1<br>Ab 5 Paraden +1, ab 8 +2<br>Ligaweit die meisten verhinderten Tore +1",
+  BISHOP:"Ab 11 km +1, ab 12 km +2<br>Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1<br>Ligaweit die meisten Sprints +1"
 };
 
 const knightDescriptions = {
-  "Zweikämpfer (Zweikämpfe gesamt)":"Ab 10 gewonnene Zweikämpfe +1 · ab 17 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Türsteher (Defensivaktionen)":"Ab 13 Defensivaktionen +1 · ab 18 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Dauerfeuer (Offensivaktionen)":"Ab 4 Offensivaktionen +1 · ab 7 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Bollwerk (Zweikampfquote)":"Ab 70 % +1 · ab 85 % +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Laser (Passgenauigkeit)":"Ab 92 % +1 · ab 97 % +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Ballmagnet (Ballkontakte)":"Ab 75 Ballkontakte +1 · ab 110 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Gefahrensucher (xG)":"Ab 0,30 xG +1 · ab 0,90 xG +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
-  "Schallmauer (Höchstgeschwindigkeit)":"Ab 33,5 km/h +1 · ab 35,0 km/h +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1"
+  "Zweikämpfer (Zweikämpfe gesamt)":"Ab 10 gewonnene Zweikämpfe +1<br>Ab 17 gewonnene Zweikämpfe +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Türsteher (Defensivaktionen)":"Ab 13 Defensivaktionen +1<br>Ab 18 Defensivaktionen +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Dauerfeuer (Offensivaktionen)":"Ab 4 Offensivaktionen +1<br>Ab 7 Offensivaktionen +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Bollwerk (Zweikampfquote)":"Ab 70 % +1<br>Ab 85 % +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Laser (Passgenauigkeit)":"Ab 92 % +1<br>Ab 97 % +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Ballmagnet (Ballkontakte)":"Ab 75 Ballkontakte +1<br>Ab 110 Ballkontakte +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Gefahrensucher (xG)":"Ab 0,30 xG +1<br>Ab 0,90 xG +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Schallmauer (Höchstgeschwindigkeit)":"Ab 33,5 km/h +1<br>Ab 35,0 km/h +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1"
 };
 
 
@@ -6518,22 +6518,6 @@ function renderFigureDraft(){
 
                 </select>
 
-                <div id="figureDescription" class="thesis muted">
-                  ${figureDescriptionHtml(freeFigures[0])}
-                </div>
-
-
-                <input
-                  id="footballerInput"
-                  list="bundesligaPlayerList"
-                  maxlength="80"
-                  autocomplete="off"
-                  oninput="filterBundesligaPlayers()"
-                  placeholder="Fußballer suchen"
-                >
-
-                <datalist id="bundesligaPlayerList"></datalist>
-
                 <select
                   id="clubInput"
                   onchange="filterBundesligaPlayers()"
@@ -6541,6 +6525,21 @@ function renderFigureDraft(){
                   <option value="">Alle Bundesliga-Vereine</option>
                   ${Object.values(clubData).map(club=>`<option value="${esc(club.name)}">${esc(club.name)}</option>`).join("")}
                 </select>
+
+                <input
+                  id="footballerInput"
+                  list="bundesligaPlayerList"
+                  maxlength="80"
+                  autocomplete="off"
+                  oninput="filterBundesligaPlayers()"
+                  placeholder="Fußballer suchen oder auswählen"
+                >
+
+                <datalist id="bundesligaPlayerList"></datalist>
+
+                <div id="figureDescription" class="thesis muted">
+                  ${figureDescriptionHtml(freeFigures[0])}
+                </div>
 
 
                 <button
@@ -6711,10 +6710,10 @@ function figureDescriptionHtml(figure){
   if(figure === "KNIGHT"){
     const category=state.game?.knight_category;
     return category
-      ? `<strong>♘ Springer · ${esc(category)}</strong><div style="margin-top:7px">${esc(knightDescriptions[category] || "")}</div>`
+      ? `<strong>${esc(category)}</strong><div style="margin-top:7px">${knightDescriptions[category] || ""}</div>`
       : "Springer-Kategorie wird vor dem Draft ausgelost.";
   }
-  return `<strong>${esc(figureNames[figure] || "Figur")}</strong><div style="margin-top:7px">${esc(figureDescriptions[figure] || "")}</div>`;
+  return figureDescriptions[figure] || "";
 }
 
 function renderFigureDescription(){
@@ -7798,10 +7797,7 @@ async function loadFigureUsage(){
   state.matchdayDrafted=Object.fromEntries((drafted.data||[]).map(x=>[x.footballer.toLocaleLowerCase("de"),true]));
 }
 function displayFigureName(figure){
-  const labels={ROOK:"Weiße weste",BISHOP:"Motor",QUEEN:"Spielmacher",KING:"Torjäger"};
-  const knight=figure==="KNIGHT"&&state.game?.knight_category?state.game.knight_category.split(" ")[0]:"";
-  const suffix=labels[figure]||knight;
-  return `${figureNames[figure]} ${suffix?`<span class="muted" style="font-size:.78em;font-weight:700">· ${esc(suffix)}</span>`:""}`;
+  return figureNames[figure] || figure;
 }
 function filterBundesligaPlayers(){
   const club=document.getElementById("clubInput")?.value||"", figure=document.getElementById("figureSelect")?.value||"", query=(document.getElementById("footballerInput")?.value||"").toLocaleLowerCase("de"), list=document.getElementById("bundesligaPlayerList");
