@@ -783,6 +783,10 @@ button:disabled{
   color:#92979e;
 
   font-size:12px;
+
+  cursor:pointer;
+
+  user-select:none;
 }
 
 .phasebar span.active{
@@ -791,6 +795,22 @@ button:disabled{
   color:#17181a;
 
   font-weight:800;
+}
+
+.ruleList{
+  display:grid;
+
+  gap:10px;
+}
+
+.ruleList > div{
+  padding:12px;
+
+  border-radius:12px;
+
+  background:#17191c;
+
+  line-height:1.55;
 }
 
 .fields{
@@ -1098,6 +1118,8 @@ let state = {
   matchdayDrafted:{},
   me:null,
 
+  viewPhase:null,
+
   globalTheses:[],
   selectedTemplateMatchday:1,
 
@@ -1317,6 +1339,7 @@ const statusNames = {
 const phases = [
 
   ["lobby","Vorbereitung"],
+  ["info","Info"],
   ["thesis_draft","Thesendraft"],
   ["figure_draft","Figurendraft"],
   ["scoring","Auswertung"],
@@ -1952,7 +1975,16 @@ function currentFigureSeat(){
 
 
 
-function phaseBar(){
+function openGamePhase(phase){
+
+  state.viewPhase = phase;
+
+  renderGame();
+
+}
+
+
+function phaseBar(activePhase = state.game?.status){
 
   return `
 
@@ -1963,10 +1995,13 @@ function phaseBar(){
 
           <span
             class="${
-              state.game?.status === id
+              activePhase === id
                 ? "active"
                 : ""
             }"
+            onclick="openGamePhase('${id}')"
+            role="button"
+            tabindex="0"
           >
             ${label}
           </span>
@@ -5388,6 +5423,9 @@ function subscribeLobby(){
 
 function renderGame(){
 
+  const displayedPhase =
+    state.viewPhase || state.game.status;
+
   document.getElementById(
     "headerActions"
   ).innerHTML = `
@@ -5411,8 +5449,15 @@ function renderGame(){
 
 
   switch(
-    state.game.status
+    displayedPhase
   ){
+
+    case "info":
+
+      content =
+        renderGameInfo();
+
+      break;
 
     case "lobby":
 
@@ -5522,10 +5567,108 @@ function renderGame(){
     </div>
 
 
-    ${phaseBar()}
+    ${phaseBar(displayedPhase)}
 
 
     ${content}
+
+  `;
+
+}
+
+
+
+/* =========================================================
+   SPIELINFORMATIONEN
+========================================================= */
+
+
+function renderGameInfo(){
+
+  return `
+
+    <div class="card">
+
+      <h2>
+        Info
+      </h2>
+
+      <p class="muted">
+        Punkteverteilung und Regeln auf einen Blick.
+      </p>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Thesen-Felder
+      </h2>
+
+      <p class="muted">
+        Fünf pro Spieler
+      </p>
+
+      <div class="ruleList">
+
+        <div><strong>+/−3 · Wahrscheinlich</strong><br>Tritt ein: +3<br>Tritt nicht ein: −3</div>
+        <div><strong>−/+3 · Unwahrscheinlich</strong><br>Tritt nicht ein: +3<br>Tritt ein: −3</div>
+        <div><strong>+1 · Wahrscheinlich</strong><br>Tritt ein: +1<br>Tritt nicht ein: +/−0</div>
+        <div><strong>−1 · Unwahrscheinlich</strong><br>Tritt nicht ein: +/−0<br>Tritt ein: −1</div>
+        <div><strong>Fragezeichenfelder</strong><br>Der Wert wird vor dem Draft aus +/−3, +1, +2, +3 und −3 ausgelost.<br>Ein positiver Wert (z. B. +2) zählt beim Eintreffen der These, ansonsten +/−0.<br>Ein negativer Wert (z. B. −3) kostet beim Eintreffen der These, ansonsten +/−0.<br>Der Wert +/−3 zählt beim Eintreffen der These +3, bei Nichteintreffen kostet er −3.</div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Spieler-Felder
+      </h2>
+
+      <p>
+        Fünf pro Spieler. Auf jedem gilt zusätzlich:<br>
+        Elf des Spieltages +2<br>
+        Spieler des Spieltages +3 <span class="muted">(statt +2 aus der Elf des Spieltages)</span><br>
+        Wer nicht eingesetzt wurde bzw. in seiner Kategorie die Leistung nicht erbracht hat, bekommt +/−0 Punkte.
+      </p>
+
+      <div class="ruleList">
+
+        <div><strong>König</strong><br>Je Tor +1<br>Doppelpack +1 zusätzlich, Dreierpack +2<br>Ligaweit die meisten Tore +1</div>
+        <div><strong>Dame</strong><br>Je Tor +1, je Assist +1<br>Tor und Assist im selben Spiel +1 zusätzlich<br>Ligaweit die meisten Scorerpunkte +1</div>
+        <div><strong>Turm</strong><br>Nur Torhüter – ein Feldspieler bringt hier nichts!<br>Zu Null +1<br>Je gehaltenem Elfmeter +1<br>Ab 5 Paraden +1, ab 8 +2<br>Ligaweit die meisten verhinderten Tore +1</div>
+        <div><strong>Läufer</strong><br>Ab 11 km +1, ab 12 km +2<br>Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1<br>Ligaweit die meisten Sprints +1</div>
+        <div><strong>Springer-Kategorien</strong><br>Die Kategorie wird vor dem Draft ausgelost.<br>Welche zur Wahl stehen und was sie zählen, steht unten bei den Springer-Kategorien.<br>Wer die Mindestmenge verfehlt, wertet nicht.<br>Die Statistiken werden über Sofascore ermittelt.</div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>
+        Springer-Kategorien
+      </h2>
+
+      <div class="ruleList">
+
+        <div><strong>Zweikämpfer <span class="muted">(Zweikämpfe gesamt)</span></strong><br>Ab 10 gewonnene Zweikämpfe +1<br>Ab 17 gewonnene Zweikämpfe +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Türsteher <span class="muted">(Defensivaktionen)</span></strong><br>Ab 13 Defensivaktionen +1<br>Ab 18 Defensivaktionen +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Dauerfeuer <span class="muted">(Offensivaktionen)</span></strong><br>Ab 4 Offensivaktionen +1<br>Ab 7 Offensivaktionen +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Bollwerk <span class="muted">(Zweikampfquote)</span></strong><br>Ab 70 % +1<br>Ab 85 % +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Laser <span class="muted">(Passgenauigkeit)</span></strong><br>Ab 92 % +1<br>Ab 97 % +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Ballmagnet <span class="muted">(Ballkontakte)</span></strong><br>Ab 75 Ballkontakte +1<br>Ab 110 Ballkontakte +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Gefahrensucher <span class="muted">(xG)</span></strong><br>Ab 0,30 xG +1<br>Ab 0,90 xG +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+        <div><strong>Schallmauer <span class="muted">(Höchstgeschwindigkeit)</span></strong><br>Ab 33,5 km/h +1<br>Ab 35,0 km/h +2<br>Ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1</div>
+
+      </div>
+
+    </div>
 
   `;
 
@@ -6793,8 +6936,8 @@ function thesisPoints(
     case "N1":
 
       return thesis.resolved
-        ? 0
-        : 1;
+        ? -1
+        : 0;
 
 
     case "P3":
