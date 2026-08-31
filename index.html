@@ -813,6 +813,54 @@ button:disabled{
   line-height:1.55;
 }
 
+.draftHistory{
+  display:none;
+}
+
+.scoringThesis{
+  position:relative;
+}
+
+.scoreThesisField{
+  position:absolute;
+
+  left:16px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  font-size:22px;
+}
+
+.scoreThesisPoints{
+  display:block;
+
+  margin-bottom:8px;
+
+  text-align:center;
+}
+
+.bonusChecks{
+  display:grid;
+
+  gap:7px;
+
+  margin-top:14px;
+}
+
+.bonusChecks label{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  color:#e6e8eb;
+
+  font-size:13px;
+}
+
 .fields{
   display:grid;
 
@@ -1339,11 +1387,11 @@ const statusNames = {
 const phases = [
 
   ["lobby","Vorbereitung"],
-  ["info","Info"],
   ["thesis_draft","Thesendraft"],
   ["figure_draft","Figurendraft"],
   ["scoring","Auswertung"],
-  ["finished","Ergebnis"]
+  ["finished","Ergebnis"],
+  ["info","Info"]
 
 ];
 
@@ -5930,6 +5978,8 @@ async function drawThesisStarter(){
       throw error;
     }
 
+    await refreshGame();
+
   }
 
   catch(error){
@@ -6230,8 +6280,12 @@ function renderThesisDraft(){
           </p>
 
 
+          <div class="grid2">
+
           ${state.players.map(
             player => `
+
+              <div>
 
               <h3>
                 ${esc(
@@ -6247,13 +6301,17 @@ function renderThesisDraft(){
 
               <hr>
 
+              </div>
+
             `
           ).join("")}
+
+          </div>
 
         </div>
 
 
-        <div class="card">
+        <div class="card draftHistory">
 
           <h2>
             Draftverlauf
@@ -6574,7 +6632,7 @@ function renderFigureDraft(){
     </div>
 
 
-    <div class="grid2">
+    <div class="stack">
 
       <div class="card">
 
@@ -6991,6 +7049,26 @@ function thesisPoints(
 
 
 
+function figureBonusPoints(figure){
+
+  return figure.player_of_week
+    ? 3
+    : figure.team_of_week
+      ? 2
+      : 0;
+
+}
+
+
+function figureTotalPoints(figure){
+
+  return Number(figure.points || 0) +
+    figureBonusPoints(figure);
+
+}
+
+
+
 function playerScore(
   userId
 ){
@@ -7044,10 +7122,7 @@ function playerScore(
       figure => {
 
         figureTotal +=
-          Number(
-            figure.points ||
-            0
-          );
+          figureTotalPoints(figure);
 
       }
     );
@@ -7302,27 +7377,15 @@ function renderScoring(
 
                     return `
 
-                      <div class="thesis">
+                      <div class="thesis scoringThesis">
 
-                        <strong>
-
-                          ${
-                            displayFieldName(
-                              placement.field
-                            )
-                          }
-
-                          ·
-
-                          ${
-                            points >= 0
-                              ? "+"
-                              : ""
-                          }
-
-                          ${points}
-
+                        <strong class="scoreThesisField">
+                          ${displayFieldName(placement.field)}
                         </strong>
+
+                        <span class="muted scoreThesisPoints">
+                          ${points >= 0 ? "+" : ""}${points} Punkte
+                        </span>
 
 
                         ${draftThesisPairing(thesis)}
@@ -7471,16 +7534,11 @@ function renderScoring(
                               "
                             >
 
-                              ${
-                                Number(
-                                  figure.points
-                                ) >= 0
-                                  ? "+"
-                                  : ""
-                              }
-
-                              ${figure.points}
+                              ${figureTotalPoints(figure) >= 0 ? "+" : ""}
+                              ${figureTotalPoints(figure)}
                               Punkte
+
+                              ${figureBonusPoints(figure) ? `<span class="muted">· inklusive ${figureBonusPoints(figure) >= 0 ? "+" : ""}${figureBonusPoints(figure)} Bonus</span>` : ""}
 
                             </p>
 
@@ -7542,6 +7600,28 @@ function renderScoring(
                               >
                                 +
                               </button>
+
+                            </div>
+
+                            <div class="bonusChecks">
+
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  ${figure.team_of_week ? "checked" : ""}
+                                  onchange="setFigureBonus('${figure.id}','team_of_week',this.checked)"
+                                >
+                                Elf des Spieltages +2
+                              </label>
+
+                              <label>
+                                <input
+                                  type="checkbox"
+                                  ${figure.player_of_week ? "checked" : ""}
+                                  onchange="setFigureBonus('${figure.id}','player_of_week',this.checked)"
+                                >
+                                Spieler des Spieltages +3
+                              </label>
 
                             </div>
 
@@ -7650,6 +7730,8 @@ async function resolveThesis(
       throw error;
     }
 
+    await refreshGame();
+
   }
 
   catch(error){
@@ -7692,6 +7774,8 @@ async function setFigurePoints(
       throw error;
     }
 
+    await refreshGame();
+
   }
 
   catch(error){
@@ -7699,6 +7783,43 @@ async function setFigurePoints(
     errorMessage(
       error
     );
+
+  }
+
+}
+
+
+
+async function setFigureBonus(
+  id,
+  bonus,
+  enabled
+){
+
+  try{
+
+    const {
+      error
+    } = await db.rpc(
+      "set_figure_bonus",
+      {
+        p_pick_id:id,
+        p_bonus:bonus,
+        p_enabled:enabled
+      }
+    );
+
+    if(error){
+      throw error;
+    }
+
+    await refreshGame();
+
+  }
+
+  catch(error){
+
+    errorMessage(error);
 
   }
 
