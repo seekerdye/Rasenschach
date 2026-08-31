@@ -1279,6 +1279,24 @@ const knightCategories = [
   "Gefahrensucher (xG)","Schallmauer (Höchstgeschwindigkeit)"
 ];
 
+const figureDescriptions = {
+  KING:"Je Tor +1 · Doppelpack +1 zusätzlich · Dreierpack +2 · Ligaweit die meisten Tore +1",
+  QUEEN:"Je Tor +1 · je Assist +1 · Tor und Assist im selben Spiel +1 zusätzlich · Ligaweit die meisten Scorerpunkte +1",
+  ROOK:"Nur Torhüter · Zu Null +1 · je gehaltener Elfmeter +1 · ab 5 Paraden +1, ab 8 Paraden +2 · Ligaweit die meisten verhinderten Tore +1",
+  BISHOP:"Ab 11 km +1, ab 12 km +2 · Ligaweit Platz 1 der Laufleistung +3, Platz 2 +2, Platz 3 +1"
+};
+
+const knightDescriptions = {
+  "Zweikämpfer (Zweikämpfe gesamt)":"Ab 10 gewonnene Zweikämpfe +1 · ab 17 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Türsteher (Defensivaktionen)":"Ab 13 Defensivaktionen +1 · ab 18 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Dauerfeuer (Offensivaktionen)":"Ab 4 Offensivaktionen +1 · ab 7 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Bollwerk (Zweikampfquote)":"Ab 70 % +1 · ab 85 % +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Laser (Passgenauigkeit)":"Ab 92 % +1 · ab 97 % +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Ballmagnet (Ballkontakte)":"Ab 75 Ballkontakte +1 · ab 110 +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Gefahrensucher (xG)":"Ab 0,30 xG +1 · ab 0,90 xG +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1",
+  "Schallmauer (Höchstgeschwindigkeit)":"Ab 33,5 km/h +1 · ab 35,0 km/h +2 · ligaweit Platz 1 +3, Platz 2 +2, Platz 3 +1"
+};
+
 
 const statusNames = {
 
@@ -6368,9 +6386,7 @@ function renderBoard(
                 ${
                   thesis
 
-                    ? esc(
-                        thesis.text
-                      )
+                    ? `${draftThesisPairing(thesis)}<div style="margin-top:7px">${esc(thesis.text)}</div>`
 
                     : "frei"
                 }
@@ -6481,6 +6497,7 @@ function renderFigureDraft(){
 
                 <select
                   id="figureSelect"
+                  onchange="renderFigureDescription()"
                 >
 
                   ${freeFigures.map(
@@ -6496,6 +6513,10 @@ function renderFigureDraft(){
                   ).join("")}
 
                 </select>
+
+                <div id="figureDescription" class="thesis muted">
+                  ${figureDescriptionHtml(freeFigures[0])}
+                </div>
 
 
                 <input
@@ -6677,6 +6698,22 @@ function renderFigureDraft(){
 }
 
 
+
+function figureDescriptionHtml(figure){
+  if(figure === "KNIGHT"){
+    const category=state.game?.knight_category;
+    return category
+      ? `<strong>♘ Springer · ${esc(category)}</strong><div style="margin-top:7px">${esc(knightDescriptions[category] || "")}</div>`
+      : "Springer-Kategorie wird vor dem Draft ausgelost.";
+  }
+  return `<strong>${esc(figureNames[figure] || "Figur")}</strong><div style="margin-top:7px">${esc(figureDescriptions[figure] || "")}</div>`;
+}
+
+function renderFigureDescription(){
+  const figure=document.getElementById("figureSelect")?.value;
+  const target=document.getElementById("figureDescription");
+  if(target) target.innerHTML=figureDescriptionHtml(figure);
+}
 
 async function pickFigure(){
 
@@ -7656,11 +7693,11 @@ function drawResult(label,value){
 
 function draftThesisPairing(thesis){
   const value=thesis.pairing || "Spieltag";
-  if(value === "Spieltag") return `<div class="muted" style="font-weight:800">Spieltag · allgemeine These</div>`;
+  if(value === "Spieltag") return `<div style="text-align:center;color:var(--cream);font-weight:900">Spieltag</div>`;
   const fixture=(Object.values(matchdayFixtures).flat()).find(([home,away])=>`${clubData[home].abbr} – ${clubData[away].abbr}`===value);
   if(!fixture) return `<div class="muted" style="font-weight:800">${esc(value)}</div>`;
   const [home,away]=fixture;
-  return `<div class="fixture" style="padding:0;background:transparent;border:0"><div class="fixtureTeam">${renderFixtureTeam(home)}</div><span class="fixtureVs">VS</span><div class="fixtureTeam">${renderFixtureTeam(away,true)}</div></div>`;
+  return `<div class="fixture" style="padding:0;background:transparent;border:0;justify-content:center"><div class="fixtureTeam">${renderFixtureTeam(home)}</div><span class="fixtureVs">VS</span><div class="fixtureTeam">${renderFixtureTeam(away,true)}</div></div>`;
 }
 
 function refreshPairingPreview(slot){
