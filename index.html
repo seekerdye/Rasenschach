@@ -1475,8 +1475,8 @@ const fieldNames = {
 
   P1:"+1",
   N1:"−1",
-  P3:"±3",
-  N3:"∓3",
+  P3:"+/-3",
+  N3:"-/+3",
   Q:"?"
 
 };
@@ -2225,7 +2225,7 @@ function phaseBar(activePhase = state.game?.status){
 
     <div class="phasebar">
 
-      ${phases.map(
+      ${phases.filter(([id]) => !(id === "scoring" && state.me?.seat === 2)).map(
         ([id,label]) => `
 
           <span
@@ -8005,15 +8005,6 @@ function renderScoring(
       ).join("")}
 
     </div>
-
-
-    <div class="card">
-      <h2>DIREKTER VERGLEICH</h2>
-      <div class="stack">
-        ${figureOrder.map(kind=>{const a=state.figures.find(item=>item.user_id===player1.user_id&&item.figure===kind),b=state.figures.find(item=>item.user_id===player2.user_id&&item.figure===kind);return `<div class="field"><div class="fieldLabel">${displayFigureName(kind)}</div><div><strong>${esc(a?.footballer||"–")}</strong> <span class="muted">${a?formatPoints(figureTotalPoints(a)):""}</span><br><strong>${esc(b?.footballer||"–")}</strong> <span class="muted">${b?formatPoints(figureTotalPoints(b)):""}</span></div></div>`;}).join("")}
-      </div>
-    </div>
-
 
     ${
       !finished
