@@ -2635,6 +2635,11 @@ async function boot(){
       }
 
 
+      const requestedMatchday=Number(thesisOverview);
+      if(requestedMatchday >= 1 && requestedMatchday <= 34){
+        state.selectedTemplateMatchday=requestedMatchday;
+      }
+      state.thesisInputMode=params.get("edit") === "1";
       await loadThesisOverview();
 
       return;
@@ -7629,10 +7634,24 @@ async function startApp(){
    PAARUNGSZUORDNUNG & GETRENNTE THESENEINGABE
 ========================================================= */
 function pairingOptions(matchday, selected){
-  return (matchdayFixtures[matchday] || []).map(([home,away]) => {
+  const general = `<option value="Spieltag" ${selected==="Spieltag"?"selected":""}>Spieltag · allgemeine These</option>`;
+  return general + (matchdayFixtures[matchday] || []).map(([home,away]) => {
     const value = `${clubData[home].abbr} – ${clubData[away].abbr}`;
-    return `<option value="${esc(value)}" ${value===selected?"selected":""}>${esc(value)} · ${esc(clubData[home].name)} – ${esc(clubData[away].name)}</option>`;
+    return `<option value="${esc(value)}" ${value===selected?"selected":""}>${esc(value)}</option>`;
   }).join("");
+}
+
+function pairingPreview(value){
+  if(!value || value === "Spieltag") return `<span class="badge">⚽ Spieltag · allgemeine These</span>`;
+  const fixture=(Object.values(matchdayFixtures).flat()).find(([home,away]) => `${clubData[home].abbr} – ${clubData[away].abbr}`===value);
+  if(!fixture) return "";
+  return `<span class="fixtureTeam"><img class="fixtureLogo" src="${clubLogoUrl(clubData[fixture[0]])}" alt="" onerror="this.remove()"><span>${esc(clubData[fixture[0]].abbr)}</span></span><span class="muted"> – </span><span class="fixtureTeam"><img class="fixtureLogo" src="${clubLogoUrl(clubData[fixture[1]])}" alt="" onerror="this.remove()"><span>${esc(clubData[fixture[1]].abbr)}</span></span>`;
+}
+
+function refreshPairingPreview(slot){
+  const select=document.getElementById(`globalPairing${slot}`);
+  const preview=document.getElementById(`pairingPreview${slot}`);
+  if(select && preview) preview.innerHTML=pairingPreview(select.value);
 }
 
 function templatePairing(matchday, slot){
@@ -7646,11 +7665,18 @@ function thesisWithPairing(thesis){
 function openThesisInput(matchday){
   state.selectedTemplateMatchday = matchday;
   state.thesisInputMode = true;
+  const url=new URL(location.href);
+  url.searchParams.set("theses", String(matchday));
+  url.searchParams.set("edit", "1");
+  history.pushState({}, "", url);
   renderThesisOverview();
 }
 
 function closeThesisInput(){
   state.thesisInputMode = false;
+  const url=new URL(location.href);
+  url.searchParams.delete("edit");
+  history.pushState({}, "", url);
   renderThesisOverview();
 }
 
@@ -7658,10 +7684,10 @@ renderThesisOverview = function(){
   const selected = state.selectedTemplateMatchday;
   document.getElementById("headerActions").innerHTML = `${playerNameBadge(accountName())}<button class="ghost" onclick="goHome()">← Lobby-Übersicht</button>`;
   if(state.thesisInputMode){
-    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>Thesen · Spieltag ${selected}</h1><p class="muted">Jede These erhält zusätzlich genau eine Bundesliga-Paarung. Die Auswahl wird in Vorbereitung, Draft und Auswertung angezeigt.</p><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1"><select id="globalPairing${slot}"><option value="">Paarung auswählen</option>${pairingOptions(selected,templatePairing(selected,slot))}</select><textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
+    document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Eingabeansicht</span><h1>Thesen · Spieltag ${selected}</h1><p class="muted">Jede These erhält eine Paarung oder die allgemeine Zuordnung „Spieltag“.</p><div class="stack">${Array.from({length:12},(_,i)=>{const slot=i+1; const selectedPairing=templatePairing(selected,slot)||"Spieltag"; return `<div class="editorRow"><div class="editorNumber">${slot}</div><div style="flex:1"><select id="globalPairing${slot}" onchange="refreshPairingPreview(${slot})">${pairingOptions(selected,selectedPairing)}</select><div id="pairingPreview${slot}" style="margin:7px 0">${pairingPreview(selectedPairing)}</div><textarea id="globalThesis${slot}" maxlength="180" placeholder="These ${slot}">${esc(templateText(selected,slot))}</textarea></div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="saveGlobalTheses()">Speichern & synchronisieren</button><button class="ghost" onclick="closeThesisInput()">Abbrechen</button></div></div>`;
     return;
   }
-  document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Zentrale Verwaltung</span><h1>Thesen Übersicht</h1><p class="muted">Übersicht ohne Eingabefelder. Öffne für einen Spieltag die getrennte Eingabeansicht.</p></div><div class="card"><h2>Spieltage</h2><div class="matchdayGrid">${Array.from({length:34},(_,i)=>{const md=i+1,count=templateCount(md);return `<div class="templateDay ${md===selected?"active":""} ${count===12?"complete":""}" onclick="selectTemplateMatchday(${md});renderThesisOverview()"><div class="templateNumber">Spieltag ${md}</div><div class="templateDate">📅 ${matchdayDates[md]}</div><div class="templateCount">${count}/12 Thesen</div></div>`}).join("")}</div></div><div class="card"><h2>Spieltag ${selected}</h2><div class="stack">${Array.from({length:12},(_,i)=>{const s=i+1,t=templateText(selected,s),p=templatePairing(selected,s);return `<div class="thesis"><strong>${s}.</strong> ${p?`<span class="badge">⚽ ${esc(p)}</span>`:'Keine Paarung'}<div style="margin-top:7px">${t?esc(t):'Noch keine These'}</div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="openThesisInput(${selected})">Thesen bearbeiten</button></div></div>`;
+  document.getElementById("app").innerHTML = `<div class="card"><span class="badge">Zentrale Verwaltung</span><h1>Thesen Übersicht</h1><p class="muted">Übersicht ohne Eingabefelder. Ein Spieltag öffnet die eigene Bearbeitungsansicht.</p></div><div class="card"><h2>Spieltage</h2><div class="matchdayGrid">${Array.from({length:34},(_,i)=>{const md=i+1,count=templateCount(md);return `<div class="templateDay ${md===selected?"active":""} ${count===12?"complete":""}" onclick="openThesisInput(${md})"><div class="templateNumber">Spieltag ${md}</div><div class="templateDate">📅 ${matchdayDates[md]}</div><div class="templateCount">${count}/12 Thesen</div></div>`}).join("")}</div></div><div class="card"><h2>Spieltag ${selected}</h2><div class="stack">${Array.from({length:12},(_,i)=>{const s=i+1,t=templateText(selected,s),p=templatePairing(selected,s);return `<div class="thesis"><strong>${s}.</strong> ${p?`<span class="badge">⚽ ${esc(p)}</span>`:'Spieltag'}<div style="margin-top:7px">${t?esc(t):'Noch keine These'}</div></div>`}).join("")}</div><div class="actions"><button class="primary" onclick="openThesisInput(${selected})">Thesen bearbeiten</button></div></div>`;
 };
 
 saveGlobalTheses = async function(){
