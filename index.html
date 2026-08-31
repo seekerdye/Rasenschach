@@ -819,6 +819,10 @@ button:disabled{
 
 .scoringThesis{
   position:relative;
+
+  padding-left:76px;
+
+  min-height:74px;
 }
 
 .scoreThesisField{
@@ -826,9 +830,7 @@ button:disabled{
 
   left:16px;
 
-  top:50%;
-
-  transform:translateY(-50%);
+  top:18px;
 
   font-size:22px;
 }
@@ -839,6 +841,14 @@ button:disabled{
   margin-bottom:8px;
 
   text-align:center;
+}
+
+.positivePoints{
+  color:#65d98a;
+}
+
+.negativePoints{
+  color:#ff7777;
 }
 
 .bonusChecks{
@@ -859,6 +869,66 @@ button:disabled{
   color:#e6e8eb;
 
   font-size:13px;
+
+  padding:10px 11px;
+
+  border:1px solid #34383e;
+
+  border-radius:10px;
+
+  background:#17191c;
+
+  cursor:pointer;
+}
+
+.bonusChecks input{
+  appearance:none;
+
+  width:18px;
+
+  height:18px;
+
+  margin:0;
+
+  border:1px solid #6d747d;
+
+  border-radius:5px;
+
+  background:#101113;
+
+  display:grid;
+
+  place-content:center;
+}
+
+.bonusChecks input:checked{
+  border-color:var(--accent);
+
+  background:var(--accent);
+}
+
+.bonusChecks input:checked::after{
+  content:"✓";
+
+  color:#17181a;
+
+  font-size:13px;
+
+  font-weight:900;
+}
+
+.figureScoringHint{
+  margin-top:10px;
+
+  padding-top:10px;
+
+  border-top:1px solid #34383e;
+
+  color:#b9bec5;
+
+  font-size:13px;
+
+  line-height:1.55;
 }
 
 .fields{
@@ -1377,7 +1447,7 @@ const statusNames = {
 
   lobby:"Vorbereitung",
   thesis_draft:"Thesendraft",
-  figure_draft:"Figurendraft",
+  figure_draft:"Spielerdraft",
   scoring:"Auswertung",
   finished:"Beendet"
 
@@ -1388,7 +1458,7 @@ const phases = [
 
   ["lobby","Vorbereitung"],
   ["thesis_draft","Thesendraft"],
-  ["figure_draft","Figurendraft"],
+  ["figure_draft","Spielerdraft"],
   ["scoring","Auswertung"],
   ["finished","Ergebnis"],
   ["info","Info"]
@@ -3024,7 +3094,7 @@ function renderStartPage(
     </div>
 
 
-    <div class="grid2">
+    <div class="stack">
 
       ${
         isMainAccount()
@@ -6168,7 +6238,7 @@ function renderThesisDraft(){
     </div>
 
 
-    <div class="grid2">
+    <div class="stack">
 
 
       <div class="card">
@@ -6566,7 +6636,7 @@ function renderBoard(
 
 
 /* =========================================================
-   FIGURENDRAFT
+   SPIELERDRAFT
 ========================================================= */
 
 
@@ -6604,6 +6674,11 @@ function renderFigureDraft(){
     );
 
 
+  const playerDraftComplete =
+    state.players.length === 2 &&
+    state.figures.length >= 10;
+
+
   return `
 
     <div class="card fixtureCard">
@@ -6621,7 +6696,7 @@ function renderFigureDraft(){
         seat ===
         state.me.seat
 
-          ? "Du bist beim Figurendraft am Zug"
+          ? "Du bist beim Spielerdraft am Zug"
 
           : `${esc(
               activePlayer?.name ||
@@ -6642,8 +6717,18 @@ function renderFigureDraft(){
 
 
         ${
-          seat ===
-          state.me.seat
+          playerDraftComplete
+
+            ? `
+
+              <p class="muted">
+                Spielerdraft abgeschlossen
+              </p>
+
+            `
+
+            : seat ===
+              state.me.seat
 
             ? `
 
@@ -6706,10 +6791,7 @@ function renderFigureDraft(){
             : `
 
               <p class="muted">
-
-                Warte auf den Pick
-                deines Gegners.
-
+                Warte auf den Pick deines Gegners.
               </p>
 
             `
@@ -7383,7 +7465,7 @@ function renderScoring(
                           ${displayFieldName(placement.field)}
                         </strong>
 
-                        <span class="muted scoreThesisPoints">
+                        <span class="scoreThesisPoints ${points > 0 ? "positivePoints" : points < 0 ? "negativePoints" : "muted"}">
                           ${points >= 0 ? "+" : ""}${points} Punkte
                         </span>
 
@@ -7496,30 +7578,17 @@ function renderScoring(
                           ]
                         }
 
-                        ·
-
-                        ${esc(
-                          figure.footballer
-                        )}
-
                       </strong>
 
 
-                      ${
-                        figure.club
+                      <div style="margin-top:6px">
+                        <strong>${esc(figure.footballer)}</strong>${figure.club ? ` <span class="muted">· ${esc(figure.club)}</span>` : ""}
+                      </div>
 
-                          ? `
 
-                            <div class="muted">
-                              ${esc(
-                                figure.club
-                              )}
-                            </div>
-
-                          `
-
-                          : ""
-                      }
+                      <div class="figureScoringHint">
+                        ${figureDescriptionHtml(figure.figure)}
+                      </div>
 
 
                       ${
