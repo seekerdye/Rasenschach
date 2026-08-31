@@ -6045,7 +6045,7 @@ function renderGameLobby(){
 
         <h2>
 
-          Thesen
+          THESEN
 
         </h2>
 
@@ -6104,10 +6104,12 @@ function renderGameLobby(){
         }
 
 
-        <hr>
+    </div>
+
+    <div class="card">
 
         <h2>
-          Auslosung
+          AUSLOSUNG
         </h2>
 
 
@@ -6127,7 +6129,7 @@ function renderGameLobby(){
               }
             </p>
 
-            ${owner ? `
+            ${owner && !starterReady ? `
               <button
                 class="ghost"
                 style="margin-top:10px"
@@ -6155,7 +6157,7 @@ function renderGameLobby(){
               }
             </p>
 
-            ${owner ? `
+            ${owner && !questionReady ? `
               <button
                 class="ghost"
                 style="margin-top:10px"
@@ -6176,7 +6178,7 @@ function renderGameLobby(){
                 ? esc(state.game.knight_category)
                 : `<span class="muted">Noch nicht ausgelost</span>`}
             </p>
-            ${owner ? `
+            ${owner && !state.game.knight_category ? `
               <button class="ghost" style="margin-top:10px" onclick="drawKnightCategory()" ${state.game.knight_category || locked ? "disabled" : ""}>
                 Kategorie auslosen
               </button>
@@ -6452,7 +6454,7 @@ function renderThesisDraft(){
       <div class="card">
 
         <h2>
-          Verfügbare Thesen
+          VERFÜGBARE THESEN
         </h2>
 
 
@@ -6533,7 +6535,7 @@ function renderThesisDraft(){
         <div class="card">
 
           <h2>
-            Thesen
+            THESEN
           </h2>
 
 
@@ -6903,7 +6905,7 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          Fußballer auswählen
+          FUSSBALLER AUSWÄHLEN
         </h2>
 
 
@@ -6994,7 +6996,7 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          Spielerdraft
+          SPIELERDRAFT
         </h2>
 
 
@@ -7092,7 +7094,7 @@ function renderFigureDraft(){
     <div class="card">
 
       <h2>
-        Thesen
+        THESEN
       </h2>
 
 
@@ -7629,7 +7631,7 @@ function renderScoring(
 
 
               <h3>
-                Thesendraft
+                THESENDRAFT
               </h3>
 
 
@@ -7764,7 +7766,7 @@ function renderScoring(
 
 
               <h3>
-                Spielerdraft
+                SPIELERDRAFT
               </h3>
 
 
