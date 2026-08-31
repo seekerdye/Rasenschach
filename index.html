@@ -22,7 +22,7 @@
   --dark:#111214;
   --cream:#ffffff;
   --muted:#b8bcc2;
-  --line:#484c52;
+  --line:transparent;
   --calcio-pink:#feb8ec;
   --accent:var(--calcio-pink);
   --danger:#ff7d7d;
@@ -5054,7 +5054,13 @@ async function renderLobbyStats(){
   }
 
   const totals = Object.fromEntries(state.lobbyPlayers.map(player => [player.user_id, 0]));
-  const results = finishedGames.map(game => {
+  const results = Array.from({length:34}, (_, index) => {
+    const game = finishedGames.find(item => item.matchday === index + 1);
+
+    if(!game){
+      return {game:{matchday:index + 1}, scores:[], winner:"Spieltag ohne Punktevergabe abgeschlossen"};
+    }
+
     const players = gamePlayers.filter(player => player.game_id === game.id).sort((a,b) => a.seat - b.seat);
     const scores = players.map(player => ({
       ...player,
@@ -5101,8 +5107,8 @@ async function renderLobbyStats(){
         <div class="field">
           <div class="fieldLabel">Spieltag ${result.game.matchday}</div>
           <div>
-            ${result.scores.map(score => `<strong>${esc(score.name)} ${formatPoints(score.score)}</strong>`).join(' <span class="muted">·</span> ')}
-            <div class="muted" style="margin-top:5px">${esc(result.winner)}${result.winner !== "Unentschieden" && result.winner !== "Noch nicht verfügbar" ? " gewinnt" : ""}</div>
+            ${result.scores.length ? result.scores.map(score => `<strong>${esc(score.name)} ${formatPoints(score.score)}</strong>`).join(' <span class="muted">·</span> ') : `<span class="muted">Keine Punkte</span>`}
+            <div class="muted" style="margin-top:5px">${esc(result.winner)}${result.scores.length && result.winner !== "Unentschieden" && result.winner !== "Noch nicht verfügbar" ? " gewinnt" : ""}</div>
           </div>
         </div>
       `).join("")}</div>` : `<p class="muted">Noch kein Spieltag abgeschlossen.</p>`}
@@ -5882,23 +5888,10 @@ function renderGame(){
       <h1 style="margin-top:12px">
         Spieltag
         ${state.game.matchday}
+        <span class="muted" style="font-size:.58em;font-weight:750;white-space:nowrap">
+          ${matchdayDates[state.game.matchday] || ""}
+        </span>
       </h1>
-
-
-      <p>
-        📅
-        <strong>
-
-          ${
-            matchdayDates[
-              state.game.matchday
-            ]
-            ||
-            ""
-          }
-
-        </strong>
-      </p>
 
     </div>
 
@@ -6076,7 +6069,7 @@ function renderGameLobby(){
                     <div class="thesis">
 
                       ${draftThesisPairing(thesis)}
-                      <div style="margin-top:9px;font-weight:800">${esc(thesis.text)}</div>
+                      <div style="margin-top:9px">${esc(thesis.text)}</div>
 
                     </div>
 
@@ -6135,7 +6128,7 @@ function renderGameLobby(){
             <p style="margin-top:8px;margin-bottom:0">
               ${
                 starterReady
-                  ? `🎲 ${esc(starter?.name || "")} beginnt`
+                  ? `${esc(starter?.name || "")} beginnt`
                   : `<span class="muted">Noch nicht ausgelost</span>`
               }
             </p>
@@ -6163,7 +6156,7 @@ function renderGameLobby(){
             <p style="margin-top:8px;margin-bottom:0">
               ${
                 questionReady
-                  ? `🎲 ${esc(state.game.question_value)}`
+                  ? `${esc(state.game.question_value)}`
                   : `<span class="muted">Noch nicht ausgelost</span>`
               }
             </p>
@@ -7528,7 +7521,7 @@ function renderScoring(
 
             <div class="bigResult">
 
-              ${esc(winner)} den Spieltag ${state.game.matchday}
+              ${esc(winner)} Spieltag ${state.game.matchday}
 
             </div>
 
@@ -7790,11 +7783,7 @@ function renderScoring(
 
                       <strong>
 
-                        ${
-                          figureNames[
-                            figure.figure
-                          ]
-                        }
+                        ${displayFigureName(figure.figure)}
 
                       </strong>
 
@@ -8193,7 +8182,7 @@ function pairingPreview(value){
 }
 
 function drawResult(label,value){
-  return `<div class="card" style="margin:0;text-align:center"><div class="muted" style="font-size:12px;font-weight:800">🎲 ${esc(label)}</div><div style="font-weight:900;margin-top:8px">${value}</div></div>`;
+  return `<div class="card" style="margin:0;text-align:center"><div class="muted" style="font-size:12px;font-weight:800">${esc(label)}</div><div style="font-weight:900;margin-top:8px">${value}</div></div>`;
 }
 
 function draftThesisPairing(thesis){
@@ -8296,6 +8285,9 @@ async function loadFigureUsage(){
   state.seasonFigureUsage=Object.fromEntries((seasonUsage.data||[]).map(x=>[`${x.user_id}|${x.footballer.toLocaleLowerCase("de")}`,Number(x.uses)]));
 }
 function displayFigureName(figure){
+  if(figure === "KNIGHT" && state.game?.knight_category){
+    return `${figureNames[figure]} · ${state.game.knight_category.split(" ")[0]}`;
+  }
   return figureNames[figure] || figure;
 }
 function filterBundesligaPlayers(){
