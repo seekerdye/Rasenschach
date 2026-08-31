@@ -1021,6 +1021,32 @@ hr{
 ========================================================= */
 
 
+const APP_INLINE_SOURCE =
+  document.currentScript
+    ?.textContent
+  ||
+  "";
+
+
+const APP_STYLE_SOURCE =
+  document.querySelector(
+    "style"
+  )
+    ?.textContent
+  ||
+  "";
+
+
+const APP_SOURCE_FINGERPRINT =
+  appFingerprint(
+    APP_STYLE_SOURCE +
+    "\n" +
+    APP_INLINE_SOURCE +
+    "\n" +
+    document.title
+  );
+
+
 const SUPABASE_URL =
   "https://myqerixfnmjgvgwculiw.supabase.co";
 
@@ -1503,6 +1529,98 @@ function errorMessage(
 
 
 
+function appFingerprint(
+  value
+){
+
+  let hash =
+    2166136261;
+
+
+  for(
+    let index = 0;
+    index < value.length;
+    index += 1
+  ){
+
+    hash ^= value.charCodeAt(
+      index
+    );
+
+
+    hash = Math.imul(
+      hash,
+      16777619
+    );
+
+  }
+
+
+  return (
+    hash >>> 0
+  ).toString(
+    36
+  );
+
+}
+
+
+
+function fingerprintFromHtml(
+  html
+){
+
+  const parsed =
+    new DOMParser()
+      .parseFromString(
+        html,
+        "text/html"
+      );
+
+
+  const inlineScripts =
+    Array.from(
+      parsed.scripts
+    )
+      .filter(
+        script =>
+          !script.src
+      );
+
+
+  const appScript =
+    inlineScripts.at(-1);
+
+
+  const style =
+    parsed.querySelector(
+      "style"
+    );
+
+
+  if(
+    !appScript
+    ||
+    !style
+  ){
+
+    return "";
+
+  }
+
+
+  return appFingerprint(
+    style.textContent +
+    "\n" +
+    appScript.textContent +
+    "\n" +
+    parsed.title
+  );
+
+}
+
+
+
 function appBase(){
 
   return (
@@ -1514,10 +1632,56 @@ function appBase(){
 
 
 
+function appUrl(
+  params={}
+){
+
+  const url =
+    new URL(
+      appBase()
+    );
+
+
+  url.searchParams.set(
+    "v",
+    APP_SOURCE_FINGERPRINT
+  );
+
+
+  Object.entries(
+    params
+  ).forEach(
+    ([key,value]) => {
+
+      if(
+        value !== ""
+        &&
+        value !== null
+        &&
+        value !== undefined
+      ){
+
+        url.searchParams.set(
+          key,
+          String(value)
+        );
+
+      }
+
+    }
+  );
+
+
+  return url.toString();
+
+}
+
+
+
 function goHome(){
 
   location.href =
-    appBase();
+    appUrl();
 
 }
 
@@ -1528,11 +1692,9 @@ function openLobby(
 ){
 
   location.href =
-    appBase() +
-    "?lobby=" +
-    encodeURIComponent(
-      id
-    );
+    appUrl({
+      lobby:id
+    });
 
 }
 
@@ -1543,11 +1705,9 @@ function openGame(
 ){
 
   location.href =
-    appBase() +
-    "?game=" +
-    encodeURIComponent(
-      id
-    );
+    appUrl({
+      game:id
+    });
 
 }
 
@@ -1556,8 +1716,9 @@ function openGame(
 function openThesisOverview(){
 
   location.href =
-    appBase() +
-    "?theses=1";
+    appUrl({
+      theses:1
+    });
 
 }
 
@@ -1568,20 +1729,13 @@ function inviteUrl(
   accessToken=""
 ){
 
-  const url =
-    appBase() +
-    "?room=" +
-    encodeURIComponent(
-      code
-    );
-
-  return accessToken
-    ? url +
-      "&access=" +
-      encodeURIComponent(
-        accessToken
-      )
-    : url;
+  return appUrl({
+    room:code,
+    access:
+      accessToken
+      ||
+      null
+  });
 
 }
 
@@ -2120,6 +2274,272 @@ async function ensureGuestSession(
 
   state.user =
     data.session.user;
+
+}
+
+
+
+let appUpdateCheckActive =
+  false;
+
+
+let appUpdatePendingFingerprint =
+  "";
+
+
+let appUpdateMonitorStarted =
+  false;
+
+
+
+function userIsEditingApp(){
+
+  const active =
+    document.activeElement;
+
+
+  return Boolean(
+    active
+    &&
+    [
+      "INPUT",
+      "TEXTAREA",
+      "SELECT"
+    ].includes(
+      active.tagName
+    )
+  );
+
+}
+
+
+
+function reloadForAppUpdate(
+  fingerprint
+){
+
+  const url =
+    new URL(
+      location.href
+    );
+
+
+  url.searchParams.set(
+    "v",
+    fingerprint
+  );
+
+
+  url.searchParams.set(
+    "app_refresh",
+    Date.now()
+  );
+
+
+  location.replace(
+    url.toString()
+  );
+
+}
+
+
+
+async function checkForAppUpdate(
+  initialCheck=false
+){
+
+  if(appUpdateCheckActive){
+    return false;
+  }
+
+
+  appUpdateCheckActive =
+    true;
+
+
+  const controller =
+    new AbortController();
+
+
+  const timeout =
+    setTimeout(
+      () =>
+        controller.abort(),
+      5000
+    );
+
+
+  try{
+
+    const checkUrl =
+      new URL(
+        appBase()
+      );
+
+
+    checkUrl.searchParams.set(
+      "app_update_check",
+      Date.now()
+    );
+
+
+    const response =
+      await fetch(
+        checkUrl.toString(),
+        {
+          cache:"no-store",
+          signal:controller.signal
+        }
+      );
+
+
+    if(!response.ok){
+      return false;
+    }
+
+
+    const remoteFingerprint =
+      fingerprintFromHtml(
+        await response.text()
+      );
+
+
+    if(
+      !remoteFingerprint
+      ||
+      remoteFingerprint ===
+        APP_SOURCE_FINGERPRINT
+    ){
+
+      appUpdatePendingFingerprint =
+        "";
+
+
+      return false;
+
+    }
+
+
+    if(
+      !initialCheck
+      &&
+      userIsEditingApp()
+    ){
+
+      if(
+        appUpdatePendingFingerprint !==
+        remoteFingerprint
+      ){
+
+        toast(
+          "Neue App-Version erkannt – Aktualisierung nach deiner Eingabe"
+        );
+
+      }
+
+
+      appUpdatePendingFingerprint =
+        remoteFingerprint;
+
+
+      return false;
+
+    }
+
+
+    reloadForAppUpdate(
+      remoteFingerprint
+    );
+
+
+    return true;
+
+  }
+
+  catch(error){
+
+    if(
+      error?.name !==
+      "AbortError"
+    ){
+
+      console.debug(
+        "Versionsprüfung vorübergehend nicht verfügbar"
+      );
+
+    }
+
+
+    return false;
+
+  }
+
+  finally{
+
+    clearTimeout(
+      timeout
+    );
+
+
+    appUpdateCheckActive =
+      false;
+
+  }
+
+}
+
+
+
+function startAppUpdateMonitor(){
+
+  if(appUpdateMonitorStarted){
+    return;
+  }
+
+
+  appUpdateMonitorStarted =
+    true;
+
+
+  setInterval(
+    () => {
+
+      if(
+        document.visibilityState ===
+        "visible"
+      ){
+
+        checkForAppUpdate();
+
+      }
+
+    },
+    60000
+  );
+
+
+  window.addEventListener(
+    "focus",
+    () =>
+      checkForAppUpdate()
+  );
+
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if(
+        document.visibilityState ===
+        "visible"
+      ){
+
+        checkForAppUpdate();
+
+      }
+
+    }
+  );
 
 }
 
@@ -7192,7 +7612,28 @@ async function finishGame(){
 ========================================================= */
 
 
-boot();
+async function startApp(){
+
+  const updateTriggered =
+    await checkForAppUpdate(
+      true
+    );
+
+
+  if(updateTriggered){
+    return;
+  }
+
+
+  startAppUpdateMonitor();
+
+
+  await boot();
+
+}
+
+
+startApp();
 
 
 </script>
