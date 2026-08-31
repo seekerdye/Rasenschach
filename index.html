@@ -371,6 +371,10 @@ header{
     grid-template-columns:1fr;
   }
 
+  .thesisGrid{
+    grid-template-columns:1fr;
+  }
+
   .figurePlayerGrid{
     grid-template-columns:1fr;
   }
@@ -962,6 +966,30 @@ button:disabled{
   font-weight:900;
 
   text-align:center;
+}
+
+.thesisGrid{
+  display:grid;
+
+  grid-template-columns:repeat(3,minmax(0,1fr));
+
+  gap:10px;
+}
+
+.thesisGrid .thesis{
+  border:0;
+}
+
+.seasonResult .field{
+  grid-template-columns:90px minmax(0,1fr);
+
+  align-items:start;
+}
+
+.seasonResult .fieldLabel{
+  font-size:15px;
+
+  text-align:left;
 }
 
 .fieldButtons{
@@ -1874,10 +1902,24 @@ function openLobby(
 
 function openLobbyStats(){
 
+  const lobbyId =
+    state.lobbyId ||
+    state.game?.lobby_id;
+
   location.href =
     appUrl({
-      lobby:state.lobbyId,
+      lobby:lobbyId,
       season:1
+    });
+
+}
+
+
+function openLobbySeason(){
+
+  location.href =
+    appUrl({
+      lobby:state.lobbyId || state.game?.lobby_id
     });
 
 }
@@ -4871,13 +4913,6 @@ function renderLobbySeason(){
     </div>
 
 
-    <div class="actions" style="margin-bottom:16px">
-      <button class="primary" onclick="openLobbyStats()">
-        Saisonübersicht
-      </button>
-    </div>
-
-
     <div class="card">
 
       <h2>
@@ -4894,6 +4929,12 @@ function renderLobbySeason(){
         von Spieler 1 verwaltet.
 
       </p>
+
+      <div class="actions" style="margin-bottom:16px">
+        <button class="primary" onclick="openLobbyStats()">
+          Saisonübersicht
+        </button>
+      </div>
 
 
       <div class="matchdayGrid">
@@ -4974,7 +5015,7 @@ async function renderLobbyStats(){
 
   document.getElementById("headerActions").innerHTML = `
     ${playerNameBadge(currentLobbyPlayerName())}
-    <button class="ghost" onclick="openLobby(${jsArg(state.lobbyId)})">← Spieltagsübersicht</button>
+    <button class="ghost" onclick="openLobbySeason()">← Spieltagsübersicht</button>
   `;
 
   const finishedGames = state.matchdayGames.filter(game => game.status === "finished");
@@ -5049,7 +5090,7 @@ async function renderLobbyStats(){
 
     <div class="card">
       <h2>Spieltagsergebnisse</h2>
-      ${results.length ? `<div class="stack">${results.map(result => `
+      ${results.length ? `<div class="stack seasonResult">${results.map(result => `
         <div class="field">
           <div class="fieldLabel">Spieltag ${result.game.matchday}</div>
           <div>
@@ -5900,10 +5941,10 @@ function renderGameInfo(){
 
       <div class="ruleList">
 
-        <div><strong>+/−3 · Wahrscheinlich</strong><br>Tritt ein: +3<br>Tritt nicht ein: −3</div>
-        <div><strong>−/+3 · Unwahrscheinlich</strong><br>Tritt nicht ein: +3<br>Tritt ein: −3</div>
-        <div><strong>+1 · Wahrscheinlich</strong><br>Tritt ein: +1<br>Tritt nicht ein: +/−0</div>
-        <div><strong>−1 · Unwahrscheinlich</strong><br>Tritt nicht ein: +/−0<br>Tritt ein: −1</div>
+        <div><strong>+/−3 Wahrscheinlich</strong><br>Tritt ein: +3<br>Tritt nicht ein: −3</div>
+        <div><strong>−/+3 Unwahrscheinlich</strong><br>Tritt nicht ein: +3<br>Tritt ein: −3</div>
+        <div><strong>+1 Wahrscheinlich</strong><br>Tritt ein: +1<br>Tritt nicht ein: +/−0</div>
+        <div><strong>−1 Unwahrscheinlich</strong><br>Tritt nicht ein: +/−0<br>Tritt ein: −1</div>
         <div><strong>Fragezeichenfelder</strong><br>Der Wert wird vor dem Draft aus +/−3, +1, +2, +3 und −3 ausgelost.<br>Ein positiver Wert (z. B. +2) zählt beim Eintreffen der These, ansonsten +/−0.<br>Ein negativer Wert (z. B. −3) kostet beim Eintreffen der These, ansonsten +/−0.<br>Der Wert +/−3 zählt beim Eintreffen der These +3, bei Nichteintreffen kostet er −3.</div>
 
       </div>
@@ -6020,7 +6061,7 @@ function renderGameLobby(){
 
             ? `
 
-              <div class="stack">
+              <div class="thesisGrid">
 
                 ${state.theses.map(
                   thesis => `
@@ -6430,7 +6471,7 @@ function renderThesisDraft(){
         </p>
 
 
-        <div class="stack">
+        <div class="thesisGrid">
 
           ${state.theses
 
@@ -6851,6 +6892,12 @@ function renderFigureDraft(){
 
   return `
 
+    <div class="grid3">
+      ${drawResult("Startspieler", state.players.find(p=>p.seat===state.game.thesis_start_seat)?.name ? `${esc(state.players.find(p=>p.seat===state.game.thesis_start_seat).name)} beginnt` : "Nicht ausgelost")}
+      ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
+      ${drawResult("Springer-Kategorie", esc(state.game.knight_category || "Nicht ausgelost"))}
+    </div>
+
     <div class="card fixtureCard">
 
       ${renderMatchdayFixtures(
@@ -6973,7 +7020,7 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          Figuren
+          Spielerdraft
         </h2>
 
 
@@ -7035,7 +7082,7 @@ function renderFigureDraft(){
 
                                         ? ` · ${esc(
                                             pick.club
-                                          )}`
+                                          )}${player.user_id === state.user.id ? ` · ${state.figureUsage[pick.footballer.toLocaleLowerCase("de")] || 1}/3` : ""}`
 
                                         : ""
                                     }`
@@ -7071,7 +7118,7 @@ function renderFigureDraft(){
     <div class="card">
 
       <h2>
-        Thesenbretter
+        Thesen
       </h2>
 
 
@@ -7440,6 +7487,15 @@ function renderScoring(
 
   }
 
+  if(!finished && state.me?.seat !== 1){
+    return `
+      <div class="card">
+        <h2>Auswertung</h2>
+        <p class="muted">Die Auswertung wird von Spieler 1 vorgenommen. Nach dem Abpfiff erscheint das Ergebnis für beide Spieler.</p>
+      </div>
+    `;
+  }
+
 
   const score1 =
     playerScore(
@@ -7485,8 +7541,12 @@ function renderScoring(
 
             <div class="bigResult">
 
-              ${esc(winner)} · Spieltag ${state.game.matchday}
+              ${esc(winner)} am Spieltag ${state.game.matchday}
 
+            </div>
+
+            <div class="actions" style="justify-content:center;margin-top:16px">
+              <button class="primary" onclick="openLobbyStats()">Zur Saisonübersicht</button>
             </div>
 
           </div>
@@ -7537,13 +7597,6 @@ function renderScoring(
 
     </div>
 
-    <div class="grid3">
-      ${drawResult("Startspieler", state.players.find(p=>p.seat===state.game.thesis_start_seat)?.name ? `${esc(state.players.find(p=>p.seat===state.game.thesis_start_seat).name)} beginnt` : "Nicht ausgelost")}
-      ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
-      ${drawResult("Springer-Kategorie", esc(state.game.knight_category || "Nicht ausgelost"))}
-    </div>
-
-
     <div class="grid2">
 
       ${state.players.map(
@@ -7592,7 +7645,7 @@ function renderScoring(
 
               <span class="badge">
 
-                Figuren:
+                Spielerdraft:
                 ${score.figures}
 
               </span>
@@ -7737,7 +7790,7 @@ function renderScoring(
 
 
               <h3>
-                Figuren
+                Spielerdraft
               </h3>
 
 
@@ -7760,7 +7813,7 @@ function renderScoring(
 
 
                       <div style="margin-top:6px">
-                        <strong>${esc(figure.footballer)}</strong>${figure.club ? ` <span class="muted">· ${esc(figure.club)}</span>` : ""}
+                        <strong>${esc(figure.footballer)}</strong>${figure.club ? ` <span class="muted">· ${esc(figure.club)}${player.user_id === state.user.id ? ` · ${state.figureUsage[figure.footballer.toLocaleLowerCase("de")] || 1}/3` : ""}</span>` : ""}
                       </div>
 
 
