@@ -1095,6 +1095,7 @@ let state = {
   figures:[],
   bundesligaPlayers:[],
   figureUsage:{},
+  matchdayDrafted:{},
   me:null,
 
   globalTheses:[],
@@ -1266,11 +1267,11 @@ const figureSequence = [
 
 const figureNames = {
 
-  KING:"♔ König",
-  QUEEN:"♕ Dame",
-  ROOK:"♖ Turm",
-  BISHOP:"♗ Läufer",
-  KNIGHT:"♘ Springer"
+  ROOK:"♖ Turm · Weiße Weste",
+  BISHOP:"♗ Läufer · Motor",
+  KNIGHT:"♘ Springer",
+  QUEEN:"♕ Dame · Spielmacher",
+  KING:"♔ König · Torjäger"
 
 };
 
@@ -5148,10 +5149,12 @@ async function loadBundesligaPlayers(){
 
 async function loadFigureUsage(){
 
-  const {data,error} = await db.rpc(
-    "get_figure_usage",
-    {p_game_id:state.gameId}
-  );
+  const [usageResult,draftedResult] = await Promise.all([
+    db.rpc("get_figure_usage",{p_game_id:state.gameId}),
+    db.rpc("get_matchday_figure_availability",{p_game_id:state.gameId})
+  ]);
+
+  const {data,error} = usageResult;
 
   if(error){
     console.warn("Figurennutzung noch nicht eingerichtet",error);
@@ -5163,6 +5166,13 @@ async function loadFigureUsage(){
     (data || []).map(item => [
       item.footballer.toLocaleLowerCase("de"),
       Number(item.uses)
+    ])
+  );
+
+  state.matchdayDrafted=Object.fromEntries(
+    (draftedResult.data || []).map(item => [
+      item.footballer.toLocaleLowerCase("de"),
+      true
     ])
   );
 
@@ -6751,9 +6761,12 @@ function filterBundesligaPlayers(){
     )
     .slice(0,80);
 
-  list.innerHTML = matches.map(player =>
-    `<option value="${esc(player.name)}" label="${esc(player.club)} · ${Math.max(0,3-(state.figureUsage[player.name.toLocaleLowerCase("de")] || 0))}/3"></option>`
-  ).join("");
+  list.innerHTML = matches.map(player => {
+    const key=player.name.toLocaleLowerCase("de");
+    const locked=state.matchdayDrafted[key];
+    const remaining=Math.max(0,3-(state.figureUsage[key] || 0));
+    return `<option value="${esc(player.name)}" label="${esc(player.club)} · ${locked ? "bereits gedraftet" : `${remaining}/3`}"></option>`;
+  }).join("");
 
 }
 
@@ -6797,6 +6810,11 @@ async function pickFigure(){
 
       if((state.figureUsage[databaseMatch.name.toLocaleLowerCase("de")] || 0) >= 3){
         toast("Dieser Spieler wurde von dir in dieser Saison bereits 3-mal gewählt");
+        return;
+      }
+
+      if(state.matchdayDrafted[databaseMatch.name.toLocaleLowerCase("de")]){
+        toast("Dieser Spieler wurde an diesem Spieltag bereits gedraftet");
         return;
       }
     }
