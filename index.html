@@ -7110,6 +7110,12 @@ function renderScoring(
 
     </div>
 
+    <div class="grid3">
+      ${drawResult("Startspieler", state.players.find(p=>p.seat===state.game.thesis_start_seat)?.name ? `${esc(state.players.find(p=>p.seat===state.game.thesis_start_seat).name)} beginnt` : "Nicht ausgelost")}
+      ${drawResult("?-Feld", esc(state.game.question_value || "Nicht ausgelost"))}
+      ${drawResult("Springer-Kategorie", esc(state.game.knight_category || "Nicht ausgelost"))}
+    </div>
+
 
     <div class="grid2">
 
@@ -7227,16 +7233,10 @@ function renderScoring(
                         </strong>
 
 
-                        <p
-                          style="
-                            margin-top:8px;
-                            margin-bottom:8px
-                          "
-                        >
-
-                      ${thesisWithPairing(thesis)}
-
-                        </p>
+                        ${draftThesisPairing(thesis)}
+                        <div style="margin-top:9px;margin-bottom:8px;font-weight:800">
+                          ${esc(thesis.text)}
+                        </div>
 
 
                         ${
