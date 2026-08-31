@@ -3598,7 +3598,7 @@ function renderThesisOverview(){
     ${playerNameBadge(accountName())}
 
     <button
-      class="ghost"
+      class="ghost darkAction"
       onclick="goHome()"
     >
       ← Lobby-Übersicht
@@ -6529,7 +6529,6 @@ function renderThesisDraft(){
 
         <h2>
           VERFÜGBARE THESEN
-          <button class="ghost" style="float:right" onclick="openGamePhase('info')">?</button>
         </h2>
 
 
@@ -6942,6 +6941,9 @@ function renderFigureDraft(){
     state.players.length === 2 &&
     state.figures.length >= 10;
 
+  const thesisDraftComplete =
+    draftedTheses().length >= 10;
+
 
   return `
 
@@ -6987,13 +6989,16 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          FUSSBALLER AUSWÄHLEN
-          <button class="ghost" style="float:right" onclick="openGamePhase('info')">?</button>
+          SPIELERDRAFT
         </h2>
 
 
         ${
-          playerDraftComplete
+          !thesisDraftComplete
+
+            ? `<p class="muted">Der Spielerdraft startet nach Abschluss des Thesendrafts.</p>`
+
+            : playerDraftComplete
 
             ? `
 
@@ -7079,7 +7084,7 @@ function renderFigureDraft(){
       <div class="card">
 
         <h2>
-          SPIELERDRAFT
+          SPIELERDRAFT - ÜBERSICHT
         </h2>
 
 
@@ -7177,7 +7182,7 @@ function renderFigureDraft(){
     <div class="card">
 
       <h2>
-        THESEN
+        THESEN - ÜBERSICHT
       </h2>
 
 
@@ -8405,7 +8410,7 @@ function filterBundesligaPlayers(){
   list.innerHTML=state.bundesligaPlayers.filter(p=>(!club||p.club===club)&&(figure!=="ROOK"||p.position==="Torhüter")&&(!query||p.name.toLocaleLowerCase("de").includes(query))).sort((a,b)=>Number(Boolean(state.matchdayDrafted[a.name.toLocaleLowerCase("de")]||(state.figureUsage[a.name.toLocaleLowerCase("de")]||0)>=3))-Number(Boolean(state.matchdayDrafted[b.name.toLocaleLowerCase("de")]||(state.figureUsage[b.name.toLocaleLowerCase("de")]||0)>=3))).slice(0,100).map(p=>{const key=p.name.toLocaleLowerCase("de"), used=state.figureUsage[key]||0, blocked=state.matchdayDrafted[key]||used>=3, remaining=Math.max(0,3-used);return `<option value="${esc(p.name)}" label="${esc(p.club)} · ${blocked?"NICHT VERFÜGBAR":`${remaining}/3 verfügbar`}"></option>`}).join("");
 }
 pickFigure=async function(){
-  try{const figure=document.getElementById("figureSelect").value, footballer=document.getElementById("footballerInput").value.trim(), club=document.getElementById("clubInput").value;const player=state.bundesligaPlayers.find(p=>p.name.toLocaleLowerCase("de")===footballer.toLocaleLowerCase("de")&&(!club||p.club===club));
+  try{if(draftedTheses().length < 10) throw new Error("Der Spielerdraft ist erst nach Abschluss des Thesendrafts möglich."); const figure=document.getElementById("figureSelect").value, footballer=document.getElementById("footballerInput").value.trim(), club=document.getElementById("clubInput").value;const player=state.bundesligaPlayers.find(p=>p.name.toLocaleLowerCase("de")===footballer.toLocaleLowerCase("de")&&(!club||p.club===club));
     if(!player)throw new Error("Bitte einen aktuellen Bundesliga-Spieler aus der Auswahl wählen.");
     const key=player.name.toLocaleLowerCase("de"); if(state.matchdayDrafted[key])throw new Error("Dieser Spieler wurde an diesem Spieltag bereits gedraftet."); if((state.figureUsage[key]||0)>=3)throw new Error("Dieser Spieler wurde in dieser Saison bereits dreimal gewählt."); if(figure==="ROOK"&&player.position!=="Torhüter")throw new Error("Für den Turm sind nur Torhüter auswählbar.");
     if(!confirm(`${displayFigureName(figure)} mit ${player.name} wirklich draften?`)) return;
